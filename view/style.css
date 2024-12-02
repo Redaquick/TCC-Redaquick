@@ -1,0 +1,629 @@
+
+/* --------------------- CSS GERAL -----------------------------*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
+    cursor: default;
+    user-select: none;
+}
+
+.b {
+    margin: 7%;
+    justify-content: center;
+    gap: 10px;
+    margin-block: 5%;
+}
+.paragrafo {
+    font-size: medium;
+    text-align: center;
+    color: #8b0000;
+}
+
+.barrinha {
+    display: flex;
+    align-items: center;
+    padding: 1px;
+    background-color: beige;
+    box-shadow: 0 0 15px #ff6961;
+}
+
+.configIMGLogoTCC {
+    display: block;
+    margin: 15px auto;
+    width: 20%;
+    max-width: 150px;
+    margin-left: 2%;
+}
+
+.containerSection {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    gap: 35px;
+}
+
+section {
+    max-width: 500px;
+    flex: 1;
+    margin: 0 10px;
+    padding: 30px;
+    width: 500px;
+    height: 350px;
+    max-height: 350px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px #ff6961;
+    background-color: beige;
+}
+
+.titulo {
+    font-size: 1.9em;
+    text-align: center;
+    color: #8b0000;
+
+}
+
+.configInputLogin {
+    width: 80%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 2px solid #ff6961;
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #bb0b0b;
+    cursor: text;
+}
+
+.configInputLogin:hover,
+.configInputPassword:hover {
+    border: 2px solid #8b0000;
+}
+
+.configInputPassword {
+    width: 80%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 2px solid #ff6961;
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #bb0b0b;
+    cursor: text;
+    margin-left: 5%;
+}
+
+::-webkit-input-placeholder {
+    color: beige;
+    font: 12px verdana, arial, sans-serif;
+}
+
+.configBtn {
+    font-size: medium;
+    margin-top: 5%;
+    margin-right: 2%;
+    background-color: #8b0000;
+    color: beige;
+    border-radius: 10px;
+    height: 35px;
+    width: 60%;
+    cursor: pointer;
+}
+
+.configBtn:hover {
+    border-radius: 20px;
+    background-color: #bb0b0b;
+}
+
+.button-container {
+    margin: 10%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.alinhamentoCentro {
+    text-align: center;
+}
+
+.configDireitosAutorais {
+    text-align: center;
+    color: #8b0000;
+    font-size: 1em;
+    margin-top: 80vh;
+}
+
+/* --------------------- CSS INDEX -----------------------------*/
+#configBtnEntrar {
+    font-size: medium;
+    margin-top: 6.5%;
+    margin-right: 2%;
+    background-color: #8b0000;
+    color: beige;
+    border-radius: 10px;
+    height: 35px;
+    width: 60%;
+    cursor: pointer;
+}
+
+#alinhamentoEsquerda60 {
+    margin-left: 60%;
+}
+
+#linkEsqueceuSenha {
+    text-decoration: none;
+    font-size: small;
+    color: #b80000;
+}
+
+#linkEsqueceuSenha:hover {
+    text-decoration: underline;
+    font-size: small;
+    color: #8b0000;
+}
+
+#configBtnObrigado {
+    font-size: medium;
+    margin-top: 5%;
+    margin-right: 2%;
+    background-color: #8b0000;
+    color: beige;
+    border-radius: 10px;
+    height: 35px;
+    width: 60%;
+    margin: 19.5%;
+}
+
+#configBtnObrigado:hover {
+    border-radius: 20px;
+    background-color: #bb0b0b;
+    cursor: pointer;
+}
+
+#configBtnEntrar:hover {
+    border-radius: 20px;
+    background-color: #bb0b0b;
+}
+
+/* ---------------- CSS ESQUECEU A SENHA -----------------------*/
+.configBtnVoltar {
+    display: inline-block;
+    width: 150px;
+    font-size: medium;
+    margin-top: 5%;
+    margin-right: 2%;
+    background-color: #8b0000;
+    color: beige;
+    border-radius: 10px;
+    height: 35px;
+}
+
+.configBtnVoltar:hover,
+#configBtnAlterar:hover {
+    border-radius: 20px;
+    background-color: #bb0b0b;
+    cursor: pointer;
+}
+
+#configBtnAlterar {
+    display: inline-block;
+    width: 36%;
+    font-size: medium;
+    margin-top: 1.9%;
+    margin-right: 2%;
+    background-color: #8b0000;
+    color: beige;
+    border-radius: 10px;
+    height: 35px
+}
+
+/* --------------------- CSS MENU ---------------------------*/
+.configDireitosAutoraisMenu {
+    text-align: center;
+    color: #8b0000;
+    font-size: 1em;
+    margin-top: 60vh;
+}
+
+.settings-container {
+    position: relative;
+    display: inline-block;
+    left: 90%;
+    margin: 2%;
+}
+
+.settings-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 80%;
+    background-color: beige;
+    box-shadow: 0 0 15px #ff6961;
+    width: 150px;
+}
+
+.settings-menu a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+}
+
+#settingsIcon {
+    cursor: pointer;
+}
+
+#configPerfil:hover,
+#configCadastrar:hover,
+#configLogout:hover {
+    background-color: #b80000;
+    color: white;
+}
+
+/* ------------------- CSS GERAR PDF ---------------------------*/
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    display: none;
+    position: fixed;
+    background-color: rgba(250, 128, 114, 0.8);
+    color: #530000;
+    width: 450px;
+    height: 80px;
+    border-radius: 10px;
+    z-index: 1;
+    align-content: center;
+    font-size: 15px;
+}
+
+.tooltip:hover .tooltiptext {
+    display: block;
+}
+
+select {
+    font-weight: bold;
+    background-color: #bb0b0b;
+    color: white;
+    padding: 5px;
+}
+
+select:hover {
+    border: 1.5px solid black;
+    cursor: pointer;
+}
+
+option {
+    font-weight: bold;
+    background-color: #8b0000;
+    color: white;
+}
+
+#configBtnVoltarGerarPDF {
+    display: inline-block;
+    width: 150px;
+    font-size: medium;
+    margin-top: -10%;
+    margin-right: 2%;
+    background-color: #8b0000;
+    color: beige;
+    border-radius: 10px;
+    height: 35px;
+}
+
+#configBtnGerarPDF {
+    display: inline-block;
+    width: 36%;
+    font-size: medium;
+    margin-top: -2%;
+    margin-right: 2%;
+    background-color: #8b0000;
+    color: beige;
+    border-radius: 10px;
+    height: 35px;
+}
+
+.configBtnExemplo {
+    width: 15%;
+    height: 15%;
+    text-align: center;
+    background-color: #8b0000;
+    color: beige;
+    border-radius: 5%;
+}
+
+#configBtnVoltarGerarPDF:hover,
+#configBtnGerarPDF:hover,
+.configBtnExemplo:hover {
+    cursor: pointer;
+    border-radius: 20px;
+    background-color: #bb0b0b;
+}
+
+
+/* ---------------- CSS CORRIGIR REDACAO -----------------------*/
+#botaoVoltarCorrecao {
+    text-decoration: none;
+    color: black;
+}
+
+canvas {
+    box-shadow: 0 0 15px #ff6961;
+    margin-top: 17%;
+}
+
+#main-container {
+    display: flex;
+    justify-content: center;
+}
+
+#canvas-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    visibility: hidden;
+}
+
+#toolbar {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 4.9vw;
+    background-color: beige;
+    gap: 0.7rem;
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+}
+
+#RenderPDF {
+    display: none;
+}
+
+#configBtnVoltarCorrigir {
+    display: inline-block;
+    width: 150px;
+    font-size: medium;
+    margin-top: -10%;
+    margin-right: 2%;
+    background-color: #8b0000;
+    color: beige;
+    border-radius: 10px;
+    height: 35px;
+}
+
+#configBtnVoltarCorrigir:hover {
+    cursor: pointer;
+    border-radius: 20px;
+    background-color: #bb0b0b;
+}
+
+.file-upload input[type="file"] {
+    position: absolute;
+    visibility: hidden;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+}
+
+.file-upload-label {
+    cursor: pointer;
+    font-size: 25px;
+    color: black;
+}
+
+.elementosLateraisCanvas {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 4.9vw;
+    background-color: beige;
+    gap: 0.7rem;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+}
+
+#draw {
+    cursor: pointer;
+}
+
+#back {
+    cursor: pointer;
+}
+
+#desativar {
+    cursor: pointer;
+}
+
+.passarVoltarPaginaBtns {
+    margin-top: 10px;
+    text-align: center;
+}
+
+#aumentarZoom {
+    visibility: hidden;
+}
+
+#diminuirZoom {
+    visibility: hidden;
+}
+
+#CampoTextoZoom {
+    visibility: hidden;
+    text-align: center;
+    width: 50px;
+    background-color: beige;
+}
+
+#passarPag {
+    visibility: hidden;
+    cursor: pointer;
+}
+
+#voltarPag {
+    visibility: hidden;
+    cursor: pointer;
+}
+
+#uploadPDF {
+    visibility: hidden;
+}
+
+#selecionarTexto {
+    cursor: pointer;
+}
+
+.configBtnCorrigirRedacao {
+    font-size: small;
+    background-color: #8b0000;
+    color: beige;
+    border-radius: 10px;
+    height: 35px;
+    width: 120px;
+}
+
+.barrinhaCorrecaoRedaquick {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: beige;
+    top: 0;
+    right: 0;
+    left: 0;
+    position: fixed;
+}
+
+.configIMGLogoTCCcorrecaoRedaquick {
+    display: flex;
+    width: 20%;
+    max-width: 150px;
+    padding: 0.25%;
+    align-items: center;
+    justify-content: center;
+}
+
+#estanteComent {
+    background-color: white;
+    border-color: #bb0b0b;
+    position: fixed;
+    right: 8%;
+    top: 15%;
+    width: 20%;
+    overflow: scroll;
+    gap: 1%;
+    padding: 0%;
+    display: none;
+    flex-direction: column;
+    min-height: 70%;
+}
+
+#paleteCores {
+    background-color: white;
+    border: 1px solid red;    
+    position: fixed;
+    right: 4vw;
+    margin-top: 15rem;    
+    gap: 2.8%;
+    padding: 0%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 16rem;
+    width: 3.5rem;
+}
+
+/* Container das competÃŠncias */
+.competencias-container {
+    position: fixed;
+    left: 10%;
+    top: 15%;
+    width: 27vht;
+    display: none;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.6rem;
+    height: 60%;
+    z-index: 1;
+}
+
+/* Estilo das sections individuais */
+.competencia {
+    background-color: #bb0b0b;
+    color: beige;
+    padding: 0.6rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    width: 22vh;
+}
+
+/* TÃ­tulo das competÃŠncias */
+.competencia .titulo {
+    font-size: 80%;
+    margin-bottom: 5px;
+    color: white;
+}
+
+/* Campo de pontuaÃ§ÃĢo */
+.campo-pontuacao {
+    width: 50%;
+    padding: 0.3rem;
+    margin-bottom: 0.3rem;
+    border: 2px solid #ff6961;
+    border-radius: 0.25rem;
+    text-align: center;
+}
+
+.campo-pontuacao:hover {
+    cursor: not-allowed;
+}
+
+.icones-competencia {
+    font-size: 1.2rem;
+    color: black;
+    cursor: pointer;
+    background-color: #bb0b0b;
+    border: none;
+}
+
+.campo-pontuacao:hover {
+    border: 2px solid #8b0000;
+}
+
+.configInputNomeAtividade {
+    width: 70%;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    border: 2px solid #ff6961;
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #bb0b0b;
+    cursor: text;
+}
+
+#comentCompetencias{
+    background-color: white;
+    border-color: #bb0b0b;
+    position: fixed;
+    right: 8%;
+    top: 15%;
+    width: 20%;
+    overflow: scroll;
+    gap: 1%;
+    padding: 0%;
+    display: none;
+    flex-direction: column;
+    min-height: 70%;
+}
