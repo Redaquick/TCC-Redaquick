@@ -6,7 +6,7 @@ session_start();
 //receber os dados vindo do form
 $nome = $_POST["nomePerfil"];
 $email = $_SESSION["email"];
-$senha = $_POST["passwordPerfil"];
+$senha = sha1($_POST["passwordPerfil"]);
 
 $sql = "UPDATE usuario SET nome = '$nome', senha = '$senha' WHERE email = '$email'";
 

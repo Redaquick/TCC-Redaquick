@@ -3,8 +3,8 @@ include_once "conexao.php";
 
 session_start();
 
-$senha = $_POST["passwordEsqueceu"];
-$senha2 = $_POST["passwordEsqueceuDois"];
+$senha = sha1($_POST["passwordEsqueceu"]);
+$senha2 = sha1($_POST["passwordEsqueceuDois"]);
 
 $email = $_SESSION["emailEsqueceuSenha"];
 

@@ -6,7 +6,7 @@ include_once "conexao.php";
 session_start(); //starta a session
 
 $email = $_POST["email"];
-$senha = $_POST["password"];
+$senha = sha1($_POST["password"]);
 
 $sql = "SELECT * FROM usuario WHERE email='$email' AND senha='$senha'";
 $resultado = $conn->query($sql); //executa o comando sql

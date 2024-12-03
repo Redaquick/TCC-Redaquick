@@ -5,7 +5,7 @@ session_start();
 $nome = $_POST["nomeUsuario"];
 $email = $_POST["email"];
 //$senha = sha1($_POST["password"]);
-$senha = $_POST["password"];
+$senha = sha1($_POST["password"]);
 $ra = $_POST["raUsuario"];
 $id_instituicao = $_SESSION["id_instituicao"];
 

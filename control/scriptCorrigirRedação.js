@@ -139,10 +139,13 @@ document.getElementById('back').addEventListener('click', () => {
         // Restaura o estado anterior do canvas
         fabricCanvas.loadFromJSON(canvasStates[currentStateIndex], () => {
             fabricCanvas.renderAll();
-            canvasStates.pop();
 
-            var ultimoComentario = armazenaComentarios.pop();
-            ultimoComentario.remove();
+            if (objetosDesenhados[objetosDesenhados.length - 1].type === 'rect') {
+                var ultimoComentario = armazenaComentarios.pop();
+                ultimoComentario.remove();
+            }
+
+            canvasStates.pop();
 
             console.log("Clicou em Voltar");
             console.log(canvasStates);
@@ -324,7 +327,10 @@ async function salvarCorrecao() {
     let canvasJson = fabricCanvas.toJSON();
     console.log(canvasJson);
 
+    let notaTotalEnem = notaC1 + notaC2 + notaC3 + notaC4 + notaC5;
+
     await inserirRedacaoPHP(canvasJson);
+    await inserirNota(notaTotalEnem);
 
     controleSalvarCorrecao = true;
     alert('Sua Correção foi salva!!!');
@@ -355,6 +361,31 @@ async function inserirRedacaoPHP(canvasJson) {
         console.error('Erro:', error);
     }
 };
+
+async function inserirNota(notaTotal) {
+    let notaTotalEnem = notaTotal;
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP 
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/inserirNota.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            body: notaTotalEnem
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json(); // Extrai e converte o corpo da resposta para JSON
+        console.log(resultadoEnvioPHP);
+
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
 
 function ProxPagina() {
     if (contadorPagina < tamanhoPagsDoc) {

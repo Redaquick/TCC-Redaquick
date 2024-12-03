@@ -4,8 +4,8 @@ include_once "conexao.php";
 session_start();
 
 // receber os dados vindos do formulário
-$senha = $_POST["password"];
-$senha2 = $_POST["password2"];
+$senha = sha1($_POST["password"]);
+$senha2 = sha1($_POST["password2"]);
 $email = $_SESSION["email"];
 
 // Query SQL com dois updates
