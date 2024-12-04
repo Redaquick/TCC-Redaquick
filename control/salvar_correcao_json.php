@@ -28,6 +28,9 @@ try {
         $id_aluno = $resultado['id_aluno'];
         try {
             $stmt->execute([$id_aluno, $curso, $trimestre, $ano, $canvasJSON, $id_atividade]);
+
+            $idRedacao = $conn->lastInsertId();
+            $_SESSION["idRedacao"] = $idRedacao;
         } catch (PDOException $ex) {
             echo json_encode('ERRO AO INSERIR REDACAO: ' . $ra . " " . $id_instituicao . " " . $ex->getMessage());
             exit();

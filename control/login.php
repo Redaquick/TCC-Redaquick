@@ -21,6 +21,7 @@ if ($resultado->num_rows > 0) { //se a quant de registros é maior q0
     $_SESSION["senha"] = $dados_usuario["senha"];
     $_SESSION["acesso"] = $dados_usuario["acesso"];
     $_SESSION["id_instituicao"] = $dados_usuario["id_instituicao"];
+    $_SESSION["id_usuario"] = $dados_usuario["id_usuario"];
 
     // Verifica o valor de "acesso" na SQL e redireciona de acordo com o valor (sim -> 1° acesso/ não -> 2° ou + acesso)
     if ($dados_usuario["acesso"] === "sim") {

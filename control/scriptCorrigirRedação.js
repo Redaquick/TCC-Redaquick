@@ -37,11 +37,11 @@ var valorNotaTextoC5 = document.getElementById("competencia5");
 
 var notaInicial = 200;
 
-var notaC1;
-var notaC2;
-var notaC3;
-var notaC4;
-var notaC5;
+var notaC1 = 200;
+var notaC2 = 200;
+var notaC3 = 200;
+var notaC4 = 200;
+var notaC5 = 200;
 
 var comentarioCompetencia1 = document.createElement('textarea');
 var comentarioCompetencia2 = document.createElement('textarea');
@@ -330,11 +330,11 @@ async function salvarCorrecao() {
     let notaTotalEnem = notaC1 + notaC2 + notaC3 + notaC4 + notaC5;
 
     await inserirRedacaoPHP(canvasJson);
-    await inserirNota(notaTotalEnem);
+    await inserirNotaPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotalEnem);
+    await inserirComentariosPHP();
 
     controleSalvarCorrecao = true;
     alert('Sua Correção foi salva!!!');
-
 }
 
 async function inserirRedacaoPHP(canvasJson) {
@@ -362,24 +362,72 @@ async function inserirRedacaoPHP(canvasJson) {
     }
 };
 
-async function inserirNota(notaTotal) {
-    let notaTotalEnem = notaTotal;
+async function inserirNotaPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotal) {
+    const dados = {
+        c1: notaC1,
+        c2: notaC2,
+        c3: notaC3,
+        c4: notaC4,
+        c5: notaC5,
+        notaTotalEnem: notaTotal
+    };
 
     try {
         // Fazendo a requisição com fetch e aguardando a resposta do PHP 
         const response = await fetch('https://feiratec.dev.br/redaquick/control/inserirNota.php', {
             method: 'POST',
             headers: {
-                'Content-Type': 'text/plain'
+                'Content-Type': 'application/json'
             },
-            body: notaTotalEnem
+            body: JSON.stringify(dados)
         });
 
         if (!response.ok) {
             throw new Error('Erro na requisição: ' + response.statusText);
         }
 
-        const resultadoEnvioPHP = await response.json(); // Extrai e converte o corpo da resposta para JSON
+        const resultadoEnvioPHP = await response.json();
+        console.log(resultadoEnvioPHP);
+
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+async function inserirComentariosPHP() {
+    let comentario = '';
+    let comentarioP = comentarioCompetencia1.value + "&" + comentarioCompetencia2.value + "&" + comentarioCompetencia3.value + "&" +
+        comentarioCompetencia4.value + "&" + comentarioCompetencia5.value;
+    let corTxt = '';
+
+    if (armazenaComentarios != null) {
+        armazenaComentarios.forEach(function (e) {
+            comentario = comentario + "&" + e.value;
+            corTxt = corTxt + "&" + e.style.borderColor;
+        });
+    }
+
+    const dados = {
+        comentarioGeral: comentario,
+        comentarioPadrao: comentarioP,
+        corText: corTxt
+    };
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP 
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/inserirComentarios.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
         console.log(resultadoEnvioPHP);
 
     } catch (error) {
@@ -1022,4 +1070,9 @@ function resetarConfigComentarios() {
     valorNotaTextoC3.value = notaInicial;
     valorNotaTextoC4.value = notaInicial;
     valorNotaTextoC5.value = notaInicial;
+
+    armazenaComentarios.forEach(function (elemento) {
+        elemento.remove();
+    });
+    armazenaComentarios.removeAll();
 }
