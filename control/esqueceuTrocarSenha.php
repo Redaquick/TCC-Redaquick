@@ -3,15 +3,17 @@ include_once "conexao.php";
 
 session_start();
 
-$senha = sha1($_POST["passwordEsqueceu"]);
-$senha2 = sha1($_POST["passwordEsqueceuDois"]);
+$senha = $_POST["passwordEsqueceu"];
+$senha2 = $_POST["passwordEsqueceuDois"];
+$senhaCriptografada = sha1($senha);
+$senhaCriptografada2 = sha1($senha2);
 
 $email = $_SESSION["emailEsqueceuSenha"];
 
 // Query SQL com dois updates
-$sql = "UPDATE usuario SET senha = '$senha' WHERE email = '$email'";
+$sql = "UPDATE usuario SET senha = '$senhaCriptografada' WHERE email = '$email'";
 
-if ($senha == $senha2) {
+if ($senhaCriptografada == $senhaCriptografada2) {
     if ($conn->query($sql) === TRUE) {
         ?>
         <script>                   

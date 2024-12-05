@@ -6,11 +6,11 @@ include_once "conexao.php";
 session_start(); //starta a session
 
 $email = $_POST["email"];
-$senha = sha1($_POST["password"]);
+$senha = $_POST["password"];
+$senhaCriptografada = sha1($senha);
 
-$sql = "SELECT * FROM usuario WHERE email='$email' AND senha='$senha'";
+$sql = "SELECT * FROM usuario WHERE email='$email' AND senha='$senhaCriptografada'";
 $resultado = $conn->query($sql); //executa o comando sql
-
 
 if ($resultado->num_rows > 0) { //se a quant de registros é maior q0
     $dados_usuario = $resultado->fetch_assoc();
@@ -18,7 +18,7 @@ if ($resultado->num_rows > 0) { //se a quant de registros é maior q0
     $_SESSION["nome"] = $dados_usuario["nome"];
     $_SESSION["email"] = $dados_usuario["email"];
     $_SESSION["status"] = $dados_usuario["status"];
-    $_SESSION["senha"] = $dados_usuario["senha"];
+    $_SESSION["senha"] = $senha;
     $_SESSION["acesso"] = $dados_usuario["acesso"];
     $_SESSION["id_instituicao"] = $dados_usuario["id_instituicao"];
     $_SESSION["id_usuario"] = $dados_usuario["id_usuario"];

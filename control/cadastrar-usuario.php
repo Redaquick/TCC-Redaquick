@@ -4,8 +4,8 @@ session_start();
 //receber os dados vindo do form
 $nome = $_POST["nomeUsuario"];
 $email = $_POST["email"];
-//$senha = sha1($_POST["password"]);
-$senha = sha1($_POST["password"]);
+$senha = $_POST["password"];
+$senhaCriptografada = sha1($senha);
 $ra = $_POST["raUsuario"];
 $id_instituicao = $_SESSION["id_instituicao"];
 
@@ -23,7 +23,7 @@ try {
         $status = 'Aluno';
         $acesso = 'sim';
         try {
-            $stmt->execute([$nome, $ra, $id_instituicao, $email, $senha, $status, $acesso]);
+            $stmt->execute([$nome, $ra, $id_instituicao, $email, $senhaCriptografada, $status, $acesso]);
             $_SESSION['mensagemCadastroRealizado'] = "Cadastro Realizado com sucesso!";
             try {
                 $sqlSelectAluno = "SELECT * FROM aluno WHERE RA = ? AND id_instituicao = ?";

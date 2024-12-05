@@ -105,6 +105,9 @@ var ano;
 var id_atividade;
 var id_instituicao;
 
+var controleVerificarCorrecaoCorrigida = false;
+var alertaRedacaoCorrigida = document.getElementById('alertaRedacaoCorrigida');
+
 // Função para salvar o estado atual do canvas
 function saveCanvasState() {
     // Adiciona o estado atual do canvas à lista de estados
@@ -250,7 +253,7 @@ async function renderizarPagina() {
                 viewport: viewport
             });
 
-            renderTask.promise.then(function () {
+            renderTask.promise.then(async function () {
                 imagemURL = canvas.toDataURL();
 
                 fabric.Image.fromURL(imagemURL, function (imagem) {
@@ -297,6 +300,39 @@ async function lerQRCodeViaPHP(urlDaImagem) {
         id_instituicao = resultadoEnvioPHP.id_instituicao;
 
         console.log(ra + "\n" + turma + "\n" + trimestre + "\n" + ano + "\n" + id_atividade + "\n" + id_instituicao);
+
+        verificaRedacaoCorrigidaPHP();
+
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+async function verificaRedacaoCorrigidaPHP() {
+    const dados = {
+        estado: 'Enviado'
+    };
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP 
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/verifica_correcaoCorrigida.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
+
+        if (resultadoEnvioPHP.resultadoSelect != null) {
+            controleVerificarCorrecaoCorrigida = true;
+            alertaRedacaoCorrigida.style.display = "flex";
+        }
 
     } catch (error) {
         console.error('Erro:', error);
@@ -450,6 +486,7 @@ function ProxPagina() {
 
         renderizarPagina();
         resetarConfigComentarios();
+        alertaRedacaoCorrigida.style.display = "none";
 
     } else {
         alert('Limite de Página Atingido!')
@@ -470,6 +507,7 @@ function PaginaAnterior() {
 
         renderizarPagina();
         resetarConfigComentarios();
+        alertaRedacaoCorrigida.style.display = "none";
 
     } else {
         alert('Limite de Página Atingido!')

@@ -4,16 +4,18 @@ include_once "conexao.php";
 session_start();
 
 // receber os dados vindos do formulário
-$senha = sha1($_POST["password"]);
-$senha2 = sha1($_POST["password2"]);
+$senha = $_POST["password"];
+$senha2 = $_POST["password2"];
+$senhaCriptografada = sha1($senha);
+$senhaCriptografada2 = sha1($senha2);
 $email = $_SESSION["email"];
 
 // Query SQL com dois updates
 $sql = "
-    UPDATE usuario SET senha = '$senha' WHERE email = '$email';
+    UPDATE usuario SET senha = '$senhaCriptografada' WHERE email = '$email';
     UPDATE usuario SET acesso = 'nao' WHERE email = '$email';
 ";
-if ($senha == $senha2) {
+if ($senhaCriptografada == $senhaCriptografada2) {
     if ($conn->multi_query($sql)) {  // Usando multi_query para executar várias instruções
         ?>
         <script>
