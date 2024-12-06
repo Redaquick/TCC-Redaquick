@@ -30,7 +30,7 @@ try {
     if ($resultado != null) {
         $id_aluno = $resultado['id_aluno'];
         try {
-            $stmt->execute([$id_aluno, $curso, $trimestre, $ano, $canvasJSON, $id_atividade]);
+            $stmt->execute([$id_aluno, $curso, $trimestre, $ano, $id_atividade]);
             $resultadoSelect = $stmt->fetchAll(PDO::FETCH_ASSOC); 
             
         } catch (PDOException $ex) {

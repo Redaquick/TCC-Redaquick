@@ -332,6 +332,8 @@ async function verificaRedacaoCorrigidaPHP() {
         if (resultadoEnvioPHP.resultadoSelect != null) {
             controleVerificarCorrecaoCorrigida = true;
             alertaRedacaoCorrigida.style.display = "flex";
+        }else{
+            alertaRedacaoCorrigida.style.display = "none";
         }
 
     } catch (error) {
@@ -543,8 +545,6 @@ function DiminuirZoom() {
 
 function desenhaRetangulo() {
     controleDesenhaRet = true;
-
-
     controleModoDesenho = false;
     fabricCanvas.isDrawingMode = false;
     contadorCliqueRet = 0;
@@ -1112,5 +1112,4 @@ function resetarConfigComentarios() {
     armazenaComentarios.forEach(function (elemento) {
         elemento.remove();
     });
-    armazenaComentarios.removeAll();
 }

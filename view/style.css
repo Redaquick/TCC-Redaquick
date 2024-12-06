@@ -628,7 +628,7 @@ canvas {
     min-height: 70%;
 }
 
-#alertaRedacaoCorrigida {
+.alertaRedacaoCorrigida {
     position: fixed;
     left: 10%;
     top: 3%;    
