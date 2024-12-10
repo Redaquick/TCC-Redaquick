@@ -956,6 +956,30 @@ function salvarClick() {
     link.href = urlImagem;
     link.download = 'redacaoCorrigida.png';
     link.click();
+
+    var conteudo = "Comentários referente às Competências:\n\n" +
+    comentarioCompetencia1.value + "\n\n" +
+    comentarioCompetencia2.value + "\n\n" +
+    comentarioCompetencia3.value + "\n\n" +
+    comentarioCompetencia4.value + "\n\n" +
+    comentarioCompetencia5.value + "\n\n\n" +
+    "Comentários Personalizados:\n\n";
+
+    for
+
+    // Cria um blob com o conteúdo do texto
+    var blob = new Blob([conteudo], { type: 'text/plain' });
+
+    // Cria uma URL para o blob
+    var urlComentarios = URL.createObjectURL(blob);
+
+    // Cria um elemento <a> para o download
+    var linkComentarios = document.createElement('a');
+    linkComentarios.href = urlComentarios;
+    linkComentarios.download = 'arquivoComentarios.txt';
+
+    linkComentarios.click();
+
 }
 
 function addTextAreaComentario() {
