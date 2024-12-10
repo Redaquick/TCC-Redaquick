@@ -327,9 +327,10 @@ async function verificaRedacaoCorrigidaPHP() {
             throw new Error('Erro na requisição: ' + response.statusText);
         }
 
-        const resultadoEnvioPHP = await response.json();
+        const resultadoEnvioPHP = await response.text();
+        console.log(resultadoEnvioPHP);
 
-        if (resultadoEnvioPHP.resultadoSelect != null) {
+        if (resultadoEnvioPHP === 'true') {
             controleVerificarCorrecaoCorrigida = true;
             alertaRedacaoCorrigida.style.display = "flex";
         }else{

@@ -643,12 +643,27 @@ canvas {
     height: 5.5rem;
     display: flex;
     justify-content: center;  
-    align-content: center;  
+    align-content: center;
+    align-items: center;
+    gap: 0.6rem;    
+    max-width: 38vh;
+    margin:0;
+    padding:0;
+    max-height: 5.5rem;
 }
 
 #configTextoAlertaRedacaoCorrigida{
     position: relative;
     color: white;
-    text-align: center;
     font-size: larger;
+    margin: 0;
+    padding: 0;
+}
+
+#configIconeAlertaRedacaoCorrigida{
+    position: relative;
+    color: white;
+    font-size: xx-large;
+    margin: 0;
+    padding: 0;
 }

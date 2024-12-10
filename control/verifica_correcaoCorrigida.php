@@ -3,7 +3,7 @@ include_once "conexao_pdo.php";
 session_start();
 
 // Recebendo o corpo da requisição como JSON
-header('Content-Type: application/json');
+header('Content-Type: text/plain');
 $input = file_get_contents('php://input');
 $dados = json_decode($input, true);
 $estado = $dados['estado'];
@@ -11,7 +11,7 @@ $estado = $dados['estado'];
 $ra = $_SESSION['NumRA'];
 $curso = $_SESSION['turma'];
 $trimestre = $_SESSION['trimestre'];
-$ano =  $_SESSION['ano'];
+$ano = $_SESSION['ano'];
 $id_atividade = $_SESSION['id_atividade'];
 $id_instituicao = $_SESSION["id_instituicao"];
 
@@ -29,23 +29,25 @@ try {
 
     if ($resultado != null) {
         $id_aluno = $resultado['id_aluno'];
+        
         try {
             $stmt->execute([$id_aluno, $curso, $trimestre, $ano, $id_atividade]);
-            $resultadoSelect = $stmt->fetchAll(PDO::FETCH_ASSOC); 
-            
+            $resultadoSelect = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
         } catch (PDOException $ex) {
-            echo json_encode('ERRO AO CONSULTAR REDACAO: ' . $ra . " " . $id_instituicao . " " . $ex->getMessage());
+            echo ('ERRO AO CONSULTAR REDACAO: ' . $ra . " " . $id_instituicao . " " . $ex->getMessage());
             exit();
         }
     }
 } catch (PDOException $e) {
-    echo json_encode('ERRO AO CONSULTAR ALUNO: ' . $e->getMessage());
+    echo ('ERRO AO CONSULTAR ALUNO: ' . $e->getMessage());
     exit();
 }
 
-$response = [
-    'resultadoSelect' => $resultadoSelect
-];
+if ($resultadoSelect != null) {
+    echo 'true';
+} else {
+    echo 'false';
+}
 
-echo json_encode($response);
-
+?>
