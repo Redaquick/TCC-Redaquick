@@ -965,8 +965,6 @@ function salvarClick() {
     comentarioCompetencia5.value + "\n\n\n" +
     "Comentários Personalizados:\n\n";
 
-    for
-
     // Cria um blob com o conteúdo do texto
     var blob = new Blob([conteudo], { type: 'text/plain' });
 
