@@ -29,11 +29,11 @@ try {
 
     if ($resultado != null) {
         $id_aluno = $resultado['id_aluno'];
-        
+
         try {
             $stmt->execute([$id_aluno, $curso, $trimestre, $ano, $id_atividade]);
             $resultadoSelect = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+            $_SESSION["VerificaCorrecaoIDredacao"] = $resultadoSelect[0]['id_redacao'];
         } catch (PDOException $ex) {
             echo ('ERRO AO CONSULTAR REDACAO: ' . $ra . " " . $id_instituicao . " " . $ex->getMessage());
             exit();

@@ -333,7 +333,8 @@ async function verificaRedacaoCorrigidaPHP() {
         if (resultadoEnvioPHP === 'true') {
             controleVerificarCorrecaoCorrigida = true;
             alertaRedacaoCorrigida.style.display = "flex";
-        }else{
+        } else {
+            controleVerificarCorrecaoCorrigida = false;
             alertaRedacaoCorrigida.style.display = "none";
         }
 
@@ -343,7 +344,7 @@ async function verificaRedacaoCorrigidaPHP() {
 }
 
 function verificaRedacaoSalvaProxPag() {
-    if (controleSalvarCorrecao == false) {
+    if (controleSalvarCorrecao == false && controleVerificarCorrecaoCorrigida == false) {
         if (confirm('Sua correção não foi salva. Tem certeza que deseja passar de página?')) {
             ProxPagina();
         }
@@ -353,7 +354,7 @@ function verificaRedacaoSalvaProxPag() {
     }
 }
 function verificaRedacaoSalvaPagAnterior() {
-    if (controleSalvarCorrecao == false) {
+    if (controleSalvarCorrecao == false && controleVerificarCorrecaoCorrigida == false) {
         if (confirm('Sua correção não foi salva. Tem certeza que deseja passar de página?')) {
             PaginaAnterior();
         }
@@ -368,13 +369,46 @@ async function salvarCorrecao() {
 
     let notaTotalEnem = notaC1 + notaC2 + notaC3 + notaC4 + notaC5;
 
-    await inserirRedacaoPHP(canvasJson);
-    await inserirNotaPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotalEnem);
-    await inserirComentariosPHP();
+    if (controleVerificarCorrecaoCorrigida == false) {
+        await inserirRedacaoPHP(canvasJson);
+        await inserirNotaPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotalEnem);
+        await inserirComentariosPHP();
 
-    controleSalvarCorrecao = true;
-    alert('Sua Correção foi salva!!!');
+        controleSalvarCorrecao = true;
+        alert('Sua Correção foi salva!!!');
+    } else {
+        if (confirm('Esta redação já foi corrigida. Deseja substituir a correção salva por esta?')) {
+            await updateRedacaoPHP(canvasJson);
+
+            alert('Sua Correção foi salva!!!');
+        }
+    }
 }
+
+async function updateRedacaoPHP(canvasJson) {
+    const canvasJsonStringfy = JSON.stringify(canvasJson);
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP 
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/updateRedacaoSalva.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            body: canvasJsonStringfy
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
+        console.log(resultadoEnvioPHP);
+
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+};
 
 async function inserirRedacaoPHP(canvasJson) {
     const canvasJsonStringfy = JSON.stringify(canvasJson);
@@ -958,12 +992,12 @@ function salvarClick() {
     link.click();
 
     var conteudo = "Comentários referente às Competências:\n\n" +
-    comentarioCompetencia1.value + "\n\n" +
-    comentarioCompetencia2.value + "\n\n" +
-    comentarioCompetencia3.value + "\n\n" +
-    comentarioCompetencia4.value + "\n\n" +
-    comentarioCompetencia5.value + "\n\n\n" +
-    "Comentários Personalizados:\n\n";
+        comentarioCompetencia1.value + "\n\n" +
+        comentarioCompetencia2.value + "\n\n" +
+        comentarioCompetencia3.value + "\n\n" +
+        comentarioCompetencia4.value + "\n\n" +
+        comentarioCompetencia5.value + "\n\n\n" +
+        "Comentários Personalizados:\n\n";
 
     // Cria um blob com o conteúdo do texto
     var blob = new Blob([conteudo], { type: 'text/plain' });
