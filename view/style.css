@@ -667,3 +667,29 @@ canvas {
     margin: 0;
     padding: 0;
 }
+
+#divRedacoesCorrigidas {
+    display: flex; /* Habilita o Flexbox */
+    flex-wrap: wrap; /* Permite que os elementos quebrem para a próxima linha */
+    justify-content: center; /* Centraliza as sections horizontalmente */
+    align-content: flex-start; /* Garante alinhamento vertical */
+    gap: 1.5rem; /* Define o espaço entre as sections */
+    margin-top: 4%;
+}
+
+#divRedacoesCorrigidas section {
+    flex: 1 1 calc((95% - (3 * 1.5rem)) / 4); /* Divide o espaço restante para 4 sections */
+    max-width: calc((95% - (3 * 1.5rem)) / 4); /* Garante que cada section tenha a largura correta */
+    min-height: 3rem;
+    background-color: white;
+    font-size: 1rem;
+    line-height: 2%;
+    display: flex; /* Centraliza o texto dentro da section */
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-sizing: border-box; /* Inclui o padding e a borda no cálculo de largura/altura */
+    margin: 0;
+    gap: 0;
+    padding: 0;
+}

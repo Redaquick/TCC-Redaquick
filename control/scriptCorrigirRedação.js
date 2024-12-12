@@ -379,6 +379,8 @@ async function salvarCorrecao() {
     } else {
         if (confirm('Esta redação já foi corrigida. Deseja substituir a correção salva por esta?')) {
             await updateRedacaoPHP(canvasJson);
+            await updateComentariosoPHP();
+            await updateNotasPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotalEnem);
 
             alert('Sua Correção foi salva!!!');
         }
@@ -396,6 +398,79 @@ async function updateRedacaoPHP(canvasJson) {
                 'Content-Type': 'text/plain'
             },
             body: canvasJsonStringfy
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
+        console.log(resultadoEnvioPHP);
+
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+};
+
+async function updateComentariosoPHP() {
+    let comentario = '';
+    let comentarioP = comentarioCompetencia1.value + "&" + comentarioCompetencia2.value + "&" + comentarioCompetencia3.value + "&" +
+        comentarioCompetencia4.value + "&" + comentarioCompetencia5.value;
+    let corTxt = '';
+
+    if (armazenaComentarios != null) {
+        armazenaComentarios.forEach(function (e, index) {
+            comentario += (index > 0 ? '&' : '') + e.value;
+            corTxt += (index > 0 ? '&' : '') + e.style.borderColor;
+        });
+    }
+
+    const dados = {
+        comentarioGeral: comentario,
+        comentarioPadrao: comentarioP,
+        corText: corTxt
+    };
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP 
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/updateComentarios.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
+        console.log(resultadoEnvioPHP);
+
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+};
+
+async function updateNotasPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotal) {
+    const dados = {
+        c1: notaC1,
+        c2: notaC2,
+        c3: notaC3,
+        c4: notaC4,
+        c5: notaC5,
+        notaTotalEnem: notaTotal
+    };
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP 
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/updateNotaRed.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
         });
 
         if (!response.ok) {
@@ -474,9 +549,9 @@ async function inserirComentariosPHP() {
     let corTxt = '';
 
     if (armazenaComentarios != null) {
-        armazenaComentarios.forEach(function (e) {
-            comentario = comentario + "&" + e.value;
-            corTxt = corTxt + "&" + e.style.borderColor;
+        armazenaComentarios.forEach(function (e, index) {
+            comentario += (index > 0 ? '&' : '') + e.value;
+            corTxt += (index > 0 ? '&' : '') + e.style.borderColor;
         });
     }
 
