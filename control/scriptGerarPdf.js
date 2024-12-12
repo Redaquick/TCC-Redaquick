@@ -4,13 +4,16 @@ let imagemBase64 = ''; // Variável para armazenar a imagem em base64
 var idAtividade;
 var idInstituicao;
 var dadosQR;
-
+var file = null;
+var receberArquivo = null;
 var vetorNomeAlunos = [];
 var vetorRaAlunos = [];
 
+var nomeAtividadeCampo = document.getElementById('nomeAtividade').value;
+
 // Função para converter a imagem selecionada pelo usuário em base64
 function converterImagem() {
-    const receberArquivo = document.getElementById("imagem-usuario").files;
+    receberArquivo = document.getElementById("imagem-usuario").files;
     if (receberArquivo.length > 0) {
         const carregarImagem = receberArquivo[0];
         const lerArquivo = new FileReader();
@@ -25,7 +28,7 @@ function converterImagem() {
 
 // Evento para quando o arquivo Excel é selecionado
 document.getElementById('fileInput').addEventListener('change', function (event) {
-    const file = event.target.files[0];
+    file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
         reader.onload = function (e) {
@@ -45,7 +48,7 @@ document.getElementById('fileInput').addEventListener('change', function (event)
     }
 });
 
-async function salvarAlunosPHP(nomeAluno, raAluno){
+async function salvarAlunosPHP(nomeAluno, raAluno) {
     const dados = {
         nome: nomeAluno,
         RA: raAluno
@@ -91,7 +94,7 @@ async function gerarQRCodes(dados) {
 
         vetorRaAlunos.push(linha.RA);
         vetorNomeAlunos.push(linha.Nome);
-        
+
         // Gerar o QR Code
         QRCode.toDataURL(textoQRCode, { width: 200 }, function (err, url) {
             if (err) {
@@ -112,61 +115,63 @@ async function gerarQRCodes(dados) {
 
 // Função para gerar um único PDF com todas as páginas
 async function gerarPDFs() {
-    // Esperar que os dados de QR code sejam enviados e gerados
-    await enviarDadosQrCodePHP();
+    if (file != null && receberArquivo != null && nomeAtividadeCampo.value != null) {
+        // Esperar que os dados de QR code sejam enviados e gerados
+        await enviarDadosQrCodePHP();
 
-    // Após a execução do fetch, agora gerar QR codes
-    gerarQRCodes(dadosQR);
+        // Após a execução do fetch, agora gerar QR codes
+        gerarQRCodes(dadosQR);
 
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    const { Promise } = window; // Para garantir compatibilidade com `Promise.all`
-    // Capturar valores do select e do campo de texto
-    var trimestreSelecionado = document.getElementById('trimestre').value;
-    var anoVigente = new Date().getFullYear();
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        const { Promise } = window; // Para garantir compatibilidade com `Promise.all`
+        // Capturar valores do select e do campo de texto
+        var trimestreSelecionado = document.getElementById('trimestre').value;
+        var anoVigente = new Date().getFullYear();
 
-    // Criação de uma lista de promessas para gerar PDFs e adicionar as páginas ao PDF principal
-    const pdfPromises = qrCodeUrls.map(async (qrCodeUrl, index) => {
-        return new Promise((resolve) => {
-            if (index > 0) {
-                doc.addPage(); // Adiciona uma nova página para cada QR code, exceto a primeira
-            }
+        // Criação de uma lista de promessas para gerar PDFs e adicionar as páginas ao PDF principal
+        const pdfPromises = qrCodeUrls.map(async (qrCodeUrl, index) => {
+            return new Promise((resolve) => {
+                if (index > 0) {
+                    doc.addPage(); // Adiciona uma nova página para cada QR code, exceto a primeira
+                }
 
-            // Adicionar imagem enviada pelo usuário ao PDF, se disponível
-            if (imagemBase64) {
-                doc.addImage(imagemBase64, 'JPEG', 0, 0, 220, 300);
-            }
+                // Adicionar imagem enviada pelo usuário ao PDF, se disponível
+                if (imagemBase64) {
+                    doc.addImage(imagemBase64, 'JPEG', 0, 0, 220, 300);
+                }
 
-            // Adicionar QR code ao PDF
-            doc.addImage(qrCodeUrl, 'PNG', 163, 5, 40, 40);
+                // Adicionar QR code ao PDF
+                doc.addImage(qrCodeUrl, 'PNG', 163, 5, 40, 40);
 
-            // Adicionar informações de nome, turma, trimestre e ano ao PDF
-            const info = qrCodeInfos[index];
-            doc.setFontSize(14);
-            doc.text(`${info.nome}`, 30, 56);
-            doc.text(`${info.turma}`, 177, 56);
-            doc.text(`${trimestreSelecionado}`, 113, 28);
-            doc.text(`${anoVigente}`, 144, 28);
+                // Adicionar informações de nome, turma, trimestre e ano ao PDF
+                const info = qrCodeInfos[index];
+                doc.setFontSize(14);
+                doc.text(`${info.nome}`, 30, 56);
+                doc.text(`${info.turma}`, 177, 56);
+                doc.text(`${trimestreSelecionado}`, 113, 28);
+                doc.text(`${anoVigente}`, 144, 28);
 
-            resolve(); // Resolve a promessa após adicionar a página ao PDF
+                resolve(); // Resolve a promessa após adicionar a página ao PDF
+            });
         });
-    });
 
-    // Aguarda a conclusão de todas as promessas
-    await Promise.all(pdfPromises);
+        // Aguarda a conclusão de todas as promessas
+        await Promise.all(pdfPromises);
 
-    // Gerar o PDF como um blob e oferecer o download
-    const pdfBlob = doc.output('blob');
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(pdfBlob);
-    link.download = 'Folha de Redações-Avaliação Global.pdf';
-    link.click();
+        // Gerar o PDF como um blob e oferecer o download
+        const pdfBlob = doc.output('blob');
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(pdfBlob);
+        link.download = 'Folha de Redações-Avaliação Global.pdf';
+        link.click();
+    } else {
+        alert(`Existem campos vazios. Preencha todos!`);
+    }
 }
 
 // Função para enviar dados para o PHP e obter idAtividade e idInstituicao
 async function enviarDadosQrCodePHP() {
-    var nomeAtividadeCampo = document.getElementById('nomeAtividade').value;
-
     const dados = {
         nomeAtividade: nomeAtividadeCampo
     };

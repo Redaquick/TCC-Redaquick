@@ -27,6 +27,7 @@ try {
         $trimestres[$i] = $resultado[$i]['trimestre'];
         $anos[$i] = $resultado[$i]['ano'];
         $tarefas[$i] = $resultado[$i]['nome_tarefa'];
+        $id_tarefas[$i] = $resultado[$i]['id_tarefa'];
     }
 
     if ($resultado) {
@@ -35,7 +36,8 @@ try {
             'cursos'=> $cursos,
             'trimestres' => $trimestres,
             'anos' => $anos,
-            'tarefas' => $tarefas 
+            'tarefas' => $tarefas,
+            'id_tarefas' => $id_tarefas
         ];
         echo json_encode($response);
     } else {

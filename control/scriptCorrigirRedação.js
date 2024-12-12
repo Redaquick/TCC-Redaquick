@@ -1055,6 +1055,18 @@ function OnOffcomentariosCompetencias() {
     }
 }
 
+function rgbToName(rgb) {
+    const coresPredefinidas = {
+        'rgb(255, 0, 0)': "Vermelho",
+        'rgb(128, 0, 128)': "Roxo",
+        'rgb(165, 42, 42)': "Marrom",
+        'rgb(0, 255, 0)': "Verde",
+        'rgb(255, 165, 0)': "Laranja",
+        'rgb(0, 0, 0)': "Preto",
+    };
+    return coresPredefinidas[rgb] || "Verde";
+}
+
 function salvarClick() {
     var urlImagem = fabricCanvas.toDataURL({
         format: 'png',
@@ -1073,6 +1085,14 @@ function salvarClick() {
         comentarioCompetencia4.value + "\n\n" +
         comentarioCompetencia5.value + "\n\n\n" +
         "Comentários Personalizados:\n\n";
+
+    for (let index = 0; index < armazenaComentarios.length; index++) {
+        const comentario = armazenaComentarios[index];
+        const estilo = getComputedStyle(comentario); 
+        const corRgb = estilo.borderColor;
+        const corLinha = rgbToName(corRgb);
+        conteudo = conteudo + "Comentário " + (index + 1) + ": " + comentario.value + "(" + corLinha + ")" + "\n\n";
+    }
 
     // Cria um blob com o conteúdo do texto
     var blob = new Blob([conteudo], { type: 'text/plain' });
