@@ -42,6 +42,7 @@ async function buscarRedacoesCorrigidasPHP() {
         console.log(nomes + "\n" + nomeTarefas + "\n" + nomeCursos + "\n" + trimestres + "\n" + anos + "\n" + id_tarefas);
 
         var nomesPacotes = [];
+        var trimestresPacotes = [];
         var idTarefaAdicionado = [];
         var index = 0;
 
@@ -52,6 +53,8 @@ async function buscarRedacoesCorrigidasPHP() {
                         nomesPacotes.push(nomeTarefas[index]);
                         idTarefaAdicionado.push(id_tarefas[index]);
                         idsPacoteAtual.push(index);
+
+                        trimestresPacotes.push(trimestres[index]);
                     }
                 } else {
                     if (i > index + 1) {
@@ -59,6 +62,8 @@ async function buscarRedacoesCorrigidasPHP() {
                             nomesPacotes.push(nomeTarefas[i]);
                             idTarefaAdicionado.push(id_tarefas[i]);
                             idsPacoteAtual.push(i);
+
+                            trimestresPacotes.push(trimestres[i]);
                         }
                     } else {
                         nomesPacotes.push(nomeTarefas[index]);
@@ -68,19 +73,24 @@ async function buscarRedacoesCorrigidasPHP() {
                         nomesPacotes.push(nomeTarefas[i]);
                         idTarefaAdicionado.push(id_tarefas[i]);
                         idsPacoteAtual.push(i);
+
+                        trimestresPacotes.push(trimestres[index]);
+                        trimestresPacotes.push(trimestres[i]);
                     }
                 }
             }
         } else {
             nomesPacotes.push(nomeTarefas[id_tarefas[index]]);
+            trimestresPacotes.push(trimestres[index]);
         }
 
         console.log(nomesPacotes);
         console.log(idTarefaAdicionado);
         console.log(idsPacoteAtual);
+        console.log(trimestresPacotes);
 
         for (let index = 0; index < nomesPacotes.length; index++) {
-            criarPacotes(nomesPacotes[index], index);
+            criarPacotes(nomesPacotes[index], index, trimestresPacotes[index]);
         }
 
     } catch (error) {
@@ -99,7 +109,7 @@ function criarRetangulos(nomeAluno, curso, trimestre, ano) {
 
     textoNomeAluno.textContent = nomeAluno;
     textoCurso.textContent = curso;
-    textoTrimestre.textContent = trimestre;
+    textoTrimestre.textContent = trimestre + "° Trimestre";
     textoAno.textContent = ano;
 
     sectionRetangulo.appendChild(textoNomeAluno);
@@ -107,17 +117,24 @@ function criarRetangulos(nomeAluno, curso, trimestre, ano) {
     sectionRetangulo.appendChild(textoTrimestre);
     sectionRetangulo.appendChild(textoAno);
 
+    sectionRetangulo.classList.add('sectionTarefasRedacoes');
+
     divRedacoesCorrigidas.appendChild(sectionRetangulo);
 }
 
-function criarPacotes(nomeTarefa, index) {
+function criarPacotes(nomeTarefa, index, trimestrePacote) {
     console.log('Passou criarPacotes');
     const sectionRetangulo = document.createElement('section');
     const textoNomeTarefa = document.createElement('p');
+    const textoTrimestre = document.createElement('p');
 
-    textoNomeTarefa.textContent = nomeTarefa;
+    textoNomeTarefa.textContent = "Tarefa: " + nomeTarefa;
+    textoTrimestre.textContent = trimestrePacote + "° Trimestre";
 
     sectionRetangulo.appendChild(textoNomeTarefa);
+    sectionRetangulo.appendChild(textoTrimestre);
+
+    sectionRetangulo.classList.add('sectionPacotes');
 
     divRedacoesCorrigidas.appendChild(sectionRetangulo);
     pacotes.push(sectionRetangulo);
@@ -127,15 +144,19 @@ function criarPacotes(nomeTarefa, index) {
             element.remove();
         });
 
-        const valorIdAtualTarefa = idsPacoteAtual[index];
+        const valorIndiceAtualTarefa = idsPacoteAtual[index];
         const posicoesInformacoes = [];
 
+        console.log("Valor Índice Tarefa Atual: " + valorIndiceAtualTarefa);
+        console.log("Valor ID Tarefas: " + id_tarefas);     
+
         id_tarefas.forEach((elemento, indice) => {
-            if (elemento === valorIdAtualTarefa) {
+            if (elemento === id_tarefas[valorIndiceAtualTarefa]) {
                 posicoesInformacoes.push(indice);
-                console.log("Passou no foreach");
+                console.log("Passou no foreach " + indice);
             }
         });
+        console.log(posicoesInformacoes);
 
         console.log("Passou antes for");
         for (let i = 0; i < posicoesInformacoes.length; i++) {
