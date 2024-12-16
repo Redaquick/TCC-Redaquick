@@ -9,8 +9,6 @@ var receberArquivo = null;
 var vetorNomeAlunos = [];
 var vetorRaAlunos = [];
 
-var nomeAtividadeCampo = document.getElementById('nomeAtividade').value;
-
 // Função para converter a imagem selecionada pelo usuário em base64
 function converterImagem() {
     receberArquivo = document.getElementById("imagem-usuario").files;
@@ -115,9 +113,12 @@ async function gerarQRCodes(dados) {
 
 // Função para gerar um único PDF com todas as páginas
 async function gerarPDFs() {
-    if (file != null && receberArquivo != null && nomeAtividadeCampo.value != null) {
+    var nomeAtividadeCampo2 = document.getElementById('nomeAtividade').value.trim();
+    // Verificar se todos os campos necessários estão preenchidos
+    if (file && imagemBase64 && nomeAtividadeCampo2) {
+
         // Esperar que os dados de QR code sejam enviados e gerados
-        await enviarDadosQrCodePHP();
+        await enviarDadosQrCodePHP(nomeAtividadeCampo2);
 
         // Após a execução do fetch, agora gerar QR codes
         gerarQRCodes(dadosQR);
@@ -163,15 +164,18 @@ async function gerarPDFs() {
         const pdfBlob = doc.output('blob');
         const link = document.createElement('a');
         link.href = URL.createObjectURL(pdfBlob);
-        link.download = 'Folha de Redações-Avaliação Global.pdf';
+        link.download = 'Folha de Redações.pdf';
         link.click();
+
     } else {
-        alert(`Existem campos vazios. Preencha todos!`);
+        alert('Por favor, coloque os arquivos solicitados!');
+        return;
     }
 }
 
 // Função para enviar dados para o PHP e obter idAtividade e idInstituicao
-async function enviarDadosQrCodePHP() {
+async function enviarDadosQrCodePHP(nomeAtividadeCampo) {
+    
     const dados = {
         nomeAtividade: nomeAtividadeCampo
     };
@@ -191,11 +195,12 @@ async function enviarDadosQrCodePHP() {
         }
 
         const resultadoEnvioPHP = await response.json(); // Extrai e converte o corpo da resposta para JSON
+        console.log(resultadoEnvioPHP);
 
         // Atribuindo os valores de idAtividade e idInstituicao
         idAtividade = resultadoEnvioPHP.id_atividade;
         idInstituicao = resultadoEnvioPHP.id_instituicao;
-        console.log(`idAtividade: ${idAtividade}, idInstituicao: ${idInstituicao}`);
+        console.log("idAtividade: " + idAtividade + " idInstituicao: " + idInstituicao);
 
     } catch (error) {
         console.error('Erro:', error);

@@ -1,5 +1,5 @@
 <?php
-include_once "conexao.php";
+include_once "conexao_pdo.php";
 session_start();
 
 // Recebendo o corpo da requisição como JSON
@@ -8,17 +8,16 @@ $input = file_get_contents('php://input');
 $dados = json_decode($input, true); // Decodifica o JSON recebido
 $nomeAtividade = $dados['nomeAtividade'];
 
-$sql = "INSERT INTO tarefa (nome) VALUES ('$nomeAtividade')";
+$sql = "INSERT INTO tarefa (nome) VALUES (?)";
+$stmt = $conn->prepare($sql);
 
 try {
-    $result = $conn->query($sql);
-    $idTarefa = $conn->insert_id;
-} catch (mysqli_sql_exception) {
-?>
-    <script>
-        alert("Erro ao inserir o registro no sistema!");
-    </script>
-<?php
+    $stmt->execute([$nomeAtividade]);
+    $idTarefa = $conn->lastInsertId();  
+      
+} catch (PDOException $ex) {
+    echo json_encode('ERRO: ' . $ex->getMessage());
+    exit();
 };
 
 // Criando a resposta para retornar ao cliente

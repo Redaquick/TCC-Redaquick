@@ -16,7 +16,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -29,57 +28,51 @@
         <section>
             <p class="titulo">Gerar Folhas de Redação</p>
             <div class="alinhamentoCentro">
-                <label class="paragrafo">Informe o trimestre que será realizado a
-                    avaliação:<br></label>
+                <label class="paragrafo">Informe o trimestre que será realizado a avaliação:<br></label>
                 <select name="trimestre" id="trimestre">
                     <option value="1">1° Trimestre</option>
                     <option value="2">2° Trimestre</option>
                     <option value="3">3° Trimestre</option>
                 </select>
                 <br><br>
+                <!-- Campo para selecionar imagem -->
+                <label class="paragrafo">Importe o arquivo da redação (.jpg):</label>
 
-                <form action="">
-                    <!-- Campo para selecionar imagem -->
-                    <label class="paragrafo">Importe o arquivo da redação (.jpg):</label>
+                <a style="text-decoration: none;" href="../imagens/folha_redacao_padrao.jpg">
+                    <button class="configBtnExemplo">Exemplo</button>
+                </a>
 
-                    <a style="text-decoration: none;" href="../imagens/folha_redacao_padrao.jpg">
-                        <button class="configBtnExemplo">Exemplo</button>
-                    </a>
+                <div class="tooltip">
+                    <i class="bi bi-question-circle"></i>
+                    <span class="tooltiptext">Caso não tenha o modelo da folha de redação, clique com o botão
+                        direito na imagem do exemplo e salve-a.</span>
+                </div>
 
-                    <div class="tooltip">
-                        <i class="bi bi-question-circle"></i>
-                        <span class="tooltiptext">Caso não tenha o modelo da folha de redação, clique com o botão
-                            direito na
-                            imagem do exemplo e salve-a.</span>
-                    </div>
+                <input type="file" id="imagem-usuario" onchange="converterImagem();" accept=".jpg" />
+                <div id="apresentar-imagem"></div>
+                <br>
 
-                    <input type="file" id="imagem-usuario" onchange="converterImagem();" accept=".jpg" />
-                    <div id="apresentar-imagem"></div>
-                    <br>
+                <!-- Campo para selecionar arquivo Excel -->
+                <label class="paragrafo">Importe o arquivo da planilha (.csv, .xlsx):</label>
+                <a style="text-decoration: none;" href="../imagens/exemplo_planilha.png">
+                    <button class="configBtnExemplo">Exemplo</button>
+                </a>
 
-                    <!-- Campo para selecionar arquivo Excel -->
-                    <label class="paragrafo">Importe o arquivo da planilha (.csv, .xlsx):</label>
-                    <a style="text-decoration: none;" href="../imagens/exemplo_planilha.png">
-                        <button class="configBtnExemplo">Exemplo</button>
-                    </a>
+                <div class="tooltip">
+                    <i class="bi bi-question-circle"></i>
+                    <span class="tooltiptext">Mantenha a formatação das colunas "Nome" e "RA", pois elas serão
+                        usadas para imprimir os QR Codes.</span>
+                </div>
 
-                    <div class="tooltip">
-                        <i class="bi bi-question-circle"></i>
-                        <span class="tooltiptext">Mantenha a formatação das colunas "Nome" e "RA", pois elas serão
-                            usadas para imprimir os QR Codes.</span>
-                    </div>
+                <input type="file" id="fileInput" accept=".csv, .xlsx" />
+                <div id="qrCodes"></div>
+                <input class="configInputNomeAtividade" type="text" name="nomeAtividade" id="nomeAtividade"
+                    placeholder="Digite o nome da Atividade" />
 
-                    <input type="file" id="fileInput" accept=".csv, .xlsx">
-                    <div id="qrCodes"></div>
-
-                    <input class="configInputNomeAtividade" type="text" name="nomeAtividade" id="nomeAtividade"
-                        placeholder="Digite o nome da Atividade" required>
-
-                    <div class="b">
-                        <a href="menu.html"><input id="configBtnVoltarGerarPDF" type="button" value="Voltar"></a>
-                        <button id="configBtnGerarPDF" onclick="gerarPDFs()">Gerar PDFs</button>
-                    </div>
-                </form>
+                <div class="b">
+                    <a href="menu.html"><input id="configBtnVoltarGerarPDF" type="button" value="Voltar"></a>
+                    <input id="configBtnGerarPDF" type="button" onclick="gerarPDFs()" value="Gerar PDFs">
+                </div>
             </div>
         </section>
     </div>
