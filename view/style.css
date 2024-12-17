@@ -267,6 +267,13 @@ section {
 }
 
 /* ------------------- CSS GERAR PDF ---------------------------*/
+#tituloGerar {
+    font-size: 1.5rem;
+    margin-top: 0;
+    text-align: center;
+    color: #8b0000;
+}
+
 .tooltip {
     position: relative;
     display: inline-block;

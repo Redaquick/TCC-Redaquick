@@ -145,9 +145,19 @@ async function gerarPDFs() {
                 // Adicionar QR code ao PDF
                 doc.addImage(qrCodeUrl, 'PNG', 163, 5, 40, 40);
 
+                const radios = document.getElementsByName('atividade');
+                var valorSelecionado;
+
+                for (let i = 0; i < radios.length; i++) {
+                    if (radios[i].checked) {
+                        valorSelecionado = radios[i].value;
+                    }
+                }
+
                 // Adicionar informações de nome, turma, trimestre e ano ao PDF
                 const info = qrCodeInfos[index];
                 doc.setFontSize(14);
+                doc.text(`${valorSelecionado}`, 70, 28)
                 doc.text(`${info.nome}`, 30, 56);
                 doc.text(`${info.turma}`, 177, 56);
                 doc.text(`${trimestreSelecionado}`, 113, 28);
@@ -164,7 +174,7 @@ async function gerarPDFs() {
         const pdfBlob = doc.output('blob');
         const link = document.createElement('a');
         link.href = URL.createObjectURL(pdfBlob);
-        link.download = 'Folha de Redações.pdf';
+        link.download = 'Folha de Redações-' + nomeAtividadeCampo2 + '.pdf';
         link.click();
 
     } else {
@@ -175,7 +185,7 @@ async function gerarPDFs() {
 
 // Função para enviar dados para o PHP e obter idAtividade e idInstituicao
 async function enviarDadosQrCodePHP(nomeAtividadeCampo) {
-    
+
     const dados = {
         nomeAtividade: nomeAtividadeCampo
     };
