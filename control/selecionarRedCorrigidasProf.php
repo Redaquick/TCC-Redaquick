@@ -8,9 +8,9 @@ $dados = json_decode($input, true);
 
 $idCorretor = $_SESSION["id_usuario"];
 
-$sql = "SELECT r.id_aluno, a.nome AS nome_aluno, r.curso, r.trimestre, r.ano, r.id_tarefa, t.nome AS nome_tarefa
+$sql = "SELECT r.id_redacao, r.id_aluno, a.nome AS nome_aluno, r.curso, r.trimestre, r.ano, r.id_tarefa, t.nome AS nome_tarefa
         FROM correcao c
-        JOIN redacao r ON c.id_redacao = r.id_redacao
+        JOIN redacao r ON c.id_redacao  = r.id_redacao
         JOIN aluno a ON r.id_aluno = a.id_aluno
         JOIN tarefa t ON r.id_tarefa = t.id_tarefa
         WHERE c.id_corretor = ?";
@@ -21,23 +21,27 @@ try {
     $stmt->execute([$idCorretor]);
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    for ($i = 0; $i < count($resultado); $i++){
+    for ($i = 0; $i < count($resultado); $i++) {
         $nomes[$i] = $resultado[$i]['nome_aluno'];
         $cursos[$i] = $resultado[$i]['curso'];
         $trimestres[$i] = $resultado[$i]['trimestre'];
         $anos[$i] = $resultado[$i]['ano'];
         $tarefas[$i] = $resultado[$i]['nome_tarefa'];
         $id_tarefas[$i] = $resultado[$i]['id_tarefa'];
+        $id_alunos[$i] = $resultado[$i]['id_aluno'];
+        $id_redacoes[$i] = $resultado[$i]['id_redacao'];
     }
 
     if ($resultado) {
         $response = [
             'nomes' => $nomes,
-            'cursos'=> $cursos,
+            'cursos' => $cursos,
             'trimestres' => $trimestres,
             'anos' => $anos,
             'tarefas' => $tarefas,
-            'id_tarefas' => $id_tarefas
+            'id_tarefas' => $id_tarefas,
+            'id_alunos' => $id_alunos,
+            'id_redacoes' => $id_redacoes
         ];
         echo json_encode($response);
     } else {
@@ -46,4 +50,3 @@ try {
 } catch (PDOException $e) {
     echo json_encode('Erro na sql: ' . $e->getMessage());
 }
-?>

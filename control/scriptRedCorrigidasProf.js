@@ -9,6 +9,10 @@ var nomeCursos = [];
 var trimestres = [];
 var anos = [];
 var id_tarefas = [];
+var id_alunos = [];
+var id_redacoes = [];
+
+var posicoesInformacoes = [];
 
 buscarRedacoesCorrigidasPHP();
 
@@ -38,10 +42,12 @@ async function buscarRedacoesCorrigidasPHP() {
         trimestres = resultadoEnvioPHP.trimestres;
         anos = resultadoEnvioPHP.anos;
         id_tarefas = resultadoEnvioPHP.id_tarefas;
+        id_alunos = resultadoEnvioPHP.id_alunos;
+        id_redacoes = resultadoEnvioPHP.id_redacoes;
 
-        console.log(nomes + "\n" + nomeTarefas + "\n" + nomeCursos + "\n" + trimestres + "\n" + anos + "\n" + id_tarefas);
+        console.log(nomes + "\n" + nomeTarefas + "\n" + nomeCursos + "\n" + trimestres + "\n" + anos + "\n" + id_tarefas + "\n" + id_alunos + "\n" + id_redacoes);
 
-        if (nomes && nomeTarefas && nomeCursos && trimestres && anos && id_tarefas) {
+        if (nomes && nomeTarefas && nomeCursos && trimestres && anos && id_tarefas && id_alunos && id_redacoes) {
 
             var nomesPacotes = [];
             var trimestresPacotes = [];
@@ -103,7 +109,7 @@ async function buscarRedacoesCorrigidasPHP() {
     }
 }
 
-function criarRetangulos(nomeAluno, curso, trimestre, ano) {
+function criarRetangulos(nomeAluno, curso, trimestre, ano, indice_redacao) {
     console.log('Passou criarRetangulos');
     const sectionRetangulo = document.createElement('section');
 
@@ -123,8 +129,13 @@ function criarRetangulos(nomeAluno, curso, trimestre, ano) {
     sectionRetangulo.appendChild(textoAno);
 
     sectionRetangulo.classList.add('sectionTarefasRedacoes');
-
     divRedacoesCorrigidas.appendChild(sectionRetangulo);
+
+    const id_redacao_atual = posicoesInformacoes[indice_redacao];
+
+    sectionRetangulo.addEventListener('click', () => {
+        
+    });
 }
 
 function criarPacotes(nomeTarefa, index, trimestrePacote) {
@@ -149,8 +160,7 @@ function criarPacotes(nomeTarefa, index, trimestrePacote) {
             element.remove();
         });
 
-        const valorIndiceAtualTarefa = idsPacoteAtual[index];
-        const posicoesInformacoes = [];
+        const valorIndiceAtualTarefa = idsPacoteAtual[index];        
 
         console.log("Valor Índice Tarefa Atual: " + valorIndiceAtualTarefa);
         console.log("Valor ID Tarefas: " + id_tarefas);
@@ -165,7 +175,7 @@ function criarPacotes(nomeTarefa, index, trimestrePacote) {
 
         console.log("Passou antes for");
         for (let i = 0; i < posicoesInformacoes.length; i++) {
-            criarRetangulos(nomes[posicoesInformacoes[i]], nomeCursos[posicoesInformacoes[i]], trimestres[posicoesInformacoes[i]], anos[posicoesInformacoes[i]]);
+            criarRetangulos(nomes[posicoesInformacoes[i]], nomeCursos[posicoesInformacoes[i]], trimestres[posicoesInformacoes[i]], anos[posicoesInformacoes[i]], i);
             console.log("Passou no for");
         }
     });
@@ -180,5 +190,33 @@ function criarSectionMensagemErro() {
     sectionRetangulo.classList.add('sectionMensagemErroPacote');
     sectionRetangulo.appendChild(texto);
     divRedacoesCorrigidas.appendChild(sectionRetangulo);
+}
+
+async function SalvarIdRedacaoSelecionada(id_redacao_atual) {
+    const dados = {
+        id_redacaoAtual: id_redacao_atual
+    };
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/salvarIDredAtual
+        .php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados) 
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
+        console.log(resultadoEnvioPHP);
+
+    } catch (error) {
+        console.error('Erro:', error);
+    }
 }
 
