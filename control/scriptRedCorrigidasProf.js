@@ -41,56 +41,61 @@ async function buscarRedacoesCorrigidasPHP() {
 
         console.log(nomes + "\n" + nomeTarefas + "\n" + nomeCursos + "\n" + trimestres + "\n" + anos + "\n" + id_tarefas);
 
-        var nomesPacotes = [];
-        var trimestresPacotes = [];
-        var idTarefaAdicionado = [];
-        var index = 0;
+        if (nomes && nomeTarefas && nomeCursos && trimestres && anos && id_tarefas) {
 
-        if (id_tarefas.length > 1) {
-            for (let i = index + 1; i < id_tarefas.length; i++) {
-                if (id_tarefas[index] == id_tarefas[i]) {
-                    if (idTarefaAdicionado.includes(id_tarefas[index]) == false) {
-                        nomesPacotes.push(nomeTarefas[index]);
-                        idTarefaAdicionado.push(id_tarefas[index]);
-                        idsPacoteAtual.push(index);
+            var nomesPacotes = [];
+            var trimestresPacotes = [];
+            var idTarefaAdicionado = [];
+            var index = 0;
 
-                        trimestresPacotes.push(trimestres[index]);
-                    }
-                } else {
-                    if (i > index + 1) {
-                        if (idTarefaAdicionado.includes(id_tarefas[i]) == false) {
+            if (id_tarefas.length > 1) {
+                for (let i = index + 1; i < id_tarefas.length; i++) {
+                    if (id_tarefas[index] == id_tarefas[i]) {
+                        if (idTarefaAdicionado.includes(id_tarefas[index]) == false) {
+                            nomesPacotes.push(nomeTarefas[index]);
+                            idTarefaAdicionado.push(id_tarefas[index]);
+                            idsPacoteAtual.push(index);
+
+                            trimestresPacotes.push(trimestres[index]);
+                        }
+                    } else {
+                        if (i > index + 1) {
+                            if (idTarefaAdicionado.includes(id_tarefas[i]) == false) {
+                                nomesPacotes.push(nomeTarefas[i]);
+                                idTarefaAdicionado.push(id_tarefas[i]);
+                                idsPacoteAtual.push(i);
+
+                                trimestresPacotes.push(trimestres[i]);
+                            }
+                        } else {
+                            nomesPacotes.push(nomeTarefas[index]);
+                            idTarefaAdicionado.push(id_tarefas[index]);
+                            idsPacoteAtual.push(index);
+
                             nomesPacotes.push(nomeTarefas[i]);
                             idTarefaAdicionado.push(id_tarefas[i]);
                             idsPacoteAtual.push(i);
 
+                            trimestresPacotes.push(trimestres[index]);
                             trimestresPacotes.push(trimestres[i]);
                         }
-                    } else {
-                        nomesPacotes.push(nomeTarefas[index]);
-                        idTarefaAdicionado.push(id_tarefas[index]);
-                        idsPacoteAtual.push(index);
-
-                        nomesPacotes.push(nomeTarefas[i]);
-                        idTarefaAdicionado.push(id_tarefas[i]);
-                        idsPacoteAtual.push(i);
-
-                        trimestresPacotes.push(trimestres[index]);
-                        trimestresPacotes.push(trimestres[i]);
                     }
                 }
+            } else {
+                nomesPacotes.push(nomeTarefas[id_tarefas[index]]);
+                trimestresPacotes.push(trimestres[index]);
+            }
+
+            console.log(nomesPacotes);
+            console.log(idTarefaAdicionado);
+            console.log(idsPacoteAtual);
+            console.log(trimestresPacotes);
+
+            for (let index = 0; index < nomesPacotes.length; index++) {
+                criarPacotes(nomesPacotes[index], index, trimestresPacotes[index]);
             }
         } else {
-            nomesPacotes.push(nomeTarefas[id_tarefas[index]]);
-            trimestresPacotes.push(trimestres[index]);
-        }
-
-        console.log(nomesPacotes);
-        console.log(idTarefaAdicionado);
-        console.log(idsPacoteAtual);
-        console.log(trimestresPacotes);
-
-        for (let index = 0; index < nomesPacotes.length; index++) {
-            criarPacotes(nomesPacotes[index], index, trimestresPacotes[index]);
+            criarSectionMensagemErro();
         }
 
     } catch (error) {
@@ -148,7 +153,7 @@ function criarPacotes(nomeTarefa, index, trimestrePacote) {
         const posicoesInformacoes = [];
 
         console.log("Valor Índice Tarefa Atual: " + valorIndiceAtualTarefa);
-        console.log("Valor ID Tarefas: " + id_tarefas);     
+        console.log("Valor ID Tarefas: " + id_tarefas);
 
         id_tarefas.forEach((elemento, indice) => {
             if (elemento === id_tarefas[valorIndiceAtualTarefa]) {
@@ -164,5 +169,16 @@ function criarPacotes(nomeTarefa, index, trimestrePacote) {
             console.log("Passou no for");
         }
     });
+}
+
+function criarSectionMensagemErro() {
+    const sectionRetangulo = document.createElement('section');
+    const texto = document.createElement('p');
+
+    texto.textContent = "Nenhuma Tarefa foi encontrada";
+
+    sectionRetangulo.classList.add('sectionMensagemErroPacote');
+    sectionRetangulo.appendChild(texto);
+    divRedacoesCorrigidas.appendChild(sectionRetangulo);
 }
 

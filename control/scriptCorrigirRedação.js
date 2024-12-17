@@ -108,6 +108,8 @@ var id_instituicao;
 var controleVerificarCorrecaoCorrigida = false;
 var alertaRedacaoCorrigida = document.getElementById('alertaRedacaoCorrigida');
 
+var controleUndefinedQrCode = false;
+
 // Função para salvar o estado atual do canvas
 function saveCanvasState() {
     // Adiciona o estado atual do canvas à lista de estados
@@ -301,6 +303,12 @@ async function lerQRCodeViaPHP(urlDaImagem) {
 
         console.log(ra + "\n" + turma + "\n" + trimestre + "\n" + ano + "\n" + id_atividade + "\n" + id_instituicao);
 
+        if (ra && turma && trimestre && ano && id_atividade && id_instituicao) {
+            controleUndefinedQrCode = true;
+        } else {
+            alert('Os dados do QrCode não foram identificados corretamente!!!');
+        }
+
         verificaRedacaoCorrigidaPHP();
 
     } catch (error) {
@@ -364,26 +372,30 @@ function verificaRedacaoSalvaPagAnterior() {
     }
 }
 async function salvarCorrecao() {
-    let canvasJson = fabricCanvas.toJSON();
-    console.log(canvasJson);
+    if (controleUndefinedQrCode) {
+        let canvasJson = fabricCanvas.toJSON();
+        console.log(canvasJson);
 
-    let notaTotalEnem = notaC1 + notaC2 + notaC3 + notaC4 + notaC5;
+        let notaTotalEnem = notaC1 + notaC2 + notaC3 + notaC4 + notaC5;
 
-    if (controleVerificarCorrecaoCorrigida == false) {
-        await inserirRedacaoPHP(canvasJson);
-        await inserirNotaPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotalEnem);
-        await inserirComentariosPHP();
+        if (controleVerificarCorrecaoCorrigida == false) {
+            await inserirRedacaoPHP(canvasJson);
+            await inserirNotaPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotalEnem);
+            await inserirComentariosPHP();
 
-        controleSalvarCorrecao = true;
-        alert('Sua Correção foi salva!!!');
-    } else {
-        if (confirm('Esta redação já foi corrigida. Deseja substituir a correção salva por esta?')) {
-            await updateRedacaoPHP(canvasJson);
-            await updateComentariosoPHP();
-            await updateNotasPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotalEnem);
-
+            controleSalvarCorrecao = true;
             alert('Sua Correção foi salva!!!');
+        } else {
+            if (confirm('Esta redação já foi corrigida. Deseja substituir a correção salva por esta?')) {
+                await updateRedacaoPHP(canvasJson);
+                await updateComentariosoPHP();
+                await updateNotasPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotalEnem);
+
+                alert('Sua Correção foi salva!!!');
+            }
         }
+    } else {
+        alert('Os dados do QrCode não foram identificados corretamente!!!');
     }
 }
 
@@ -599,6 +611,7 @@ function ProxPagina() {
         renderizarPagina();
         resetarConfigComentarios();
         alertaRedacaoCorrigida.style.display = "none";
+        controleUndefinedQrCode = false;
 
     } else {
         alert('Limite de Página Atingido!')
@@ -620,6 +633,7 @@ function PaginaAnterior() {
         renderizarPagina();
         resetarConfigComentarios();
         alertaRedacaoCorrigida.style.display = "none";
+        controleUndefinedQrCode = false;
 
     } else {
         alert('Limite de Página Atingido!')
@@ -664,6 +678,7 @@ function desenhaRetangulo() {
         currentStateIndex++;
     }
 }
+
 function addTextAreaCompetencia() {
     comentarioCompetencia1.style.borderColor = 'black';
     comentarioCompetencia1.style.borderWidth = '2px';
@@ -1088,7 +1103,7 @@ function salvarClick() {
 
     for (let index = 0; index < armazenaComentarios.length; index++) {
         const comentario = armazenaComentarios[index];
-        const estilo = getComputedStyle(comentario); 
+        const estilo = getComputedStyle(comentario);
         const corRgb = estilo.borderColor;
         const corLinha = rgbToName(corRgb);
         conteudo = conteudo + "Comentário " + (index + 1) + ": " + comentario.value + "(" + corLinha + ")" + "\n\n";
@@ -1245,6 +1260,8 @@ inputPDFupload.addEventListener('change', function (event) {
 
         renderizarPagina();
         resetarConfigComentarios();
+
+        controleUndefinedQrCode = false;
     };
 });
 
