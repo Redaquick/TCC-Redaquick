@@ -131,10 +131,11 @@ function criarRetangulos(nomeAluno, curso, trimestre, ano, indice_redacao) {
     sectionRetangulo.classList.add('sectionTarefasRedacoes');
     divRedacoesCorrigidas.appendChild(sectionRetangulo);
 
-    const id_redacao_atual = posicoesInformacoes[indice_redacao];
+    const id_redacao_atual = id_redacoes[posicoesInformacoes[indice_redacao]];
 
     sectionRetangulo.addEventListener('click', () => {
-        
+        console.log("id_redacao_atual: " + id_redacao_atual);
+        SalvarIdRedacaoSelecionada(id_redacao_atual);
     });
 }
 
@@ -199,8 +200,7 @@ async function SalvarIdRedacaoSelecionada(id_redacao_atual) {
 
     try {
         // Fazendo a requisição com fetch e aguardando a resposta do PHP
-        const response = await fetch('https://feiratec.dev.br/redaquick/control/salvarIDredAtual
-        .php', {
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/salvarIDredAtual.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -214,6 +214,10 @@ async function SalvarIdRedacaoSelecionada(id_redacao_atual) {
 
         const resultadoEnvioPHP = await response.json();
         console.log(resultadoEnvioPHP);
+
+        if(resultadoEnvioPHP){
+            window.location = "../view/editaRedCorrigida.html";
+        }
 
     } catch (error) {
         console.error('Erro:', error);

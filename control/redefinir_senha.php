@@ -18,12 +18,11 @@ $sql = "
 if ($senhaCriptografada == $senhaCriptografada2) {
     if ($conn->multi_query($sql)) {  // Usando multi_query para executar várias instruções
         ?>
-        <script>
-            alert("Senha alterada com sucesso");
+        <script>            
             <?php
             $_SESSION['senha'] = $senha;
             ?>
-            window.location = "../view/menu.html";
+            window.location = "../index.php";
         </script>
         <?php
     } else {

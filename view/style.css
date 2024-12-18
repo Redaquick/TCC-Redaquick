@@ -689,6 +689,20 @@ canvas {
     margin-top: 4%;
 }
 
+#divRedacoesCorrigidasAluno {
+    display: flex;
+    /* Habilita o Flexbox */
+    flex-wrap: wrap;
+    /* Permite que os elementos quebrem para a próxima linha */
+    justify-content: center;
+    /* Centraliza as sections horizontalmente */
+    align-content: flex-start;
+    /* Garante alinhamento vertical */
+    gap: 1.5rem;
+    /* Define o espaço entre as sections */
+    margin-top: 4%;
+}
+
 .sectionTarefasRedacoes {
     flex: 1 1 calc((72% - (3 * 1.5rem)) / 4);
     /* Divide o espaço restante para 4 sections */
@@ -735,7 +749,7 @@ canvas {
     /* Inclui o padding e a borda no cálculo de largura/altura */
     margin: 0;
     gap: 0;
-    padding: 0;    
+    padding: 0;
     cursor: pointer;
 }
 
@@ -755,6 +769,6 @@ canvas {
     padding: 0;
     border: 0.2rem solid;
     text-align: center;
-    align-items: center;   
-    align-content: center; 
+    align-items: center;
+    align-content: center;
 }

@@ -12,21 +12,21 @@ $senhaCriptografada = sha1($senha);
 $sql = "UPDATE usuario SET nome = '$nome', senha = '$senhaCriptografada' WHERE email = '$email'";
 
 if ($conn->query($sql) === TRUE) {
-?>
+    ?>
     <script>
-        alert("Registro alterado com sucesso!");
         <?php
         $_SESSION['senha'] = $senha;
+        $_SESSION['mensagemSucessoPerfil'] = "Registro alterado com sucesso!";
         ?>
         window.location = "../view/perfil.php";
     </script>
-<?php
+    <?php
 } else {
-?>
+    $_SESSION['mensagemErroPerfil'] = "Erro ao atualizar o registro!";
+    ?>
     <script>
-        alert("Erro ao atualizar o registro!");
         window.history.back();
     </script>
-<?php
+    <?php
 }
 ?>

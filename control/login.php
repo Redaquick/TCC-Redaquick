@@ -25,17 +25,26 @@ if ($resultado->num_rows > 0) { //se a quant de registros é maior q0
 
     // Verifica o valor de "acesso" na SQL e redireciona de acordo com o valor (sim -> 1° acesso/ não -> 2° ou + acesso)
     if ($dados_usuario["acesso"] === "sim") {
-?>
+        ?>
         <script>
             window.location = "../view/redefinir_senha_login.html"; // Página para quem irá fazer o 1° acesso
         </script>
-    <?php
+        <?php
     } else {
-    ?>
-        <script>
-            window.location = "../view/menu.html"; // Página para quem já fez o 1° acesso
-        </script>
-    <?php
+
+        if ($dados_usuario["status"] === 'docente') {
+            ?>
+            <script>
+                window.location = "../view/menu.html"; // Página para o docente quem já fez o 1° acesso
+            </script>
+            <?php
+        } else {
+            ?>
+            <script>
+                window.location = "../view/menuAluno.html"; // Página para o aluno quem já fez o 1° acesso
+            </script>
+            <?php
+        }
     }
 } else {
     $_SESSION["loginIncorreto"] = "Email ou senha incorretos!";
@@ -43,6 +52,6 @@ if ($resultado->num_rows > 0) { //se a quant de registros é maior q0
     <script>
         window.location = "../index.php";        
     </script>
-<?php
+    <?php
 }
 ?>

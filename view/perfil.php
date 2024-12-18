@@ -21,22 +21,39 @@ session_start();
 
     <div class="containerSection">
         <section>
-            <p class="titulo">Perfil</p>
+            <p class="titulo"><?php
+            if (isset($_SESSION['mensagemSucessoPerfil'])) {
+                echo ($_SESSION['mensagemSucessoPerfil']);
+                unset($_SESSION['mensagemSucessoPerfil']);
+            } else if (isset($_SESSION['mensagemErroPerfil'])) {
+                echo ($_SESSION['mensagemErroPerfil']);
+                unset($_SESSION['mensagemErroPerfil']);
+            } else {
+                echo ('Perfil');
+            }
+            ?></p>
             <div class="alinhamentoCentro">
                 <form action="../control/alterar_perfil.php" method="post">
                     <input class="configInputLogin" type="text" name="nomePerfil" id="nomePerfil"
-                        value ="<?php echo $_SESSION["nome"] ?>" required>
+                        value="<?php echo $_SESSION["nome"] ?>" required>
                     <br><br>
-                    <input class="configInputLogin" type="email" name="emailPerfil" id="emailPerfil" value="<?php echo $_SESSION["email"] ?>"
-                        required readonly>
-                    <br><br>                    
+                    <input class="configInputLogin" type="email" name="emailPerfil" id="emailPerfil"
+                        value="<?php echo $_SESSION["email"] ?>" required readonly>
+                    <br><br>
                     <input class="configInputPassword" type="password" name="passwordPerfil" id="passwordPerfil"
                         value="<?php echo $_SESSION["senha"] ?>" required minlength="5" maxlength="20"><span
                         style="margin-left: 2%;"><i style="cursor: pointer;" class="bi bi-eye"
                             id="togglePassword"></i></span>
 
                     <div class="b">
-                        <a href="menu.html"><input class="configBtnVoltar" type="button" value="Voltar"></a>
+                        <a href=<?php
+                        if ($_SESSION["status"] === 'docente') {
+                            echo ('menu.html');
+                        } else {
+                            echo ('menuAluno.html');
+                        }
+                        ?>><input class="configBtnVoltar" type="button"
+                                value="Voltar"></a>
                         <input id="configBtnAlterar" type="submit" value="Alterar Dados">
                     </div>
                 </form>
