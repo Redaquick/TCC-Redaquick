@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Corretor Redação</title>
+    <title>Editar Redação</title>
     <link rel="stylesheet" href="style.css">
 
     <!-- CSS do Bootstrap -->
@@ -22,14 +22,7 @@
         <img src="../imagens/LogoRedaQuick_nova.png" alt="Logo RedaQuick" class="configIMGLogoTCCcorrecaoRedaquick">
     </div>
 
-    <div class="alertaRedacaoCorrigida" id="alertaRedacaoCorrigida">
-        <section class="sectionAlertaRedacaoCorrigida">
-            <span id="configIconeAlertaRedacaoCorrigida"><i class="bi bi-check2-circle"></i></span>
-            <p id="configTextoAlertaRedacaoCorrigida">Esta redação já foi Corrigida!</p>
-        </section>
-    </div>
-
-    <div class="competencias-container" id="competenciasContainer">
+    <div class="competencias-container" id="competenciasContainer" style="visibility: visible;">
         <section class="competencia">
             <p class="titulo">Competência 1</p>
             <span><button id="diminuiNotaC1" class="icones-competencia"><i class="bi bi-dash" title="Diminuir"
@@ -72,12 +65,12 @@
         </section>
     </div>
 
-    <div id="main-container">
+    <div id="main-container" style="visibility: visible;">
         <div id="canvas-container">
             <canvas id="fabric-canvas"></canvas>
             <canvas id="RenderPDF"></canvas>
         </div>
-        <div id="toolbar"><br><br><br>
+        <div id="toolbar" style="visibility: visible;"><br><br><br>
             <span style="font-size: 25px"><i class="bi bi-pen" id="draw" title="Caneta"></i></span>
             <span style="font-size: 25px"><i class="bi bi-textarea-resize" id="selecionarTexto" title="Selecionar Texto"
                     onclick="desenhaRetangulo()"></i></span>
@@ -115,7 +108,7 @@
             </section>
         </div>
 
-        <div class="elementosLateraisCanvas" id="elementosLateraisCanvas"><br><br><br>
+        <div class="elementosLateraisCanvas" id="elementosLateraisCanvas" style="visibility: visible;"><br><br><br>
             <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-zoom-in" id="aumentarZoom"
                     onclick="AumentarZoom()" title="Aumentar Zoom"></i></span>
             <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-zoom-out" id="diminuirZoom"
@@ -135,7 +128,7 @@
     </div>
 
     <div>
-        <section id="estanteComent">
+        <section id="estanteComent"  style="display: flex;">
             <span style="background-color: #bb0b0b;">
                 <p style="font-size: 30px; text-align: center; color: white;">Comentários da Redação</p>
             </span>
@@ -144,7 +137,7 @@
     </div>
 
     <div>
-        <section id="comentCompetencias">
+        <section id="comentCompetencias"  style="display: flex;">
             <span style="background-color: #bb0b0b;">
                 <p style="font-size: 30px; text-align: center; color: white;">Comentários Referente as Competências</p>
             </span>

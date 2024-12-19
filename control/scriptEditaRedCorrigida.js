@@ -2,8 +2,6 @@ var fabricCanvas = new fabric.Canvas('fabric-canvas');
 var canvas = document.getElementById("RenderPDF");
 var context = canvas.getContext("2d");
 
-var passarPagButton = document.getElementById("passarPag");
-var voltarPagButton = document.getElementById("voltarPag");
 var voltarParaMenu = document.getElementById("configBtnVoltarCorrigir");
 var aumentarZoom = document.getElementById("aumentarZoom");
 var diminuirZoom = document.getElementById("diminuirZoom");
@@ -573,51 +571,6 @@ async function inserirComentariosPHP() {
     }
 }
 
-function ProxPagina() {
-    if (contadorPagina < tamanhoPagsDoc) {
-        contadorPagina++;
-
-        currentStateIndex = -1;
-        canvasStates.splice(0, canvasStates.length);
-        fabricCanvas.clear();
-
-        zoom = 1;
-        valorZoomPercentual = (zoom * 100);
-        valorZoomTexto.value = valorZoomPercentual + '%';
-        fabricCanvas.setZoom(1);
-
-        renderizarPagina();
-        resetarConfigComentarios();
-        alertaRedacaoCorrigida.style.display = "none";
-        controleUndefinedQrCode = false;
-
-    } else {
-        alert('Limite de Página Atingido!')
-    }
-}
-function PaginaAnterior() {
-    if (contadorPagina > 1) {
-        contadorPagina--;
-
-        currentStateIndex = -1;
-        canvasStates.splice(0, canvasStates.length);
-        fabricCanvas.clear();
-
-        zoom = 1;
-        valorZoomPercentual = (zoom * 100);
-        valorZoomTexto.value = valorZoomPercentual + '%';
-        fabricCanvas.setZoom(1);
-
-        renderizarPagina();
-        resetarConfigComentarios();
-        alertaRedacaoCorrigida.style.display = "none";
-        controleUndefinedQrCode = false;
-
-    } else {
-        alert('Limite de Página Atingido!')
-    }
-}
-
 function AumentarZoom() {
     if (zoom < 2) {
         zoom = zoom + 0.25;
@@ -1175,14 +1128,14 @@ function buttonCorBlack() {
 }
 
 function hiddenVisibleDisplay() {
-    sectionCompetenciasContainer.style.display = "none";
-    sectionEstanteComentarios.style.display = "none";
-    sectionComentariosCompetencias.style.display = "none";
-    firstinputPDFupload.style.display = "none";
-    toolbar.style.display = "none";
-    elementosLateraisCanvas.style.display = "none";
-    topBarCorrecao.style.display = "none";
-    voltarParaMenu.style.display = "none";
+    sectionCompetenciasContainer.style.display = "flex";
+    sectionEstanteComentarios.style.display = "flex";
+    sectionComentariosCompetencias.style.display = "flex";
+    firstinputPDFupload.style.display = "flex";
+    toolbar.style.display = "flex";
+    elementosLateraisCanvas.style.display = "flex";
+    topBarCorrecao.style.display = "flex";
+    voltarParaMenu.style.display = "flex";
     aumentarZoom.style.visibility = "visible";
     diminuirZoom.style.visibility = "visible";
     valorZoomTexto.style.visibility = "visible";

@@ -12,7 +12,16 @@ var id_tarefas = [];
 var id_alunos = [];
 var id_redacoes = [];
 
+var id_redacoes_atuais = [];
+var nomesAtuais = [];
+var cursosAtuais = [];
+var nomeTarefaAtual;
+
 var posicoesInformacoes = [];
+
+var RAs = [];
+var notasEnem = [];
+var notasDecimal = [];
 
 buscarRedacoesCorrigidasPHP();
 
@@ -140,12 +149,13 @@ function criarRetangulos(nomeAluno, curso, trimestre, ano, indice_redacao) {
 }
 
 function criarPacotes(nomeTarefa, index, trimestrePacote) {
+    var nomeTarefaAtual = nomeTarefa;
     console.log('Passou criarPacotes');
     const sectionRetangulo = document.createElement('section');
     const textoNomeTarefa = document.createElement('p');
     const textoTrimestre = document.createElement('p');
 
-    textoNomeTarefa.textContent = "Tarefa: " + nomeTarefa;
+    textoNomeTarefa.textContent = "Tarefa: " + nomeTarefaAtual;
     textoTrimestre.textContent = trimestrePacote + "° Trimestre";
 
     sectionRetangulo.appendChild(textoNomeTarefa);
@@ -161,7 +171,7 @@ function criarPacotes(nomeTarefa, index, trimestrePacote) {
             element.remove();
         });
 
-        const valorIndiceAtualTarefa = idsPacoteAtual[index];        
+        const valorIndiceAtualTarefa = idsPacoteAtual[index];
 
         console.log("Valor Índice Tarefa Atual: " + valorIndiceAtualTarefa);
         console.log("Valor ID Tarefas: " + id_tarefas);
@@ -177,6 +187,17 @@ function criarPacotes(nomeTarefa, index, trimestrePacote) {
         console.log("Passou antes for");
         for (let i = 0; i < posicoesInformacoes.length; i++) {
             criarRetangulos(nomes[posicoesInformacoes[i]], nomeCursos[posicoesInformacoes[i]], trimestres[posicoesInformacoes[i]], anos[posicoesInformacoes[i]], i);
+            
+            id_redacoes_atuais = [];
+            nomesAtuais = [];
+            cursosAtuais = [];
+
+            id_redacoes_atuais.push(id_redacoes[posicoesInformacoes[i]]);
+            nomesAtuais.push(nomes[posicoesInformacoes[i]]);
+            cursosAtuais.push(nomeCursos[posicoesInformacoes[i]]);
+
+            nomeTarefaAtual = nomeTarefas[posicoesInformacoes[i]];
+
             console.log("Passou no for");
         }
     });
@@ -205,7 +226,7 @@ async function SalvarIdRedacaoSelecionada(id_redacao_atual) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(dados) 
+            body: JSON.stringify(dados)
         });
 
         if (!response.ok) {
@@ -215,7 +236,7 @@ async function SalvarIdRedacaoSelecionada(id_redacao_atual) {
         const resultadoEnvioPHP = await response.json();
         console.log(resultadoEnvioPHP);
 
-        if(resultadoEnvioPHP){
+        if (resultadoEnvioPHP) {
             window.location = "../view/editaRedCorrigida.html";
         }
 
@@ -224,3 +245,58 @@ async function SalvarIdRedacaoSelecionada(id_redacao_atual) {
     }
 }
 
+async function gerarRelatorio() {
+    const dados = {
+        nomes: nomesAtuais,
+        ids: id_redacoes_atuais
+    };
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/buscarNotasCorrigidas.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
+        console.log(resultadoEnvioPHP);
+
+        RAs = resultadoEnvioPHP.RAs;
+        notasEnem = resultadoEnvioPHP.notasEnem;
+        notasDecimal = resultadoEnvioPHP.notasDecimal;
+
+        //nomesAtuais
+        //cursosAtuais
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        doc.addPage();
+
+        const pageSize = doc.getPageSize();
+        doc.setFontSize(12);
+        doc.text(`Relatório com Notas`, (pageSize.width / 2) - 10, 10);
+        doc.text(`Nome`, 20, 30);
+        doc.text(`RA`, 110, 30);
+        doc.text(`Curso`, 130, 30);
+        doc.text(`Nota ENEM`, 150, 30);
+        doc.text(`Nota Decimal (0-10)`, 160, 30);
+
+        // Gerar o PDF como um Blob e oferecer o download
+        const pdfBlob = doc.output('blob');
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(pdfBlob);
+        link.download = `Relatório Notas.pdf`;
+        link.click();
+
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}

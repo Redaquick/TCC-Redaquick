@@ -355,7 +355,6 @@ option {
     background-color: #bb0b0b;
 }
 
-
 /* ---------------- CSS CORRIGIR REDACAO -----------------------*/
 #botaoVoltarCorrecao {
     text-decoration: none;
@@ -771,4 +770,21 @@ canvas {
     text-align: center;
     align-items: center;
     align-content: center;
+}
+
+#configBtnGerarRelatorio {
+    font-size: medium;
+    background-color: #8b0000;
+    color: beige;
+    border-radius: 10px;
+    height: 3rem;
+    width: 15rem;
+    cursor: pointer;
+    margin-top: 0;
+}
+
+#configBtnGerarRelatorio:hover {
+    cursor: pointer;
+    border-radius: 20px;
+    background-color: #bb0b0b;
 }
