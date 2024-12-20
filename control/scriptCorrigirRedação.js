@@ -31,7 +31,7 @@ var valorZoomPercentual = 0;
 
 var valorNotaTextoC1 = document.getElementById("competencia1");
 var valorNotaTextoC2 = document.getElementById("competencia2");
-var valorNotaTextoC3 = document.getElementById("competencia3");
+var valorNotaTextoC3 = document.getElementById("competencia3"); //USAR NO PDF
 var valorNotaTextoC4 = document.getElementById("competencia4");
 var valorNotaTextoC5 = document.getElementById("competencia5");
 
@@ -39,13 +39,13 @@ var notaInicial = 200;
 
 var notaC1 = 200;
 var notaC2 = 200;
-var notaC3 = 200;
+var notaC3 = 200; //USAR NO PDF
 var notaC4 = 200;
 var notaC5 = 200;
 
 var comentarioCompetencia1 = document.createElement('textarea');
 var comentarioCompetencia2 = document.createElement('textarea');
-var comentarioCompetencia3 = document.createElement('textarea');
+var comentarioCompetencia3 = document.createElement('textarea'); //USAR NO PDF
 var comentarioCompetencia4 = document.createElement('textarea');
 var comentarioCompetencia5 = document.createElement('textarea');
 
@@ -60,7 +60,7 @@ var botaoAumentaC4 = document.getElementById("aumentaNotaC4");
 var botaoDiminuiC5 = document.getElementById("diminuiNotaC5");
 var botaoAumentaC5 = document.getElementById("aumentaNotaC5");
 
-var armazenaComentarios = [];
+var armazenaComentarios = []; //USAR NO PDF
 
 var arquivoRenderizado;
 

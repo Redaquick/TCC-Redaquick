@@ -22,8 +22,8 @@
         <img src="../imagens/LogoRedaQuick_nova.png" alt="Logo RedaQuick" class="configIMGLogoTCCcorrecaoRedaquick">
     </div>
 
-    <div class="competencias-container" id="competenciasContainer" style="visibility: visible;">
-        <section class="competencia">
+    <div class="competencias-container" id="competenciasContainer"" style="visibility: visible;">
+        <section class="competencia" style="display: flex;">
             <p class="titulo">Competência 1</p>
             <span><button id="diminuiNotaC1" class="icones-competencia"><i class="bi bi-dash" title="Diminuir"
                         onclick="diminuirNotaC1()"></i></button></span>
@@ -31,7 +31,7 @@
             <span><button id="aumentaNotaC1" class="icones-competencia"><i class="bi bi-plus" title="Aumentar"
                         onclick="aumentarNotaC1()"></i></button></span>
         </section>
-        <section class="competencia">
+        <section class="competencia" style="display: flex;">
             <p class="titulo">Competência 2</p>
             <span><button id="diminuiNotaC2" class="icones-competencia"><i class="bi bi-dash" title="Diminuir"
                         onclick="diminuirNotaC2()"></i></button></span>
@@ -39,7 +39,7 @@
             <span><button id="aumentaNotaC2" class="icones-competencia"><i class="bi bi-plus" title="Aumentar"
                         onclick="aumentarNotaC2()"></i></button></span>
         </section>
-        <section class="competencia">
+        <section class="competencia" style="display: flex;">
             <p class="titulo">Competência 3</p>
             <span><button id="diminuiNotaC3" class="icones-competencia"><i class="bi bi-dash" title="Diminuir"
                         onclick="diminuirNotaC3()"></i></button></span>
@@ -47,7 +47,7 @@
             <span><button id="aumentaNotaC3" class="icones-competencia"><i class="bi bi-plus" title="Aumentar"
                         onclick="aumentarNotaC3()"></i></button></span>
         </section>
-        <section class="competencia">
+        <section class="competencia" style="display: flex;">
             <p class="titulo">Competência 4</p>
             <span><button id="diminuiNotaC4" class="icones-competencia"><i class="bi bi-dash" title="Diminuir"
                         onclick="diminuirNotaC4()"></i></button></span>
@@ -55,7 +55,7 @@
             <span><button id="aumentaNotaC4" class="icones-competencia"><i class="bi bi-plus" title="Aumentar"
                         onclick="aumentarNotaC4()"></i></button></span>
         </section>
-        <section class="competencia">
+        <section class="competencia" style="display: flex;">
             <p class="titulo">Competência 5</p>
             <span><button id="diminuiNotaC5" class="icones-competencia"><i class="bi bi-dash" title="Diminuir"
                         onclick="diminuirNotaC5()"></i></button></span>
@@ -86,7 +86,7 @@
         </div>
 
         <div>
-            <section id="paleteCores">
+            <section id="paleteCores" style="display: flex;">
                 <button
                     style="background-color: red; border-radius: 20%; width: 1.8rem; height: 1.8rem; border: 1px solid white;"
                     id="buttonCorRed" onclick="buttonCorRed()"></button>
@@ -110,19 +110,19 @@
 
         <div class="elementosLateraisCanvas" id="elementosLateraisCanvas" style="visibility: visible;"><br><br><br>
             <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-zoom-in" id="aumentarZoom"
-                    onclick="AumentarZoom()" title="Aumentar Zoom"></i></span>
+                    onclick="AumentarZoom()" title="Aumentar Zoom" style="visibility: visible;"></i></span>
             <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-zoom-out" id="diminuirZoom"
-                    onclick="DiminuirZoom()" title="Diminuir Zoom"></i></span>
+                    onclick="DiminuirZoom()" title="Diminuir Zoom" style="visibility: visible;"></i></span>
             <input style="cursor: not-allowed;" type="text" value="100%" id="CampoTextoZoom" readonly title="Zoom">
             <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-box-arrow-in-down" id="salvarBtn"
-                    onclick="salvarClick()" title="Download"></i></span>
+                    onclick="salvarClick()" title="Download" style="visibility: visible;"></i></span>
             <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-clipboard-data"
-                    id="campoCompetenciasBtn" onclick="OnOffcampoCompetencias()" title="Competências"></i></span>
+                    id="campoCompetenciasBtn" onclick="OnOffcampoCompetencias()" title="Competências" style="visibility: visible;"></i></span>
             <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-cloud-check" title="Salvar Correção"
-                    id="salvarCorrecao" onclick="salvarCorrecao()"></i></span>
+                    id="salvarCorrecao" onclick="salvarCorrecao()" style="visibility: visible;"></i></span>
 
             <span style="font-size: 25px; margin-top: 50vh;"><a href="redacoes_corrigidas_professor.html" id="botaoVoltarCorrecao"><i
-                        class="bi bi-arrow-bar-left" title="Voltar Menu"></i></a></span>
+                        class="bi bi-arrow-bar-left" title="Voltar Menu" style="visibility: visible;"></i></a></span>
             <input type="file" id="uploadPDF" accept=".pdf">
         </div>
     </div>

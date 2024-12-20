@@ -17,6 +17,7 @@ var id_redacoes_atuais = [];
 var nomesAtuais = [];
 var cursosAtuais = [];
 var nomeTarefaAtual;
+var nomeTarefaRelatorio;
 
 var posicoesInformacoes = [];
 
@@ -191,6 +192,8 @@ function criarPacotes(nomeTarefa, index, trimestrePacote) {
         nomesAtuais = [];
         cursosAtuais = [];
 
+        nomeTarefaRelatorio = nomeTarefas[posicoesInformacoes[0]];
+
         for (let i = 0; i < posicoesInformacoes.length; i++) {
             criarRetangulos(nomes[posicoesInformacoes[i]], nomeCursos[posicoesInformacoes[i]], trimestres[posicoesInformacoes[i]], anos[posicoesInformacoes[i]], i);
 
@@ -302,36 +305,42 @@ async function gerarRelatorio() {
         doc.line(177, 15, 177, 290); // Linha vertical para separar 'Nota ENEM' de 'Nota Decimal'
         doc.line(0, 22, 210, 22);
 
+        //FAZER TREM DE QUEBRAR PÁGINA
+
         let y = 30; // Posição inicial no eixo Y
         for (let i = 0; i < nomesAtuais.length; i++) {
             // Quebra o nome em várias linhas, se necessário
             const nomeQuebrado = doc.splitTextToSize(nomesAtuais[i], 40); // 90 é a largura máxima permitida para o nome
 
             // Desenha o nome, que pode ter múltiplas linhas
-            for (let j = 0; j < nomeQuebrado.length; j++) {
+            for (var j = 0; j < nomeQuebrado.length; j++) {
                 doc.text(nomeQuebrado[j], 3, y + (j * 6)); // Ajusta o Y para cada linha do nome
             }
 
             // Desenha a linha separadora, ajustada com base no número de linhas do nome
-            const linhaY = y + nomeQuebrado.length * 6; // Ajusta a linha de separação após o nome
+        
+            console.log("Valor y: " + y);
+            console.log("Valor j: " + j);
+
             // Desenha as outras informações na mesma linha
-            doc.text(`${RAs[i]}`, 104, linhaY);
-            doc.text(`${cursosAtuais[i]}`, 124, linhaY);
-            doc.text(`${notasEnem[i]}`, 158, linhaY);
-            doc.text(`${notasDecimal[i]}`, 188, linhaY);
+            doc.text(`${RAs[i]}`, 104, y + ((j-1) * 6));
+            doc.text(`${cursosAtuais[i]}`, 124, y + ((j-1) * 6));
+            doc.text(`${notasEnem[i]}`, 158, y + ((j-1) * 6));
+            doc.text(`${notasDecimal[i]}`, 188, y + ((j-1) * 6));
 
+            const linhaY = y + ((j-1) * 6) + 2; // Ajusta a linha de separação após o nome
 
-            doc.line(0, linhaY+2, 210, linhaY+2);
+            doc.line(0, linhaY, 210, linhaY);
 
             // Ajusta o valor de Y para a próxima linha
-            y += nomeQuebrado.length * 6; // Aumenta Y conforme o número de linhas do nome
+            y = linhaY + 6; // Aumenta Y conforme o número de linhas do nome
         }
 
         // Gerar o PDF como um Blob e oferecer o download
         const pdfBlob = doc.output('blob');
         const link = document.createElement('a');
         link.href = URL.createObjectURL(pdfBlob);
-        link.download = `Relatório Notas.pdf`;
+        link.download = 'Relatório Notas - ' + nomeTarefaRelatorio + ".pdf";
         link.click();
 
     } catch (error) {
