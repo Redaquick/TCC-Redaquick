@@ -1,4 +1,5 @@
 var divRedacoesCorrigidas = document.getElementById('divRedacoesCorrigidas');
+var relatiorioBtn = document.getElementById('configBtnGerarRelatorio');
 
 var pacotes = [];
 var idsPacoteAtual = [];
@@ -185,18 +186,21 @@ function criarPacotes(nomeTarefa, index, trimestrePacote) {
         console.log(posicoesInformacoes);
 
         console.log("Passou antes for");
+
+        id_redacoes_atuais = [];
+        nomesAtuais = [];
+        cursosAtuais = [];
+
         for (let i = 0; i < posicoesInformacoes.length; i++) {
             criarRetangulos(nomes[posicoesInformacoes[i]], nomeCursos[posicoesInformacoes[i]], trimestres[posicoesInformacoes[i]], anos[posicoesInformacoes[i]], i);
-            
-            id_redacoes_atuais = [];
-            nomesAtuais = [];
-            cursosAtuais = [];
 
             id_redacoes_atuais.push(id_redacoes[posicoesInformacoes[i]]);
             nomesAtuais.push(nomes[posicoesInformacoes[i]]);
             cursosAtuais.push(nomeCursos[posicoesInformacoes[i]]);
 
             nomeTarefaAtual = nomeTarefas[posicoesInformacoes[i]];
+
+            relatiorioBtn.style.display = 'block';
 
             console.log("Passou no for");
         }
@@ -272,22 +276,56 @@ async function gerarRelatorio() {
         notasEnem = resultadoEnvioPHP.notasEnem;
         notasDecimal = resultadoEnvioPHP.notasDecimal;
 
-        //nomesAtuais
-        //cursosAtuais
-
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
-        doc.addPage();
+        // Configura o título do relatório
+        doc.setFontSize(14);
+        doc.setFont('helvetica', 'bold'); // Define a fonte como negrito
+        doc.text('Relatório com Notas', 80, 10);
 
-        const pageSize = doc.getPageSize();
+        // Configura os cabeçalhos da tabela com espaçamento ajustado
         doc.setFontSize(12);
-        doc.text(`Relatório com Notas`, (pageSize.width / 2) - 10, 10);
-        doc.text(`Nome`, 20, 30);
-        doc.text(`RA`, 110, 30);
-        doc.text(`Curso`, 130, 30);
-        doc.text(`Nota ENEM`, 150, 30);
-        doc.text(`Nota Decimal (0-10)`, 160, 30);
+        doc.setFont('helvetica', 'normal'); // Volta para a fonte padrão
+        doc.text('Nome', 47, 20);
+        doc.text('RA', 107, 20);
+        doc.text('Curso', 129, 20);
+        doc.text('Nota (ENEM)', 150, 20);
+        doc.text('Nota (Decimal)', 180, 20);
+
+        // Desenha as barras verticais para separar as colunas
+        doc.setDrawColor(0); // Define a cor da linha (preto)
+        doc.setLineWidth(0.3); // Define a largura da linha
+        doc.line(100, 15, 100, 290); // Linha vertical para separar 'Nome' de 'RA'
+        doc.line(120, 15, 120, 290); // Linha vertical para separar 'RA' de 'Curso'
+        doc.line(147, 15, 147, 290); // Linha vertical para separar 'Curso' de 'Nota ENEM'
+        doc.line(177, 15, 177, 290); // Linha vertical para separar 'Nota ENEM' de 'Nota Decimal'
+        doc.line(0, 22, 210, 22);
+
+        let y = 30; // Posição inicial no eixo Y
+        for (let i = 0; i < nomesAtuais.length; i++) {
+            // Quebra o nome em várias linhas, se necessário
+            const nomeQuebrado = doc.splitTextToSize(nomesAtuais[i], 40); // 90 é a largura máxima permitida para o nome
+
+            // Desenha o nome, que pode ter múltiplas linhas
+            for (let j = 0; j < nomeQuebrado.length; j++) {
+                doc.text(nomeQuebrado[j], 3, y + (j * 6)); // Ajusta o Y para cada linha do nome
+            }
+
+            // Desenha a linha separadora, ajustada com base no número de linhas do nome
+            const linhaY = y + nomeQuebrado.length * 6; // Ajusta a linha de separação após o nome
+            // Desenha as outras informações na mesma linha
+            doc.text(`${RAs[i]}`, 104, linhaY);
+            doc.text(`${cursosAtuais[i]}`, 124, linhaY);
+            doc.text(`${notasEnem[i]}`, 158, linhaY);
+            doc.text(`${notasDecimal[i]}`, 188, linhaY);
+
+
+            doc.line(0, linhaY+2, 210, linhaY+2);
+
+            // Ajusta o valor de Y para a próxima linha
+            y += nomeQuebrado.length * 6; // Aumenta Y conforme o número de linhas do nome
+        }
 
         // Gerar o PDF como um Blob e oferecer o download
         const pdfBlob = doc.output('blob');

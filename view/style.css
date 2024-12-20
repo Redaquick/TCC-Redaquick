@@ -686,6 +686,8 @@ canvas {
     gap: 1.5rem;
     /* Define o espaço entre as sections */
     margin-top: 4%;
+
+    overflow: visible; /* Evita cortar conteúdo dos filhos */
 }
 
 #divRedacoesCorrigidasAluno {
@@ -700,6 +702,8 @@ canvas {
     gap: 1.5rem;
     /* Define o espaço entre as sections */
     margin-top: 4%;
+
+    overflow: visible; /* Evita cortar conteúdo dos filhos */
 }
 
 .sectionTarefasRedacoes {
@@ -707,15 +711,17 @@ canvas {
     /* Divide o espaço restante para 4 sections */
     max-width: calc((68% - (3 * 1.5rem)) / 4);
     /* Garante que cada section tenha a largura correta */
-    min-height: 4rem;
-    height: 32rem;
+    min-height: 20rem;
+    height: auto;
+    max-height: 39rem;
     background-color: white;
     font-size: 1rem;
-    line-height: 2%;
+    line-height: 1.5;
     display: flex;
     /* Centraliza o texto dentro da section */
     align-items: center;
     justify-content: center;
+    text-align: center; /* Centraliza o texto */
     flex-direction: column;
     box-sizing: border-box;
     /* Inclui o padding e a borda no cálculo de largura/altura */
@@ -727,6 +733,12 @@ canvas {
     box-shadow: 0 0 0px;
     border-color: black;
     border: 0.2rem solid;
+
+    flex: 0 1 auto;
+    word-wrap: break-word; /* Permite quebrar palavras longas */
+    word-break: break-word; /* Garante que palavras grandes sejam quebradas */
+    white-space: normal; /* Permite quebra de linha automática */
+    overflow-wrap: break-word; /* Compatibilidade adicional para quebra de texto */
 }
 
 .sectionPacotes {
@@ -735,14 +747,16 @@ canvas {
     max-width: calc((95% - (3 * 1.5rem)) / 4);
     /* Garante que cada section tenha a largura correta */
     min-height: 3rem;
-    height: 6rem;
+    height: auto;
+    max-height: 8rem;
     background-color: white;
     font-size: 1rem;
-    line-height: 2%;
+    line-height: 1.5;
     display: flex;
     /* Centraliza o texto dentro da section */
     align-items: center;
     justify-content: center;
+    text-align: center; /* Centraliza o texto */
     flex-direction: column;
     box-sizing: border-box;
     /* Inclui o padding e a borda no cálculo de largura/altura */
@@ -750,6 +764,12 @@ canvas {
     gap: 0;
     padding: 0;
     cursor: pointer;
+
+    flex: 0 1 auto;
+    word-wrap: break-word; /* Permite quebrar palavras longas */
+    word-break: break-word; /* Garante que palavras grandes sejam quebradas */
+    white-space: normal; /* Permite quebra de linha automática */
+    overflow-wrap: break-word; /* Compatibilidade adicional para quebra de texto */
 }
 
 .sectionMensagemErroPacote {
@@ -770,6 +790,12 @@ canvas {
     text-align: center;
     align-items: center;
     align-content: center;
+
+    flex: 0 1 auto;
+    word-wrap: break-word; /* Permite quebrar palavras longas */
+    word-break: break-word; /* Garante que palavras grandes sejam quebradas */
+    white-space: normal; /* Permite quebra de linha automática */
+    overflow-wrap: break-word; /* Compatibilidade adicional para quebra de texto */
 }
 
 #configBtnGerarRelatorio {
