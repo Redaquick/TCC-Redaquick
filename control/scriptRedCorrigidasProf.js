@@ -305,37 +305,54 @@ async function gerarRelatorio() {
         doc.line(177, 15, 177, 290); // Linha vertical para separar 'Nota ENEM' de 'Nota Decimal'
         doc.line(0, 22, 210, 22);
 
-        //FAZER TREM DE QUEBRAR PÁGINA
-
         let y = 30; // Posição inicial no eixo Y
+        const pageHeight = 290; // Altura útil da página no PDF
+
         for (let i = 0; i < nomesAtuais.length; i++) {
             // Quebra o nome em várias linhas, se necessário
-            const nomeQuebrado = doc.splitTextToSize(nomesAtuais[i], 40); // 90 é a largura máxima permitida para o nome
+            const nomeQuebrado = doc.splitTextToSize(nomesAtuais[i], 90); // 90 é a largura máxima permitida para o nome
+
+            // Calcula a altura necessária para o nome (múltiplas linhas)
+            const nomeAltura = nomeQuebrado.length * 6; // 6 é o espaçamento entre linhas
+
+            // Verifica se há espaço suficiente para o próximo bloco de dados
+            if (y + nomeAltura + 10 > pageHeight) { // 10 é a margem adicional
+                doc.addPage(); // Adiciona uma nova página
+                y = 30; // Reinicia o valor de Y na nova página
+
+                // Redesenha os cabeçalhos e linhas verticais na nova página
+                doc.setFontSize(12);
+                doc.setFont('helvetica', 'normal');
+                doc.text('Nome', 47, 20);
+                doc.text('RA', 107, 20);
+                doc.text('Curso', 128, 20);
+                doc.text('Nota (ENEM)', 150, 20);
+                doc.text('Nota (Decimal)', 180, 20);
+                doc.line(100, 15, 100, 290);
+                doc.line(120, 15, 120, 290);
+                doc.line(147, 15, 147, 290);
+                doc.line(177, 15, 177, 290);
+                doc.line(0, 22, 210, 22);
+            }
 
             // Desenha o nome, que pode ter múltiplas linhas
             for (var j = 0; j < nomeQuebrado.length; j++) {
                 doc.text(nomeQuebrado[j], 3, y + (j * 6)); // Ajusta o Y para cada linha do nome
             }
 
-            // Desenha a linha separadora, ajustada com base no número de linhas do nome
-        
-            console.log("Valor y: " + y);
-            console.log("Valor j: " + j);
-
             // Desenha as outras informações na mesma linha
-            doc.text(`${RAs[i]}`, 104, y + ((j-1) * 6));
-            doc.text(`${cursosAtuais[i]}`, 124, y + ((j-1) * 6));
-            doc.text(`${notasEnem[i]}`, 158, y + ((j-1) * 6));
-            doc.text(`${notasDecimal[i]}`, 188, y + ((j-1) * 6));
+            doc.text(`${RAs[i]}`, 104, y + ((j - 1) * 6));
+            doc.text(`${cursosAtuais[i]}`, 124, y + ((j - 1) * 6));
+            doc.text(`${notasEnem[i]}`, 158, y + ((j - 1) * 6));
+            doc.text(`${notasDecimal[i]}`, 188, y + ((j - 1) * 6));
 
-            const linhaY = y + ((j-1) * 6) + 2; // Ajusta a linha de separação após o nome
-
+            // Desenha a linha separadora após o registro
+            const linhaY = y + ((j - 1) * 6) + 2; // Ajusta a linha de separação
             doc.line(0, linhaY, 210, linhaY);
 
             // Ajusta o valor de Y para a próxima linha
             y = linhaY + 6; // Aumenta Y conforme o número de linhas do nome
         }
-
         // Gerar o PDF como um Blob e oferecer o download
         const pdfBlob = doc.output('blob');
         const link = document.createElement('a');
