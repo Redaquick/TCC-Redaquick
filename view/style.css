@@ -687,7 +687,8 @@ canvas {
     /* Define o espaço entre as sections */
     margin-top: 4%;
 
-    overflow: visible; /* Evita cortar conteúdo dos filhos */
+    overflow: visible;
+    /* Evita cortar conteúdo dos filhos */
 }
 
 #divRedacoesCorrigidasAluno {
@@ -703,7 +704,8 @@ canvas {
     /* Define o espaço entre as sections */
     margin-top: 4%;
 
-    overflow: visible; /* Evita cortar conteúdo dos filhos */
+    overflow: visible;
+    /* Evita cortar conteúdo dos filhos */
 }
 
 .sectionTarefasRedacoes {
@@ -721,7 +723,8 @@ canvas {
     /* Centraliza o texto dentro da section */
     align-items: center;
     justify-content: center;
-    text-align: center; /* Centraliza o texto */
+    text-align: center;
+    /* Centraliza o texto */
     flex-direction: column;
     box-sizing: border-box;
     /* Inclui o padding e a borda no cálculo de largura/altura */
@@ -735,10 +738,18 @@ canvas {
     border: 0.2rem solid;
 
     flex: 0 1 auto;
-    word-wrap: break-word; /* Permite quebrar palavras longas */
-    word-break: break-word; /* Garante que palavras grandes sejam quebradas */
-    white-space: normal; /* Permite quebra de linha automática */
-    overflow-wrap: break-word; /* Compatibilidade adicional para quebra de texto */
+    word-wrap: break-word;
+    /* Permite quebrar palavras longas */
+    word-break: break-word;
+    /* Garante que palavras grandes sejam quebradas */
+    white-space: normal;
+    /* Permite quebra de linha automática */
+    overflow-wrap: break-word;
+    /* Compatibilidade adicional para quebra de texto */
+
+    animation: revelarRedacao 1ms ease-in-out both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 25%;
 }
 
 .sectionPacotes {
@@ -756,7 +767,8 @@ canvas {
     /* Centraliza o texto dentro da section */
     align-items: center;
     justify-content: center;
-    text-align: center; /* Centraliza o texto */
+    text-align: center;
+    /* Centraliza o texto */
     flex-direction: column;
     box-sizing: border-box;
     /* Inclui o padding e a borda no cálculo de largura/altura */
@@ -766,10 +778,14 @@ canvas {
     cursor: pointer;
 
     flex: 0 1 auto;
-    word-wrap: break-word; /* Permite quebrar palavras longas */
-    word-break: break-word; /* Garante que palavras grandes sejam quebradas */
-    white-space: normal; /* Permite quebra de linha automática */
-    overflow-wrap: break-word; /* Compatibilidade adicional para quebra de texto */
+    word-wrap: break-word;
+    /* Permite quebrar palavras longas */
+    word-break: break-word;
+    /* Garante que palavras grandes sejam quebradas */
+    white-space: normal;
+    /* Permite quebra de linha automática */
+    overflow-wrap: break-word;
+    /* Compatibilidade adicional para quebra de texto */
 }
 
 .sectionMensagemErroPacote {
@@ -792,10 +808,14 @@ canvas {
     align-content: center;
 
     flex: 0 1 auto;
-    word-wrap: break-word; /* Permite quebrar palavras longas */
-    word-break: break-word; /* Garante que palavras grandes sejam quebradas */
-    white-space: normal; /* Permite quebra de linha automática */
-    overflow-wrap: break-word; /* Compatibilidade adicional para quebra de texto */
+    word-wrap: break-word;
+    /* Permite quebrar palavras longas */
+    word-break: break-word;
+    /* Garante que palavras grandes sejam quebradas */
+    white-space: normal;
+    /* Permite quebra de linha automática */
+    overflow-wrap: break-word;
+    /* Compatibilidade adicional para quebra de texto */
 }
 
 #configBtnGerarRelatorio {
@@ -813,4 +833,17 @@ canvas {
     cursor: pointer;
     border-radius: 20px;
     background-color: #bb0b0b;
+}
+
+@keyframes revelarRedacao {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
