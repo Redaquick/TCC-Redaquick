@@ -44,7 +44,7 @@ try {
     exit();
 }
 
-if ($resultadoSelect != null) {
+if (($stmt->rowCount()) > 0) {
     echo 'true';
 } else {
     echo 'false';

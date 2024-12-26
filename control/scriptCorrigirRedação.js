@@ -309,7 +309,12 @@ async function lerQRCodeViaPHP(urlDaImagem) {
             alert('Os dados do QrCode não foram identificados corretamente!!!');
         }
 
-        verificaRedacaoCorrigidaPHP();
+        if (controleUndefinedQrCode) {
+            verificaRedacaoCorrigidaPHP();
+        }else{
+            controleVerificarCorrecaoCorrigida = false;
+            alertaRedacaoCorrigida.style.display = "none";
+        }
 
     } catch (error) {
         console.error('Erro:', error);
@@ -1257,6 +1262,8 @@ inputPDFupload.addEventListener('change', function (event) {
         valorZoomPercentual = (zoom * 100);
         valorZoomTexto.value = valorZoomPercentual + '%';
         fabricCanvas.setZoom(1);
+
+        contadorPagina = 1;
 
         renderizarPagina();
         resetarConfigComentarios();
