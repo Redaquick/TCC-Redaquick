@@ -747,9 +747,11 @@ canvas {
     overflow-wrap: break-word;
     /* Compatibilidade adicional para quebra de texto */
 
-    animation: revelarRedacao 1ms ease-in-out both;
+    animation: revelarRedacao 30ms ease-in-out both;
     animation-timeline: view();
     animation-range: entry 0% cover 25%;
+
+    transition: transform 0.3s ease;
 }
 
 .sectionPacotes {
@@ -786,6 +788,8 @@ canvas {
     /* Permite quebra de linha automática */
     overflow-wrap: break-word;
     /* Compatibilidade adicional para quebra de texto */
+
+    transition: transform 0.3s ease;
 }
 
 .sectionMensagemErroPacote {
@@ -837,13 +841,18 @@ canvas {
 
 @keyframes revelarRedacao {
     from {
-        opacity: 0;
-        transform: scale(0.5);
-
+        opacity: 0;       
     }
 
     to {
-        opacity: 1;
-        transform: scale(1);
+        opacity: 1;        
     }
+}
+
+.sectionTarefasRedacoes:hover {
+    transform: scale(1.2);
+}
+
+.sectionPacotes:hover{
+    transform: scale(1.2);
 }
