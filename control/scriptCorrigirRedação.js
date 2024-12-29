@@ -240,6 +240,12 @@ function imutaObjeto() {
 }
 
 async function renderizarPagina() {
+    contadorCliqueRet = 0;
+
+    controleDesenhaRet = false;
+    controleModoDesenho = false;
+    fabricCanvas.isDrawingMode = false;
+
     await pdfjsLib.getDocument(arquivoRenderizado).promise.then((doc) => {
         tamanhoPagsDoc = doc.numPages;
         console.log('Tamanho do pdf ' + tamanhoPagsDoc);
