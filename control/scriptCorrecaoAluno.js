@@ -83,7 +83,6 @@ function saveCanvasState() {
     canvasStates.push(fabricCanvas.toJSON());
 }
 
-
 // Evento para parar o DrawingMode
 fabricCanvas.on('mouse:up', function (event) {
 
