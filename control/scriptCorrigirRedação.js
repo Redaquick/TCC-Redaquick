@@ -1356,28 +1356,30 @@ firstinputPDFupload.addEventListener('change', function (event) {
 inputPDFupload.addEventListener('change', function (event) {
     const file = event.target.files[0];
 
-    const fileReader = new FileReader();
-    fileReader.readAsArrayBuffer(file); //Ler o arquivo como um ArrayBuffer
+    if (file != null) {
+        const fileReader = new FileReader();
+        fileReader.readAsArrayBuffer(file); //Ler o arquivo como um ArrayBuffer
 
-    fileReader.onload = function () {
-        arquivoRenderizado = new Uint8Array(this.result);   //Converter o arquivo em Uint8
+        fileReader.onload = function () {
+            arquivoRenderizado = new Uint8Array(this.result);   //Converter o arquivo em Uint8
 
-        currentStateIndex = -1;
-        canvasStates.splice(0, canvasStates.length);
-        fabricCanvas.clear();
+            currentStateIndex = -1;
+            canvasStates.splice(0, canvasStates.length);
+            fabricCanvas.clear();
 
-        zoom = 1;
-        valorZoomPercentual = (zoom * 100);
-        valorZoomTexto.value = valorZoomPercentual + '%';
-        fabricCanvas.setZoom(1);
+            zoom = 1;
+            valorZoomPercentual = (zoom * 100);
+            valorZoomTexto.value = valorZoomPercentual + '%';
+            fabricCanvas.setZoom(1);
 
-        contadorPagina = 1;
+            contadorPagina = 1;
 
-        renderizarPagina();
-        resetarConfigComentarios();
+            renderizarPagina();
+            resetarConfigComentarios();
 
-        controleUndefinedQrCode = false;
-    };
+            controleUndefinedQrCode = false;
+        };
+    }
 });
 
 function resetarConfigComentarios() {
@@ -1396,4 +1398,6 @@ function resetarConfigComentarios() {
     armazenaComentarios.forEach(function (elemento) {
         elemento.remove();
     });
+
+    armazenaComentarios.splice(0, armazenaComentarios.length);
 }
