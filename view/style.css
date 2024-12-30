@@ -685,7 +685,7 @@ canvas {
     /* Garante alinhamento vertical */
     gap: 1.5rem;
     /* Define o espaço entre as sections */
-    margin-top: 4%;
+    margin-top: 7%;
 
     overflow: visible;
     /* Evita cortar conteúdo dos filhos */
@@ -702,7 +702,7 @@ canvas {
     /* Garante alinhamento vertical */
     gap: 1.5rem;
     /* Define o espaço entre as sections */
-    margin-top: 4%;
+    margin-top: 7%;
 
     overflow: visible;
     /* Evita cortar conteúdo dos filhos */
@@ -855,4 +855,17 @@ canvas {
 
 .sectionPacotes:hover{
     transform: scale(1.2);
+}
+
+.barrinhaRedCorrigidas {
+    display: flex;
+    align-items: center;
+    padding: 1px;
+    background-color: beige;
+    box-shadow: 0 0 15px #ff6961;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 2;
 }

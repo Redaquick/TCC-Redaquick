@@ -2,6 +2,8 @@ var fabricCanvas = new fabric.Canvas('fabric-canvas');
 var canvas = document.getElementById("RenderPDF");
 var context = canvas.getContext("2d");
 
+var passarPagButton = document.getElementById("passarPag");
+var voltarPagButton = document.getElementById("voltarPag");
 var voltarParaMenu = document.getElementById("configBtnVoltarCorrigir");
 var aumentarZoom = document.getElementById("aumentarZoom");
 var diminuirZoom = document.getElementById("diminuirZoom");
@@ -16,6 +18,8 @@ var toolbar = document.getElementById("toolbar");
 var elementosLateraisCanvas = document.getElementById("elementosLateraisCanvas");
 var firstinputPDFupload = document.getElementById("firstUploadPDF");
 var inputPDFupload = document.getElementById("uploadPDF");
+var sectionCorrigirRedacao = document.getElementById("sectionCorrigirRedacao");
+var topBar = document.getElementById("barrinha");
 var topBarCorrecao = document.getElementById("barrinhaCorrecaoRedaquick");
 var buttonCorPrincipal = document.getElementById('buttonCorPrincipal');
 var paleteCores = document.getElementById('paleteCores');
@@ -27,7 +31,7 @@ var valorZoomPercentual = 0;
 
 var valorNotaTextoC1 = document.getElementById("competencia1");
 var valorNotaTextoC2 = document.getElementById("competencia2");
-var valorNotaTextoC3 = document.getElementById("competencia3");
+var valorNotaTextoC3 = document.getElementById("competencia3"); //USAR NO PDF
 var valorNotaTextoC4 = document.getElementById("competencia4");
 var valorNotaTextoC5 = document.getElementById("competencia5");
 
@@ -35,13 +39,13 @@ var notaInicial = 200;
 
 var notaC1 = 200;
 var notaC2 = 200;
-var notaC3 = 200;
+var notaC3 = 200; //USAR NO PDF
 var notaC4 = 200;
 var notaC5 = 200;
 
 var comentarioCompetencia1 = document.createElement('textarea');
 var comentarioCompetencia2 = document.createElement('textarea');
-var comentarioCompetencia3 = document.createElement('textarea');
+var comentarioCompetencia3 = document.createElement('textarea'); //USAR NO PDF
 var comentarioCompetencia4 = document.createElement('textarea');
 var comentarioCompetencia5 = document.createElement('textarea');
 
@@ -56,7 +60,7 @@ var botaoAumentaC4 = document.getElementById("aumentaNotaC4");
 var botaoDiminuiC5 = document.getElementById("diminuiNotaC5");
 var botaoAumentaC5 = document.getElementById("aumentaNotaC5");
 
-var armazenaComentarios = [];
+var armazenaComentarios = []; //USAR NO PDF
 
 var arquivoRenderizado;
 
@@ -236,6 +240,12 @@ function imutaObjeto() {
 }
 
 async function renderizarPagina() {
+    contadorCliqueRet = 0;
+
+    controleDesenhaRet = false;
+    controleModoDesenho = false;
+    fabricCanvas.isDrawingMode = false;
+
     await pdfjsLib.getDocument(arquivoRenderizado).promise.then((doc) => {
         tamanhoPagsDoc = doc.numPages;
         console.log('Tamanho do pdf ' + tamanhoPagsDoc);
@@ -305,7 +315,12 @@ async function lerQRCodeViaPHP(urlDaImagem) {
             alert('Os dados do QrCode não foram identificados corretamente!!!');
         }
 
-        verificaRedacaoCorrigidaPHP();
+        if (controleUndefinedQrCode) {
+            verificaRedacaoCorrigidaPHP();
+        } else {
+            controleVerificarCorrecaoCorrigida = false;
+            alertaRedacaoCorrigida.style.display = "none";
+        }
 
     } catch (error) {
         console.error('Erro:', error);
@@ -347,6 +362,26 @@ async function verificaRedacaoCorrigidaPHP() {
     }
 }
 
+function verificaRedacaoSalvaProxPag() {
+    if (controleSalvarCorrecao == false && controleVerificarCorrecaoCorrigida == false) {
+        if (confirm('Sua correção não foi salva. Tem certeza que deseja passar de página?')) {
+            ProxPagina();
+        }
+    } else {
+        controleSalvarCorrecao = false;
+        ProxPagina();
+    }
+}
+function verificaRedacaoSalvaPagAnterior() {
+    if (controleSalvarCorrecao == false && controleVerificarCorrecaoCorrigida == false) {
+        if (confirm('Sua correção não foi salva. Tem certeza que deseja passar de página?')) {
+            PaginaAnterior();
+        }
+    } else {
+        controleSalvarCorrecao = false;
+        PaginaAnterior();
+    }
+}
 async function salvarCorrecao() {
     if (controleUndefinedQrCode) {
         let canvasJson = fabricCanvas.toJSON();
@@ -571,6 +606,51 @@ async function inserirComentariosPHP() {
     }
 }
 
+function ProxPagina() {
+    if (contadorPagina < tamanhoPagsDoc) {
+        contadorPagina++;
+
+        currentStateIndex = -1;
+        canvasStates.splice(0, canvasStates.length);
+        fabricCanvas.clear();
+
+        zoom = 1;
+        valorZoomPercentual = (zoom * 100);
+        valorZoomTexto.value = valorZoomPercentual + '%';
+        fabricCanvas.setZoom(1);
+
+        renderizarPagina();
+        resetarConfigComentarios();
+        alertaRedacaoCorrigida.style.display = "none";
+        controleUndefinedQrCode = false;
+
+    } else {
+        alert('Limite de Página Atingido!')
+    }
+}
+function PaginaAnterior() {
+    if (contadorPagina > 1) {
+        contadorPagina--;
+
+        currentStateIndex = -1;
+        canvasStates.splice(0, canvasStates.length);
+        fabricCanvas.clear();
+
+        zoom = 1;
+        valorZoomPercentual = (zoom * 100);
+        valorZoomTexto.value = valorZoomPercentual + '%';
+        fabricCanvas.setZoom(1);
+
+        renderizarPagina();
+        resetarConfigComentarios();
+        alertaRedacaoCorrigida.style.display = "none";
+        controleUndefinedQrCode = false;
+
+    } else {
+        alert('Limite de Página Atingido!')
+    }
+}
+
 function AumentarZoom() {
     if (zoom < 2) {
         zoom = zoom + 0.25;
@@ -615,8 +695,9 @@ function addTextAreaCompetencia() {
     comentarioCompetencia1.style.borderWidth = '2px';
     comentarioCompetencia1.style.minHeight = '152px';
     comentarioCompetencia1.style.maxHeight = '152px';
+    comentarioCompetencia1.setAttribute('readonly', true);
 
-    comentarioCompetencia1.value = "";
+    comentarioCompetencia1.value = "200 pts: Demonstra excelente domínio da modalidade escrita formal da língua portuguesa e de escolha de registro. Desvios gramaticais ou de convenções da escrita serão aceitos somente como excepcionalidade e quando não caracterizarem reincidência.";
 
     sectionComentariosCompetencias.appendChild(comentarioCompetencia1);
 
@@ -624,8 +705,9 @@ function addTextAreaCompetencia() {
     comentarioCompetencia2.style.borderWidth = '2px';
     comentarioCompetencia2.style.minHeight = '152px';
     comentarioCompetencia2.style.maxHeight = '152px';
+    comentarioCompetencia1.setAttribute('readonly', true);
 
-    comentarioCompetencia2.value = "";
+    comentarioCompetencia2.value = "200 pts: Desenvolve o tema por meio de argumentação consistente, a partir de um repertório sociocultural produtivo e apresenta excelente domínio do texto dissertativo-argumentativo.";
 
     sectionComentariosCompetencias.appendChild(comentarioCompetencia2);
 
@@ -633,8 +715,9 @@ function addTextAreaCompetencia() {
     comentarioCompetencia3.style.borderWidth = '2px';
     comentarioCompetencia3.style.minHeight = '152px';
     comentarioCompetencia3.style.maxHeight = '152px';
+    comentarioCompetencia1.setAttribute('readonly', true);
 
-    comentarioCompetencia3.value = "";
+    comentarioCompetencia3.value = "200 pts: Apresenta informações, fatos e opiniões relacionados ao tema proposto, de forma consistente e organizada, configurando autoria, em defesa de um ponto de vista.";
 
     sectionComentariosCompetencias.appendChild(comentarioCompetencia3);
 
@@ -642,8 +725,9 @@ function addTextAreaCompetencia() {
     comentarioCompetencia4.style.borderWidth = '2px';
     comentarioCompetencia4.style.minHeight = '152px';
     comentarioCompetencia4.style.maxHeight = '152px';
+    comentarioCompetencia1.setAttribute('readonly', true);
 
-    comentarioCompetencia4.value = "";
+    comentarioCompetencia4.value = "200 pts: Articula bem as partes do texto e apresenta repertório diversificado de recursos coesivos.";
 
     sectionComentariosCompetencias.appendChild(comentarioCompetencia4);
 
@@ -651,8 +735,9 @@ function addTextAreaCompetencia() {
     comentarioCompetencia5.style.borderWidth = '2px';
     comentarioCompetencia5.style.minHeight = '152px';
     comentarioCompetencia5.style.maxHeight = '152px';
+    comentarioCompetencia1.setAttribute('readonly', true);
 
-    comentarioCompetencia5.value = "";
+    comentarioCompetencia5.value = "200 pts: Elabora muito bem proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.";
 
     sectionComentariosCompetencias.appendChild(comentarioCompetencia5);
 }
@@ -1019,40 +1104,105 @@ function salvarClick() {
         quality: 1.0
     });
 
-    var link = document.createElement('a');
-    link.href = urlImagem;
-    link.download = 'redacaoCorrigida.png';
-    link.click();
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-    var conteudo = "Comentários referente às Competências:\n\n" +
-        comentarioCompetencia1.value + "\n\n" +
-        comentarioCompetencia2.value + "\n\n" +
-        comentarioCompetencia3.value + "\n\n" +
-        comentarioCompetencia4.value + "\n\n" +
-        comentarioCompetencia5.value + "\n\n\n" +
-        "Comentários Personalizados:\n\n";
+    // Adiciona a imagem na primeira página
+    doc.addImage(urlImagem, 'PNG', 3, 0, 200, 280);  // Ajuste a posição e o tamanho conforme necessário
+    doc.addPage();
 
-    for (let index = 0; index < armazenaComentarios.length; index++) {
-        const comentario = armazenaComentarios[index];
-        const estilo = getComputedStyle(comentario);
-        const corRgb = estilo.borderColor;
-        const corLinha = rgbToName(corRgb);
-        conteudo = conteudo + "Comentário " + (index + 1) + ": " + comentario.value + "(" + corLinha + ")" + "\n\n";
+    // Configura o título do relatório
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold'); // Define a fonte como negrito
+    doc.text('Vista Pedagógica', 85, 10);
+
+    // Configura os textos das competências, quebrando em linhas para caber no espaço
+    var nomeQuebrado1 = doc.splitTextToSize(comentarioCompetencia1.value, 235);
+    var nomeQuebrado2 = doc.splitTextToSize(comentarioCompetencia2.value, 235);
+    var nomeQuebrado3 = doc.splitTextToSize(comentarioCompetencia3.value, 235);
+    var nomeQuebrado4 = doc.splitTextToSize(comentarioCompetencia4.value, 235);
+    var nomeQuebrado5 = doc.splitTextToSize(comentarioCompetencia5.value, 235);
+
+    // Cabeçalhos da tabela com espaçamento ajustado
+    doc.setFontSize(12);
+    doc.text('Comentários Referentes às Competências:', 10, 20);
+
+    let yComentario = 30;
+
+    // Função para adicionar comentários de cada competência
+    function adicionarComentarioCompetencia(titulo, comentarios) {
+        doc.setFont('helvetica', 'bold'); // Define a fonte como negrito
+        doc.text(titulo, 10, yComentario);
+        yComentario += 5;
+
+        for (let i = 0; i < comentarios.length; i++) {
+            doc.setFont('helvetica', 'normal'); // Fonte padrão
+            doc.text(comentarios[i], 10, yComentario);
+            yComentario += 6;
+
+            // Adiciona nova página se necessário
+            if (yComentario > doc.internal.pageSize.height - 10) {
+                doc.addPage();
+                yComentario = 30;
+            }
+        }
     }
 
-    // Cria um blob com o conteúdo do texto
-    var blob = new Blob([conteudo], { type: 'text/plain' });
+    // Adicionando os comentários das competências
+    adicionarComentarioCompetencia('Competência 1:', nomeQuebrado1);
+    adicionarComentarioCompetencia('Competência 2:', nomeQuebrado2);
+    adicionarComentarioCompetencia('Competência 3:', nomeQuebrado3);
+    adicionarComentarioCompetencia('Competência 4:', nomeQuebrado4);
+    adicionarComentarioCompetencia('Competência 5:', nomeQuebrado5);
 
-    // Cria uma URL para o blob
-    var urlComentarios = URL.createObjectURL(blob);
+    // Linha separadora
+    doc.setDrawColor(0); // Cor da linha (preto)
+    doc.setLineWidth(0.3); // Largura da linha
+    doc.line(10, yComentario, 200, yComentario);
+    yComentario += 10;
 
-    // Cria um elemento <a> para o download
-    var linkComentarios = document.createElement('a');
-    linkComentarios.href = urlComentarios;
-    linkComentarios.download = 'arquivoComentarios.txt';
+    // Adicionando comentários personalizados
+    doc.setFont('helvetica', 'bold');
+    doc.text('Comentários Personalizados:', 10, yComentario);
+    yComentario += 10;
 
-    linkComentarios.click();
+    if (armazenaComentarios) {
+        for (let i = 0; i < armazenaComentarios.length; i++) {
+            const estilo = getComputedStyle(armazenaComentarios[i]);
+            const corRgb = estilo.borderColor;
+            const corLinha = rgbToName(corRgb);
 
+            doc.setFont('helvetica', 'bold');
+            doc.text('Comentário ' + (i + 1) + ' (' + corLinha + ') :', 10, yComentario);
+            yComentario += 5;
+
+            doc.setFont('helvetica', 'normal');
+            const comentarioQuebrado = doc.splitTextToSize(armazenaComentarios[i].value, 180);
+            for (let j = 0; j < comentarioQuebrado.length; j++) {
+                doc.text(comentarioQuebrado[j], 10, yComentario);
+                yComentario += 6;
+
+                // Adiciona nova página se necessário
+                if (yComentario > doc.internal.pageSize.height - 10) {
+                    doc.addPage();
+                    yComentario = 10;
+                }
+            }
+            yComentario += 10; // Espaço entre os comentários
+        }
+    } else {
+        doc.setFont('helvetica', 'normal');
+        doc.text('Nenhum comentário personalizado disponível.', 10, yComentario);
+    }
+
+    console.log(armazenaComentarios);
+
+    // Gerar o PDF como um Blob e oferecer o download
+    const pdfBlob = doc.output('blob');
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(pdfBlob);
+    link.download = 'Vista Pedagógica.pdf';
+    link.click();
 }
 
 function addTextAreaComentario() {
@@ -1128,21 +1278,94 @@ function buttonCorBlack() {
 }
 
 function hiddenVisibleDisplay() {
+    sectionCorrigirRedacao.style.display = "none";
     sectionCompetenciasContainer.style.display = "flex";
     sectionEstanteComentarios.style.display = "flex";
-    sectionComentariosCompetencias.style.display = "flex";
-    firstinputPDFupload.style.display = "flex";
+    sectionComentariosCompetencias.style.display = "none";
+    firstinputPDFupload.style.display = "none";
+    topBar.style.display = "none";
     toolbar.style.display = "flex";
     elementosLateraisCanvas.style.display = "flex";
     topBarCorrecao.style.display = "flex";
-    voltarParaMenu.style.display = "flex";
+    passarPagButton.style.visibility = "visible";
+    voltarPagButton.style.visibility = "visible";
+    voltarParaMenu.style.display = "none";
     aumentarZoom.style.visibility = "visible";
     diminuirZoom.style.visibility = "visible";
     valorZoomTexto.style.visibility = "visible";
+    inputPDFupload.style.visibility = "none";
     drawPagButton.style.visibility = "visible";
     backPagButton.style.visibility = "visible";
     desativarPagButton.style.visibility = "visible";
     document.getElementById('canvas-container').style.visibility = "visible";
 
     fabricCanvas.renderAll();
+}
+
+firstinputPDFupload.addEventListener('change', function (event) {
+    const file = event.target.files[0];
+
+    const fileReader = new FileReader();
+    fileReader.readAsArrayBuffer(file); //Ler o arquivo como um ArrayBuffer
+
+    fileReader.onload = function () {
+        arquivoRenderizado = new Uint8Array(this.result);   //Converter o arquivo em Uint8
+
+        hiddenVisibleDisplay();
+        renderizarPagina();
+        addTextAreaCompetencia();
+
+        inputPDFupload.files = firstinputPDFupload.files;
+        fabricCanvas.selection = false;
+        fabricCanvas.selectable = false;
+    };
+});
+
+inputPDFupload.addEventListener('change', function (event) {
+    const file = event.target.files[0];
+
+    if (file != null) {
+        const fileReader = new FileReader();
+        fileReader.readAsArrayBuffer(file); //Ler o arquivo como um ArrayBuffer
+
+        fileReader.onload = function () {
+            arquivoRenderizado = new Uint8Array(this.result);   //Converter o arquivo em Uint8
+
+            currentStateIndex = -1;
+            canvasStates.splice(0, canvasStates.length);
+            fabricCanvas.clear();
+
+            zoom = 1;
+            valorZoomPercentual = (zoom * 100);
+            valorZoomTexto.value = valorZoomPercentual + '%';
+            fabricCanvas.setZoom(1);
+
+            contadorPagina = 1;
+
+            renderizarPagina();
+            resetarConfigComentarios();
+
+            controleUndefinedQrCode = false;
+        };
+    }
+});
+
+function resetarConfigComentarios() {
+    comentarioCompetencia1.value = '200 pts: Demonstra excelente domínio da modalidade escrita formal da língua portuguesa e de escolha de registro. Desvios gramaticais ou de convenções da escrita serão aceitos somente como excepcionalidade e quando não caracterizarem reincidência.';
+    comentarioCompetencia2.value = '200 pts: Desenvolve o tema por meio de argumentação consistente, a partir de um repertório sociocultural produtivo e apresenta excelente domínio do texto dissertativo-argumentativo.';
+    comentarioCompetencia3.value = '200 pts: Apresenta informações, fatos e opiniões relacionados ao tema proposto, de forma consistente e organizada, configurando autoria, em defesa de um ponto de vista.';
+    comentarioCompetencia4.value = '200 pts: Articula bem as partes do texto e apresenta repertório diversificado de recursos coesivos.';
+    comentarioCompetencia5.value = '200 pts: Elabora muito bem proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.';
+
+    valorNotaTextoC1.value = notaInicial;
+    valorNotaTextoC2.value = notaInicial;
+    valorNotaTextoC3.value = notaInicial;
+    valorNotaTextoC4.value = notaInicial;
+    valorNotaTextoC5.value = notaInicial;
+
+    armazenaComentarios.forEach(function (elemento) {
+        elemento.remove();
+    });
+
+    armazenaComentarios.splice(0, armazenaComentarios.length);
 }

@@ -22,64 +22,49 @@
 </head>
 
 <body>
-    <div class="barrinha" id="barrinha">
-        <img src="../imagens/LogoRedaQuick_nova.png" alt="Logo RedaQuick" class="configIMGLogoTCC">
-    </div>
-
-    <div class="containerSection">
-        <section id="sectionCorrigirRedacao">
-            <p class="titulo"><br>Redações do Aluno</p>
-            <div class="alinhamentoCentro">
-                <br><br>
-                <input type="file" id="firstUploadPDF" accept=".pdf"><br><br><br>
-                <a href="menu.html"><input id="configBtnVoltarCorrigir" type="button" value="Voltar"></a>
-            </div>
-        </section>
-    </div>
-
-    <div class="barrinhaCorrecaoRedaquick" id="barrinhaCorrecaoRedaquick">
+    <div class="barrinhaCorrecaoRedaquick" id="barrinhaCorrecaoRedaquick" style="display: flex;">
         <img src="../imagens/LogoRedaQuick_nova.png" alt="Logo RedaQuick" class="configIMGLogoTCCcorrecaoRedaquick">
     </div>
 
-    <div class="competencias-container" id="competenciasContainer">
+    <div class="competencias-container" id="competenciasContainer" style="display: flex;">
         <section class="competencia">
             <p class="titulo">Competência 1</p>
-            
+
             <input type="text" value="" class="campo-pontuacao" id="competencia1" readonly>
-            
+
         </section>
         <section class="competencia">
             <p class="titulo">Competência 2</p>
-            
+
             <input type="text" value="" class="campo-pontuacao" id="competencia2" readonly>
-            
+
         </section>
         <section class="competencia">
             <p class="titulo">Competência 3</p>
-            
+
             <input type="text" value="" class="campo-pontuacao" id="competencia3" readonly>
-            
+
         </section>
         <section class="competencia">
             <p class="titulo">Competência 4</p>
-            
+
             <input type="text" value="" class="campo-pontuacao" id="competencia4" readonly>
-            
+
         </section>
         <section class="competencia">
             <p class="titulo">Competência 5</p>
-            
+
             <input type="text" value="" class="campo-pontuacao" id="competencia5" readonly>
-            
+
         </section>
     </div>
 
     <div id="main-container">
-        <div id="canvas-container">
+        <div id="canvas-container" style="visibility: visible;">
             <canvas id="fabric-canvas"></canvas>
             <canvas id="RenderPDF"></canvas>
         </div>
-        <div id="toolbar"><br><br><br>
+        <div id="toolbar" style="display: flex;"><br><br><br>
             <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-chat-right-text"
                     id="estanteComentariosBtn" onclick="OnOffestanteComentarios()" title="Comentários"></i></span>
             <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-card-checklist"
@@ -89,23 +74,22 @@
                     onclick="salvarClick()" title="Download"></i></span>
         </div>
 
-        <div class="elementosLateraisCanvas" id="elementosLateraisCanvas"><br><br><br>
+        <div class="elementosLateraisCanvas" id="elementosLateraisCanvas" style="display: flex;"><br><br><br>
             <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-zoom-in" id="aumentarZoom"
-                    onclick="AumentarZoom()" title="Aumentar Zoom"></i></span>
+                    style="visibility: visible;" onclick="AumentarZoom()" title="Aumentar Zoom"></i></span>
             <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-zoom-out" id="diminuirZoom"
-                    onclick="DiminuirZoom()" title="Diminuir Zoom"></i></span>
-            <input style="cursor: not-allowed;" type="text" value="100%" id="CampoTextoZoom" readonly title="Zoom">
+                    style="visibility: visible;" onclick="DiminuirZoom()" title="Diminuir Zoom"></i></span>
+            <input style="cursor: not-allowed;" type="text" value="100%" id="CampoTextoZoom" style="visibility: visible" readonly title="Zoom">
             <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-clipboard-data"
                     id="campoCompetenciasBtn" onclick="OnOffcampoCompetencias()" title="Competências"></i></span>
 
             <span style="font-size: 25px; margin-top: 63vh;"><a href="menuAluno.html" id="botaoVoltarCorrecao"><i
-                        class="bi bi-arrow-bar-left" title="Voltar Menu"></i></a></span>
-            <input type="file" id="uploadPDF" accept=".pdf">
+                        class="bi bi-arrow-bar-left" title="Voltar Menu" style="visibility: visible;"></i></a></span>
         </div>
     </div>
 
     <div>
-        <section id="estanteComent">
+        <section id="estanteComent" style="display: flex;">
             <span style="background-color: #bb0b0b;">
                 <p style="font-size: 30px; text-align: center; color: white;">Comentários da Redação</p>
             </span>
@@ -114,7 +98,7 @@
     </div>
 
     <div>
-        <section id="comentCompetencias">
+        <section id="comentCompetencias" style="display: none;">
             <span style="background-color: #bb0b0b;">
                 <p style="font-size: 30px; text-align: center; color: white;">Comentários Referente as Competências</p>
             </span>

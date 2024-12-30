@@ -142,6 +142,8 @@ function criarRetangulos(nomeAluno, curso, trimestre, ano, indice_redacao) {
     sectionRetangulo.classList.add('sectionTarefasRedacoes');
     divRedacoesCorrigidas.appendChild(sectionRetangulo);
 
+    sectionRetangulo.style.zIndex = '1';
+
     const id_redacao_atual = id_redacoes[posicoesInformacoes[indice_redacao]];
 
     sectionRetangulo.addEventListener('click', () => {
@@ -166,6 +168,9 @@ function criarPacotes(nomeTarefa, index, trimestrePacote) {
     sectionRetangulo.classList.add('sectionPacotes');
 
     divRedacoesCorrigidas.appendChild(sectionRetangulo);
+
+    sectionRetangulo.style.zIndex = '1';
+
     pacotes.push(sectionRetangulo);
 
     sectionRetangulo.addEventListener('click', () => {

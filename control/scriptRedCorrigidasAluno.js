@@ -68,6 +68,8 @@ function criarRetangulos(nomeTarefa, nomeCurso, trimestre, ano, id_redacao) {
     sectionRetangulo.classList.add('sectionTarefasRedacoes');
     divRedacoesCorrigidasAluno.appendChild(sectionRetangulo);
 
+    sectionRetangulo.style.zIndex = '1';
+
     sectionRetangulo.addEventListener('click', () => {
         console.log('idRedacao: ' + id_redacao)
     });

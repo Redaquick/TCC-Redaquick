@@ -695,6 +695,7 @@ function addTextAreaCompetencia() {
     comentarioCompetencia1.style.borderWidth = '2px';
     comentarioCompetencia1.style.minHeight = '152px';
     comentarioCompetencia1.style.maxHeight = '152px';
+    comentarioCompetencia1.setAttribute('readonly', true);
 
     comentarioCompetencia1.value = "200 pts: Demonstra excelente domínio da modalidade escrita formal da língua portuguesa e de escolha de registro. Desvios gramaticais ou de convenções da escrita serão aceitos somente como excepcionalidade e quando não caracterizarem reincidência.";
 
@@ -704,6 +705,7 @@ function addTextAreaCompetencia() {
     comentarioCompetencia2.style.borderWidth = '2px';
     comentarioCompetencia2.style.minHeight = '152px';
     comentarioCompetencia2.style.maxHeight = '152px';
+    comentarioCompetencia2.setAttribute('readonly', true);
 
     comentarioCompetencia2.value = "200 pts: Desenvolve o tema por meio de argumentação consistente, a partir de um repertório sociocultural produtivo e apresenta excelente domínio do texto dissertativo-argumentativo.";
 
@@ -713,6 +715,7 @@ function addTextAreaCompetencia() {
     comentarioCompetencia3.style.borderWidth = '2px';
     comentarioCompetencia3.style.minHeight = '152px';
     comentarioCompetencia3.style.maxHeight = '152px';
+    comentarioCompetencia3.setAttribute('readonly', true);
 
     comentarioCompetencia3.value = "200 pts: Apresenta informações, fatos e opiniões relacionados ao tema proposto, de forma consistente e organizada, configurando autoria, em defesa de um ponto de vista.";
 
@@ -722,6 +725,7 @@ function addTextAreaCompetencia() {
     comentarioCompetencia4.style.borderWidth = '2px';
     comentarioCompetencia4.style.minHeight = '152px';
     comentarioCompetencia4.style.maxHeight = '152px';
+    comentarioCompetencia4.setAttribute('readonly', true);
 
     comentarioCompetencia4.value = "200 pts: Articula bem as partes do texto e apresenta repertório diversificado de recursos coesivos.";
 
@@ -731,6 +735,7 @@ function addTextAreaCompetencia() {
     comentarioCompetencia5.style.borderWidth = '2px';
     comentarioCompetencia5.style.minHeight = '152px';
     comentarioCompetencia5.style.maxHeight = '152px';
+    comentarioCompetencia5.setAttribute('readonly', true);
 
     comentarioCompetencia5.value = "200 pts: Elabora muito bem proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.";
 
@@ -1198,43 +1203,6 @@ function salvarClick() {
     link.href = URL.createObjectURL(pdfBlob);
     link.download = 'Vista Pedagógica.pdf';
     link.click();
-
-
-    /*
-    var link = document.createElement('a');
-    link.href = urlImagem;
-    link.download = 'redacaoCorrigida.png';
-    link.click();
-
-    var conteudo = "Comentários referente às Competências:\n\n" +
-        comentarioCompetencia1.value + "\n\n" +
-        comentarioCompetencia2.value + "\n\n" +
-        comentarioCompetencia3.value + "\n\n" +
-        comentarioCompetencia4.value + "\n\n" +
-        comentarioCompetencia5.value + "\n\n\n" +
-        "Comentários Personalizados:\n\n";
-
-    for (let index = 0; index < armazenaComentarios.length; index++) {
-        const comentario = armazenaComentarios[index];
-        const estilo = getComputedStyle(comentario);
-        const corRgb = estilo.borderColor;
-        const corLinha = rgbToName(corRgb);
-        conteudo = conteudo + "Comentário " + (index + 1) + ": " + comentario.value + "(" + corLinha + ")" + "\n\n";
-    }
-
-    // Cria um blob com o conteúdo do texto
-    var blob = new Blob([conteudo], { type: 'text/plain' });
-
-    // Cria uma URL para o blob
-    var urlComentarios = URL.createObjectURL(blob);
-
-    // Cria um elemento <a> para o download
-    var linkComentarios = document.createElement('a');
-    linkComentarios.href = urlComentarios;
-    linkComentarios.download = 'arquivoComentarios.txt';
-
-    linkComentarios.click();
-*/
 }
 
 function addTextAreaComentario() {

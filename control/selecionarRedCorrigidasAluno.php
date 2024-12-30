@@ -13,7 +13,7 @@ $sql = "SELECT r.id_redacao, r.curso, r.trimestre, r.ano, t.nome AS nome_tarefa
         JOIN aluno a ON u.ra = a.ra AND u.id_instituicao = a.id_instituicao
         JOIN redacao r ON a.id_aluno  = r.id_aluno        
         JOIN tarefa t ON r.id_tarefa = t.id_tarefa
-        WHERE u.id_usuario = ?";
+        WHERE u.id_usuario = ? ORDER BY r.ano DESC, r.trimestre DESC, r.curso DESC, nome_tarefa";
 
 $stmt = $conn->prepare($sql);
 
