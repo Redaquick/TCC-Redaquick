@@ -362,54 +362,6 @@ async function verificaRedacaoCorrigidaPHP() {
     }
 }
 
-function verificaRedacaoSalvaProxPag() {
-    if (controleSalvarCorrecao == false && controleVerificarCorrecaoCorrigida == false) {
-        if (confirm('Sua correção não foi salva. Tem certeza que deseja passar de página?')) {
-            ProxPagina();
-        }
-    } else {
-        controleSalvarCorrecao = false;
-        ProxPagina();
-    }
-}
-function verificaRedacaoSalvaPagAnterior() {
-    if (controleSalvarCorrecao == false && controleVerificarCorrecaoCorrigida == false) {
-        if (confirm('Sua correção não foi salva. Tem certeza que deseja passar de página?')) {
-            PaginaAnterior();
-        }
-    } else {
-        controleSalvarCorrecao = false;
-        PaginaAnterior();
-    }
-}
-async function salvarCorrecao() {
-    if (controleUndefinedQrCode) {
-        let canvasJson = fabricCanvas.toJSON();
-        console.log(canvasJson);
-
-        let notaTotalEnem = notaC1 + notaC2 + notaC3 + notaC4 + notaC5;
-
-        if (controleVerificarCorrecaoCorrigida == false) {
-            await inserirRedacaoPHP(canvasJson);
-            await inserirNotaPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotalEnem);
-            await inserirComentariosPHP();
-
-            controleSalvarCorrecao = true;
-            alert('Sua Correção foi salva!!!');
-        } else {
-            if (confirm('Esta redação já foi corrigida. Deseja substituir a correção salva por esta?')) {
-                await updateRedacaoPHP(canvasJson);
-                await updateComentariosoPHP();
-                await updateNotasPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotalEnem);
-
-                alert('Sua Correção foi salva!!!');
-            }
-        }
-    } else {
-        alert('Os dados do QrCode não foram identificados corretamente!!!');
-    }
-}
-
 async function updateRedacaoPHP(canvasJson) {
     const canvasJsonStringfy = JSON.stringify(canvasJson);
 
@@ -603,51 +555,6 @@ async function inserirComentariosPHP() {
 
     } catch (error) {
         console.error('Erro:', error);
-    }
-}
-
-function ProxPagina() {
-    if (contadorPagina < tamanhoPagsDoc) {
-        contadorPagina++;
-
-        currentStateIndex = -1;
-        canvasStates.splice(0, canvasStates.length);
-        fabricCanvas.clear();
-
-        zoom = 1;
-        valorZoomPercentual = (zoom * 100);
-        valorZoomTexto.value = valorZoomPercentual + '%';
-        fabricCanvas.setZoom(1);
-
-        renderizarPagina();
-        resetarConfigComentarios();
-        alertaRedacaoCorrigida.style.display = "none";
-        controleUndefinedQrCode = false;
-
-    } else {
-        alert('Limite de Página Atingido!')
-    }
-}
-function PaginaAnterior() {
-    if (contadorPagina > 1) {
-        contadorPagina--;
-
-        currentStateIndex = -1;
-        canvasStates.splice(0, canvasStates.length);
-        fabricCanvas.clear();
-
-        zoom = 1;
-        valorZoomPercentual = (zoom * 100);
-        valorZoomTexto.value = valorZoomPercentual + '%';
-        fabricCanvas.setZoom(1);
-
-        renderizarPagina();
-        resetarConfigComentarios();
-        alertaRedacaoCorrigida.style.display = "none";
-        controleUndefinedQrCode = false;
-
-    } else {
-        alert('Limite de Página Atingido!')
     }
 }
 
@@ -1287,8 +1194,6 @@ function hiddenVisibleDisplay() {
     toolbar.style.display = "flex";
     elementosLateraisCanvas.style.display = "flex";
     topBarCorrecao.style.display = "flex";
-    passarPagButton.style.visibility = "visible";
-    voltarPagButton.style.visibility = "visible";
     voltarParaMenu.style.display = "none";
     aumentarZoom.style.visibility = "visible";
     diminuirZoom.style.visibility = "visible";

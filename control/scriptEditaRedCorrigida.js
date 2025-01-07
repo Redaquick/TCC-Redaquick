@@ -606,51 +606,6 @@ async function inserirComentariosPHP() {
     }
 }
 
-function ProxPagina() {
-    if (contadorPagina < tamanhoPagsDoc) {
-        contadorPagina++;
-
-        currentStateIndex = -1;
-        canvasStates.splice(0, canvasStates.length);
-        fabricCanvas.clear();
-
-        zoom = 1;
-        valorZoomPercentual = (zoom * 100);
-        valorZoomTexto.value = valorZoomPercentual + '%';
-        fabricCanvas.setZoom(1);
-
-        renderizarPagina();
-        resetarConfigComentarios();
-        alertaRedacaoCorrigida.style.display = "none";
-        controleUndefinedQrCode = false;
-
-    } else {
-        alert('Limite de Página Atingido!')
-    }
-}
-function PaginaAnterior() {
-    if (contadorPagina > 1) {
-        contadorPagina--;
-
-        currentStateIndex = -1;
-        canvasStates.splice(0, canvasStates.length);
-        fabricCanvas.clear();
-
-        zoom = 1;
-        valorZoomPercentual = (zoom * 100);
-        valorZoomTexto.value = valorZoomPercentual + '%';
-        fabricCanvas.setZoom(1);
-
-        renderizarPagina();
-        resetarConfigComentarios();
-        alertaRedacaoCorrigida.style.display = "none";
-        controleUndefinedQrCode = false;
-
-    } else {
-        alert('Limite de Página Atingido!')
-    }
-}
-
 function AumentarZoom() {
     if (zoom < 2) {
         zoom = zoom + 0.25;

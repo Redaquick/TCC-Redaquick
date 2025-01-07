@@ -21,11 +21,11 @@ try {
     $stmt->execute([$idUsuario]);
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    for ($i = 0; $i < count($resultado); $i++) {        
+    for ($i = 0; $i < count($resultado); $i++) {
         $cursos[$i] = $resultado[$i]['curso'];
         $trimestres[$i] = $resultado[$i]['trimestre'];
         $anos[$i] = $resultado[$i]['ano'];
-        $tarefas[$i] = $resultado[$i]['nome_tarefa'];     
+        $tarefas[$i] = $resultado[$i]['nome_tarefa'];
         $id_redacoes[$i] = $resultado[$i]['id_redacao'];
     }
 
