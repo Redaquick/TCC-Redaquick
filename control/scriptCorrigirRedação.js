@@ -1187,8 +1187,8 @@ function buttonCorBlack() {
 function hiddenVisibleDisplay() {
     sectionCorrigirRedacao.style.display = "none";
     sectionCompetenciasContainer.style.display = "flex";
-    sectionEstanteComentarios.style.display = "flex";
-    sectionComentariosCompetencias.style.display = "none";
+    sectionEstanteComentarios.style.display = "none";
+    sectionComentariosCompetencias.style.display = "flex";
     firstinputPDFupload.style.display = "none";
     topBar.style.display = "none";
     toolbar.style.display = "flex";

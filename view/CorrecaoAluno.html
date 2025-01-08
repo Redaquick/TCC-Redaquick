@@ -76,10 +76,10 @@
 
         <div class="elementosLateraisCanvas" id="elementosLateraisCanvas" style="display: flex;"><br><br><br>
             <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-zoom-in" id="aumentarZoom"
-                    style="visibility: visible;" onclick="AumentarZoom()" title="Aumentar Zoom"></i></span>
+                    onclick="AumentarZoom()" title="Aumentar Zoom"></i></span>
             <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-zoom-out" id="diminuirZoom"
-                    style="visibility: visible;" onclick="DiminuirZoom()" title="Diminuir Zoom"></i></span>
-            <input style="cursor: not-allowed;" type="text" value="100%" id="CampoTextoZoom" style="visibility: visible" readonly title="Zoom">
+                    onclick="DiminuirZoom()" title="Diminuir Zoom"></i></span>
+            <input style="cursor: not-allowed;" type="text" value="100%" id="CampoTextoZoom" readonly title="Zoom">
             <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-clipboard-data"
                     id="campoCompetenciasBtn" onclick="OnOffcampoCompetencias()" title="Competências"></i></span>
 
@@ -89,7 +89,7 @@
     </div>
 
     <div>
-        <section id="estanteComent" style="display: flex;">
+        <section id="estanteComent" style="display: none;">
             <span style="background-color: #bb0b0b;">
                 <p style="font-size: 30px; text-align: center; color: white;">Comentários da Redação</p>
             </span>
@@ -98,7 +98,7 @@
     </div>
 
     <div>
-        <section id="comentCompetencias" style="display: none;">
+        <section id="comentCompetencias" style="display: flex;">
             <span style="background-color: #bb0b0b;">
                 <p style="font-size: 30px; text-align: center; color: white;">Comentários Referente as Competências</p>
             </span>

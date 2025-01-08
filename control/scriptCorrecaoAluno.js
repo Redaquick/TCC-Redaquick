@@ -110,6 +110,8 @@ var alertaRedacaoCorrigida = document.getElementById('alertaRedacaoCorrigida');
 
 var controleUndefinedQrCode = false;
 
+buscarJson();
+
 // Função para salvar o estado atual do canvas
 function saveCanvasState() {
     // Adiciona o estado atual do canvas à lista de estados
@@ -120,48 +122,6 @@ function imutaObjeto() {
     objetosDesenhados.forEach(function (elemento) {
         elemento.selectable = false;   // Não pode ser selecionado  
         elemento.hasControls = false;  // Sem controles de redimensionamento/rotação
-    });
-}
-
-async function renderizarPagina() {
-    contadorCliqueRet = 0;
-
-    controleDesenhaRet = false;
-    controleModoDesenho = false;
-    fabricCanvas.isDrawingMode = false;
-
-    await pdfjsLib.getDocument(arquivoRenderizado).promise.then((doc) => {
-        tamanhoPagsDoc = doc.numPages;
-        console.log('Tamanho do pdf ' + tamanhoPagsDoc);
-
-        doc.getPage(contadorPagina).then(page => {
-            var viewport = page.getViewport(1);
-
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-
-            var renderTask = page.render({
-                canvasContext: context,
-                viewport: viewport
-            });
-
-            renderTask.promise.then(async function () {
-                imagemURL = canvas.toDataURL();
-
-                fabric.Image.fromURL(imagemURL, function (imagem) {
-                    fabricCanvas.setWidth(imagem.width);
-                    fabricCanvas.setHeight(imagem.height);
-
-                    heightImagem = imagem.height;
-                    widthImagem = imagem.width;
-
-                    fabricCanvas.setBackgroundImage(imagem, fabricCanvas.renderAll.bind(fabricCanvas));
-                    fabricCanvas.renderAll();
-
-                    lerQRCodeViaPHP(imagemURL);
-                });
-            });
-        });
     });
 }
 
@@ -560,4 +520,53 @@ function resetarConfigComentarios() {
     });
 
     armazenaComentarios.splice(0, armazenaComentarios.length);
+}
+
+async function buscarJson() {
+    const dados = {
+        mensagem: "Enviado"
+    };
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/buscarJsonAlterar.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
+        console.log(resultadoEnvioPHP);
+
+        if (resultadoEnvioPHP.backgroundImage) {
+            // Obtém as dimensões da imagem de fundo no JSON
+            const backgroundImage = resultadoEnvioPHP.backgroundImage;
+            const imageWidth = backgroundImage.width;
+            const imageHeight = backgroundImage.height;
+
+            // Ajusta o tamanho do canvas com base nas dimensões da imagem de fundo
+            fabricCanvas.setWidth(imageWidth);
+            fabricCanvas.setHeight(imageHeight);
+        }
+
+        await fabricCanvas.loadFromJSON(resultadoEnvioPHP, () => {
+            console.log("Canvas carregado com sucesso.");
+
+            objetosDesenhados = fabricCanvas.getObjects();
+            console.log(objetosDesenhados);
+            imutaObjeto();
+
+            fabricCanvas.selection = false;
+            fabricCanvas.selectable = false;
+        });
+
+    } catch (error) {
+        console.error('Erro:', error);
+    }
 }

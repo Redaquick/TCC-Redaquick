@@ -239,48 +239,6 @@ function imutaObjeto() {
     });
 }
 
-async function renderizarPagina() {
-    contadorCliqueRet = 0;
-
-    controleDesenhaRet = false;
-    controleModoDesenho = false;
-    fabricCanvas.isDrawingMode = false;
-
-    await pdfjsLib.getDocument(arquivoRenderizado).promise.then((doc) => {
-        tamanhoPagsDoc = doc.numPages;
-        console.log('Tamanho do pdf ' + tamanhoPagsDoc);
-
-        doc.getPage(contadorPagina).then(page => {
-            var viewport = page.getViewport(1);
-
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-
-            var renderTask = page.render({
-                canvasContext: context,
-                viewport: viewport
-            });
-
-            renderTask.promise.then(async function () {
-                imagemURL = canvas.toDataURL();
-
-                fabric.Image.fromURL(imagemURL, function (imagem) {
-                    fabricCanvas.setWidth(imagem.width);
-                    fabricCanvas.setHeight(imagem.height);
-
-                    heightImagem = imagem.height;
-                    widthImagem = imagem.width;
-
-                    fabricCanvas.setBackgroundImage(imagem, fabricCanvas.renderAll.bind(fabricCanvas));
-                    fabricCanvas.renderAll();
-
-                    lerQRCodeViaPHP(imagemURL);
-                });
-            });
-        });
-    });
-}
-
 async function lerQRCodeViaPHP(urlDaImagem) {
     const urlString = urlDaImagem;
 
@@ -1231,79 +1189,6 @@ function buttonCorBlack() {
     corRetangulo = 'rgba(0, 0, 0, 0.2)';
     fabricCanvas.freeDrawingBrush.color = corLinha;
 }
-
-function hiddenVisibleDisplay() {
-    sectionCorrigirRedacao.style.display = "none";
-    sectionCompetenciasContainer.style.display = "flex";
-    sectionEstanteComentarios.style.display = "flex";
-    sectionComentariosCompetencias.style.display = "none";
-    firstinputPDFupload.style.display = "none";
-    topBar.style.display = "none";
-    toolbar.style.display = "flex";
-    elementosLateraisCanvas.style.display = "flex";
-    topBarCorrecao.style.display = "flex";
-    passarPagButton.style.visibility = "visible";
-    voltarPagButton.style.visibility = "visible";
-    voltarParaMenu.style.display = "none";
-    aumentarZoom.style.visibility = "visible";
-    diminuirZoom.style.visibility = "visible";
-    valorZoomTexto.style.visibility = "visible";
-    inputPDFupload.style.visibility = "none";
-    drawPagButton.style.visibility = "visible";
-    backPagButton.style.visibility = "visible";
-    desativarPagButton.style.visibility = "visible";
-    document.getElementById('canvas-container').style.visibility = "visible";
-
-    fabricCanvas.renderAll();
-}
-
-firstinputPDFupload.addEventListener('change', function (event) {
-    const file = event.target.files[0];
-
-    const fileReader = new FileReader();
-    fileReader.readAsArrayBuffer(file); //Ler o arquivo como um ArrayBuffer
-
-    fileReader.onload = function () {
-        arquivoRenderizado = new Uint8Array(this.result);   //Converter o arquivo em Uint8
-
-        hiddenVisibleDisplay();
-        renderizarPagina();
-        addTextAreaCompetencia();
-
-        inputPDFupload.files = firstinputPDFupload.files;
-        fabricCanvas.selection = false;
-        fabricCanvas.selectable = false;
-    };
-});
-
-inputPDFupload.addEventListener('change', function (event) {
-    const file = event.target.files[0];
-
-    if (file != null) {
-        const fileReader = new FileReader();
-        fileReader.readAsArrayBuffer(file); //Ler o arquivo como um ArrayBuffer
-
-        fileReader.onload = function () {
-            arquivoRenderizado = new Uint8Array(this.result);   //Converter o arquivo em Uint8
-
-            currentStateIndex = -1;
-            canvasStates.splice(0, canvasStates.length);
-            fabricCanvas.clear();
-
-            zoom = 1;
-            valorZoomPercentual = (zoom * 100);
-            valorZoomTexto.value = valorZoomPercentual + '%';
-            fabricCanvas.setZoom(1);
-
-            contadorPagina = 1;
-
-            renderizarPagina();
-            resetarConfigComentarios();
-
-            controleUndefinedQrCode = false;
-        };
-    }
-});
 
 function resetarConfigComentarios() {
     comentarioCompetencia1.value = '200 pts: Demonstra excelente domínio da modalidade escrita formal da língua portuguesa e de escolha de registro. Desvios gramaticais ou de convenções da escrita serão aceitos somente como excepcionalidade e quando não caracterizarem reincidência.';
