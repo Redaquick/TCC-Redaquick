@@ -249,7 +249,7 @@ async function SalvarIdRedacaoSelecionada(id_redacao_atual) {
         console.log(resultadoEnvioPHP);
 
         if (resultadoEnvioPHP) {
-            window.location = "../view/editaRedCorrigida.html";
+            window.location = "../view/editaRedCorrigida.php";
         }
 
     } catch (error) {

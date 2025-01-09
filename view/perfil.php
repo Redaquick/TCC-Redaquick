@@ -48,9 +48,9 @@ session_start();
                     <div class="b">
                         <a href=<?php
                         if ($_SESSION["status"] === 'docente') {
-                            echo ('menu.html');
+                            echo ('menu.php');
                         } else {
-                            echo ('menuAluno.html');
+                            echo ('menuAluno.php');
                         }
                         ?>><input class="configBtnVoltar" type="button"
                                 value="Voltar"></a>

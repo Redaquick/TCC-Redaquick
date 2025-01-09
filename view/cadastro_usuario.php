@@ -48,7 +48,7 @@ if (!isset($_SESSION)) {//verifica se existe a session
                             id="togglePassword"></i></span>
                                       
                     <div class="b">
-                        <a href="menu.html"><input class="configBtnVoltar" type="button" value="Voltar"></a>
+                        <a href="menu.php"><input class="configBtnVoltar" type="button" value="Voltar"></a>
                         <input id="configBtnAlterar" type="submit" value="Cadastrar">
                     </div>
                 </form>

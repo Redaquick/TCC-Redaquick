@@ -35,13 +35,13 @@ if ($resultado->num_rows > 0) { //se a quant de registros é maior q0
         if ($dados_usuario["status"] === 'docente') {
             ?>
             <script>
-                window.location = "../view/menu.html"; // Página para o docente quem já fez o 1° acesso
+                window.location = "../view/menu.php"; // Página para o docente quem já fez o 1° acesso
             </script>
             <?php
         } else {
             ?>
             <script>
-                window.location = "../view/menuAluno.html"; // Página para o aluno quem já fez o 1° acesso
+                window.location = "../view/menuAluno.php"; // Página para o aluno quem já fez o 1° acesso
             </script>
             <?php
         }

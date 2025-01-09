@@ -20,7 +20,7 @@ try {
     $resultado = $stmtSelect->fetchAll(PDO::FETCH_ASSOC);
 
     if ($resultado == null) {
-        $status = 'Aluno';
+        $status = 'aluno';
         $acesso = 'sim';
         try {
             $stmt->execute([$nome, $ra, $id_instituicao, $email, $senhaCriptografada, $status, $acesso]);

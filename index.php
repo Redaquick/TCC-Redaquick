@@ -67,7 +67,7 @@ if (!isset($_SESSION)) {//verifica se existe a session
                     <div id="alinhamentoEsquerda60">
                         <a href="view/email_esqueceu_senha.php" id="linkEsqueceuSenha">Esqueceu a senha?</a>
                     </div>
-                    <a href="view/menu.html"><input type="submit" id="configBtnEntrar" value="Entrar"></a>
+                    <a href="view/menu.php"><input type="submit" id="configBtnEntrar" value="Entrar"></a>
                 </form>
             </div>
         </section>

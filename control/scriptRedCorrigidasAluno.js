@@ -1,5 +1,24 @@
 var divRedacoesCorrigidasAluno = document.getElementById('divRedacoesCorrigidasAluno');
 
+var nomes = [];
+var nomeTarefas = [];
+var nomeCursos = [];
+var trimestres = [];
+var anos = [];
+var id_redacoes = [];
+
+var id_redacoes_atuais = [];
+var nomesAtuais = [];
+var cursosAtuais = [];
+var nomeTarefaAtual;
+var nomeTarefaRelatorio;
+
+var posicoesInformacoes = [];
+
+var RAs = [];
+var notasEnem = [];
+var notasDecimal = [];
+
 buscarRedacoesCorrigidasAlunoPHP();
 
 async function buscarRedacoesCorrigidasAlunoPHP() {

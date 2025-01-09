@@ -24,7 +24,7 @@ var topBarCorrecao = document.getElementById("barrinhaCorrecaoRedaquick");
 var buttonCorPrincipal = document.getElementById('buttonCorPrincipal');
 var paleteCores = document.getElementById('paleteCores');
 
-var contadorPagina = 1;
+var contador = 1;
 var zoom = 1;
 var tamanhoPagsDoc = 0;
 var valorZoomPercentual = 0;

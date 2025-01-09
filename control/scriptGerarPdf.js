@@ -157,11 +157,18 @@ async function gerarPDFs() {
                 // Adicionar informações de nome, turma, trimestre e ano ao PDF
                 const info = qrCodeInfos[index];
                 doc.setFontSize(14);
-                doc.text(`${valorSelecionado}`, 70, 28)
+                doc.setFont('helvetica', 'bold'); // Volta para a fonte padrão
+                if (valorSelecionado === "Atividade Sala") {
+                    doc.text(`${valorSelecionado}`, 73, 28);
+                } else {
+                    doc.text(`${valorSelecionado}`, 67, 28); // Substitua os valores de coordenadas por aqueles que deseja usar
+                }
+                doc.setFont('helvetica', 'normal'); // Volta para a fonte padrão
                 doc.text(`${info.nome}`, 30, 56);
                 doc.text(`${info.turma}`, 177, 56);
+                doc.setFont('helvetica', 'bold'); // Volta para a fonte padrão
                 doc.text(`${trimestreSelecionado}`, 113, 28);
-                doc.text(`${anoVigente}`, 144, 28);
+                doc.text(`${anoVigente}`, 145, 28);
 
                 resolve(); // Resolve a promessa após adicionar a página ao PDF
             });

@@ -31,7 +31,7 @@ var valorZoomPercentual = 0;
 
 var valorNotaTextoC1 = document.getElementById("competencia1");
 var valorNotaTextoC2 = document.getElementById("competencia2");
-var valorNotaTextoC3 = document.getElementById("competencia3"); //USAR NO PDF
+var valorNotaTextoC3 = document.getElementById("competencia3");
 var valorNotaTextoC4 = document.getElementById("competencia4");
 var valorNotaTextoC5 = document.getElementById("competencia5");
 
@@ -39,13 +39,13 @@ var notaInicial = 200;
 
 var notaC1 = 200;
 var notaC2 = 200;
-var notaC3 = 200; //USAR NO PDF
+var notaC3 = 200; 
 var notaC4 = 200;
 var notaC5 = 200;
 
 var comentarioCompetencia1 = document.createElement('textarea');
 var comentarioCompetencia2 = document.createElement('textarea');
-var comentarioCompetencia3 = document.createElement('textarea'); //USAR NO PDF
+var comentarioCompetencia3 = document.createElement('textarea');
 var comentarioCompetencia4 = document.createElement('textarea');
 var comentarioCompetencia5 = document.createElement('textarea');
 
@@ -60,7 +60,7 @@ var botaoAumentaC4 = document.getElementById("aumentaNotaC4");
 var botaoDiminuiC5 = document.getElementById("diminuiNotaC5");
 var botaoAumentaC5 = document.getElementById("aumentaNotaC5");
 
-var armazenaComentarios = []; //USAR NO PDF
+var armazenaComentarios = [];
 
 var arquivoRenderizado;
 
@@ -327,6 +327,51 @@ async function lerQRCodeViaPHP(urlDaImagem) {
     }
 }
 
+function ProxPagina() {
+    if (contadorPagina < tamanhoPagsDoc) {
+        contadorPagina++;
+
+        currentStateIndex = -1;
+        canvasStates.splice(0, canvasStates.length);
+        fabricCanvas.clear();
+
+        zoom = 1;
+        valorZoomPercentual = (zoom * 100);
+        valorZoomTexto.value = valorZoomPercentual + '%';
+        fabricCanvas.setZoom(1);
+
+        renderizarPagina();
+        resetarConfigComentarios();
+        alertaRedacaoCorrigida.style.display = "none";
+        controleUndefinedQrCode = false;
+
+    } else {
+        alert('Limite de Página Atingido!')
+    }
+}
+function PaginaAnterior() {
+    if (contadorPagina > 1) {
+        contadorPagina--;
+
+        currentStateIndex = -1;
+        canvasStates.splice(0, canvasStates.length);
+        fabricCanvas.clear();
+
+        zoom = 1;
+        valorZoomPercentual = (zoom * 100);
+        valorZoomTexto.value = valorZoomPercentual + '%';
+        fabricCanvas.setZoom(1);
+
+        renderizarPagina();
+        resetarConfigComentarios();
+        alertaRedacaoCorrigida.style.display = "none";
+        controleUndefinedQrCode = false;
+
+    } else {
+        alert('Limite de Página Atingido!')
+    }
+}
+
 async function verificaRedacaoCorrigidaPHP() {
     const dados = {
         estado: 'Enviado'
@@ -359,6 +404,54 @@ async function verificaRedacaoCorrigidaPHP() {
 
     } catch (error) {
         console.error('Erro:', error);
+    }
+}
+
+function verificaRedacaoSalvaProxPag() {
+    if (controleSalvarCorrecao == false && controleVerificarCorrecaoCorrigida == false) {
+        if (confirm('Sua correção não foi salva. Tem certeza que deseja passar de página?')) {
+            ProxPagina();
+        }
+    } else {
+        controleSalvarCorrecao = false;
+        ProxPagina();
+    }
+}
+function verificaRedacaoSalvaPagAnterior() {
+    if (controleSalvarCorrecao == false && controleVerificarCorrecaoCorrigida == false) {
+        if (confirm('Sua correção não foi salva. Tem certeza que deseja passar de página?')) {
+            PaginaAnterior();
+        }
+    } else {
+        controleSalvarCorrecao = false;
+        PaginaAnterior();
+    }
+}
+async function salvarCorrecao() {
+    if (controleUndefinedQrCode) {
+        let canvasJson = fabricCanvas.toJSON();
+        console.log(canvasJson);
+
+        let notaTotalEnem = notaC1 + notaC2 + notaC3 + notaC4 + notaC5;
+
+        if (controleVerificarCorrecaoCorrigida == false) {
+            await inserirRedacaoPHP(canvasJson);
+            await inserirNotaPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotalEnem);
+            await inserirComentariosPHP();
+
+            controleSalvarCorrecao = true;
+            alert('Sua Correção foi salva!!!');
+        } else {
+            if (confirm('Esta redação já foi corrigida. Deseja substituir a correção salva por esta?')) {
+                await updateRedacaoPHP(canvasJson);
+                await updateComentariosoPHP();
+                await updateNotasPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotalEnem);
+
+                alert('Sua Correção foi salva!!!');
+            }
+        }
+    } else {
+        alert('Os dados do QrCode não foram identificados corretamente!!!');
     }
 }
 
@@ -1006,16 +1099,18 @@ function rgbToName(rgb) {
 }
 
 function salvarClick() {
+    console.log("Largura: " + fabricCanvas.width + "\n Altura: " + fabricCanvas.height);
+
     var urlImagem = fabricCanvas.toDataURL({
-        format: 'png',
+        format: 'JPEG',
         quality: 1.0
     });
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // Adiciona a imagem na primeira página
-    doc.addImage(urlImagem, 'PNG', 3, 0, 200, 280);  // Ajuste a posição e o tamanho conforme necessário
+    // Adiciona a imagem ao PDF com largura de 200 e altura proporcional
+    doc.addImage(urlImagem, 'JPEG', 0, 0, 210, 300);
     doc.addPage();
 
     // Configura o título do relatório
@@ -1194,6 +1289,8 @@ function hiddenVisibleDisplay() {
     toolbar.style.display = "flex";
     elementosLateraisCanvas.style.display = "flex";
     topBarCorrecao.style.display = "flex";
+    passarPagButton.style.visibility = "visible";
+    voltarPagButton.style.visibility = "visible";
     voltarParaMenu.style.display = "none";
     aumentarZoom.style.visibility = "visible";
     diminuirZoom.style.visibility = "visible";

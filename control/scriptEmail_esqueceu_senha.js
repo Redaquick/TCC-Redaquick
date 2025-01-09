@@ -35,7 +35,7 @@ function cliqueBotaoVerificaCodigo() {
     //Logica de Verificacao do CodigoEnviado
 
     if (codigo == campoCodigo.value) {
-        window.location = "esqueceu_senha.html";
+        window.location = "esqueceu_senhaTela.php";
     } else {
         alert('Código Incorreto!');
     }
