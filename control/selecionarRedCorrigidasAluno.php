@@ -8,10 +8,11 @@ $dados = json_decode($input, true);
 
 $idUsuario = $_SESSION["id_usuario"];
 
-$sql = "SELECT r.id_redacao, r.curso, r.trimestre, r.ano, t.nome AS nome_tarefa
+$sql = "SELECT r.id_redacao, r.curso, r.trimestre, r.ano, t.nome AS nome_tarefa, c.nota_enem
         FROM usuario u
         JOIN aluno a ON u.ra = a.ra AND u.id_instituicao = a.id_instituicao
-        JOIN redacao r ON a.id_aluno  = r.id_aluno        
+        JOIN redacao r ON a.id_aluno  = r.id_aluno
+        JOIN correcao c ON r.id_redacao = c.id_redacao        
         JOIN tarefa t ON r.id_tarefa = t.id_tarefa
         WHERE u.id_usuario = ? ORDER BY r.ano DESC, r.trimestre DESC, r.curso DESC, nome_tarefa";
 
@@ -27,6 +28,7 @@ try {
         $anos[$i] = $resultado[$i]['ano'];
         $tarefas[$i] = $resultado[$i]['nome_tarefa'];
         $id_redacoes[$i] = $resultado[$i]['id_redacao'];
+        $notas_enem[$i] = $resultado[$i]['nota_enem']; 
     }
 
     if ($resultado) {
@@ -35,7 +37,8 @@ try {
             'trimestres' => $trimestres,
             'anos' => $anos,
             'tarefas' => $tarefas,
-            'id_redacoes' => $id_redacoes
+            'id_redacoes' => $id_redacoes,
+            'notas_enem' => $notas_enem
         ];
         echo json_encode($response);
     } else {

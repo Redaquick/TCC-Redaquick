@@ -13,12 +13,12 @@ $stmt = $conn->prepare($sql);
 
 try {
     $stmt->execute([$id_redacaoAtual]);
-      
+    $resultado = $stmt->fetch(PDO::FETCH_ASSOC);  
 } catch (PDOException $ex) {
     echo ('ERRO: ' . $ex->getMessage());
     exit();
 };
 
 // Enviando a resposta como JSON
-echo ('teste');
+echo ($resultado['json']);
 ?>

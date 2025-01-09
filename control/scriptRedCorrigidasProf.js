@@ -249,7 +249,7 @@ async function SalvarIdRedacaoSelecionada(id_redacao_atual) {
         console.log(resultadoEnvioPHP);
 
         if (resultadoEnvioPHP) {
-            window.location = "../view/editaRedCorrigida.php";
+            window.location = "../view/editaRedCorrigida.html";
         }
 
     } catch (error) {
@@ -258,6 +258,9 @@ async function SalvarIdRedacaoSelecionada(id_redacao_atual) {
 }
 
 async function gerarRelatorio() {
+    const { jsPDF } = window.jspdf;
+    const XLSX = window.XLSX; // Certifique-se de que a biblioteca SheetJS foi carregada
+    
     const dados = {
         nomes: nomesAtuais,
         ids: id_redacoes_atuais
@@ -284,48 +287,40 @@ async function gerarRelatorio() {
         notasEnem = resultadoEnvioPHP.notasEnem;
         notasDecimal = resultadoEnvioPHP.notasDecimal;
 
-        const { jsPDF } = window.jspdf;
+        // Gerar o PDF
         const doc = new jsPDF();
 
-        // Configura o título do relatório
         doc.setFontSize(14);
-        doc.setFont('helvetica', 'bold'); // Define a fonte como negrito
+        doc.setFont('helvetica', 'bold');
         doc.text('Relatório com Notas', 80, 10);
 
-        // Configura os cabeçalhos da tabela com espaçamento ajustado
         doc.setFontSize(12);
-        doc.setFont('helvetica', 'normal'); // Volta para a fonte padrão
+        doc.setFont('helvetica', 'normal');
         doc.text('Nome', 47, 20);
         doc.text('RA', 107, 20);
         doc.text('Curso', 129, 20);
         doc.text('Nota (ENEM)', 150, 20);
         doc.text('Nota (Decimal)', 180, 20);
 
-        // Desenha as barras verticais para separar as colunas
-        doc.setDrawColor(0); // Define a cor da linha (preto)
-        doc.setLineWidth(0.3); // Define a largura da linha
-        doc.line(100, 15, 100, 290); // Linha vertical para separar 'Nome' de 'RA'
-        doc.line(120, 15, 120, 290); // Linha vertical para separar 'RA' de 'Curso'
-        doc.line(147, 15, 147, 290); // Linha vertical para separar 'Curso' de 'Nota ENEM'
-        doc.line(177, 15, 177, 290); // Linha vertical para separar 'Nota ENEM' de 'Nota Decimal'
+        doc.setDrawColor(0);
+        doc.setLineWidth(0.3);
+        doc.line(100, 15, 100, 290);
+        doc.line(120, 15, 120, 290);
+        doc.line(147, 15, 147, 290);
+        doc.line(177, 15, 177, 290);
         doc.line(0, 22, 210, 22);
 
-        let y = 30; // Posição inicial no eixo Y
-        const pageHeight = 290; // Altura útil da página no PDF
+        let y = 30;
+        const pageHeight = 290;
 
         for (let i = 0; i < nomesAtuais.length; i++) {
-            // Quebra o nome em várias linhas, se necessário
-            const nomeQuebrado = doc.splitTextToSize(nomesAtuais[i], 90); // 90 é a largura máxima permitida para o nome
+            const nomeQuebrado = doc.splitTextToSize(nomesAtuais[i], 90);
+            const nomeAltura = nomeQuebrado.length * 6;
 
-            // Calcula a altura necessária para o nome (múltiplas linhas)
-            const nomeAltura = nomeQuebrado.length * 6; // 6 é o espaçamento entre linhas
+            if (y + nomeAltura + 10 > pageHeight) {
+                doc.addPage();
+                y = 30;
 
-            // Verifica se há espaço suficiente para o próximo bloco de dados
-            if (y + nomeAltura + 10 > pageHeight) { // 10 é a margem adicional
-                doc.addPage(); // Adiciona uma nova página
-                y = 30; // Reinicia o valor de Y na nova página
-
-                // Redesenha os cabeçalhos e linhas verticais na nova página
                 doc.setFontSize(12);
                 doc.setFont('helvetica', 'normal');
                 doc.text('Nome', 47, 20);
@@ -340,30 +335,46 @@ async function gerarRelatorio() {
                 doc.line(0, 22, 210, 22);
             }
 
-            // Desenha o nome, que pode ter múltiplas linhas
             for (var j = 0; j < nomeQuebrado.length; j++) {
-                doc.text(nomeQuebrado[j], 3, y + (j * 6)); // Ajusta o Y para cada linha do nome
+                doc.text(nomeQuebrado[j], 3, y + (j * 6));
             }
 
-            // Desenha as outras informações na mesma linha
             doc.text(`${RAs[i]}`, 104, y + ((j - 1) * 6));
             doc.text(`${cursosAtuais[i]}`, 124, y + ((j - 1) * 6));
             doc.text(`${notasEnem[i]}`, 158, y + ((j - 1) * 6));
             doc.text(`${notasDecimal[i]}`, 188, y + ((j - 1) * 6));
 
-            // Desenha a linha separadora após o registro
-            const linhaY = y + ((j - 1) * 6) + 2; // Ajusta a linha de separação
+            const linhaY = y + ((j - 1) * 6) + 2;
             doc.line(0, linhaY, 210, linhaY);
 
-            // Ajusta o valor de Y para a próxima linha
-            y = linhaY + 6; // Aumenta Y conforme o número de linhas do nome
+            y = linhaY + 6;
         }
-        // Gerar o PDF como um Blob e oferecer o download
+
+        // Gerar o PDF como um Blob
         const pdfBlob = doc.output('blob');
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(pdfBlob);
-        link.download = 'Relatório Notas - ' + nomeTarefaRelatorio + ".pdf";
-        link.click();
+        const pdfLink = document.createElement('a');
+        pdfLink.href = URL.createObjectURL(pdfBlob);
+        pdfLink.download = 'Relatório Notas - ' + nomeTarefaRelatorio + ".pdf";
+
+        // Preparar os dados para o CSV
+        const dadosCSV = [["Nome", "RA", "Curso", "Nota (ENEM)", "Nota (Decimal)"]];
+        for (let i = 0; i < nomesAtuais.length; i++) {
+            dadosCSV.push([nomesAtuais[i], RAs[i], cursosAtuais[i], notasEnem[i], notasDecimal[i]]);
+        }
+
+        // Convertendo para CSV
+        const ws = XLSX.utils.aoa_to_sheet(dadosCSV);
+        const csvContent = XLSX.utils.sheet_to_csv(ws);
+
+        // Criar um Blob para o arquivo CSV
+        const csvBlob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const csvLink = document.createElement("a");
+        csvLink.href = URL.createObjectURL(csvBlob);
+        csvLink.download = "Relatório Notas - " + nomeTarefaRelatorio + ".csv";
+
+        // Simular o clique nos dois links para fazer o download dos dois arquivos
+        pdfLink.click();
+        csvLink.click();
 
     } catch (error) {
         console.error('Erro:', error);
