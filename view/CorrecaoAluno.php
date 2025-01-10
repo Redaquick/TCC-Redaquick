@@ -82,11 +82,12 @@ if ($_SESSION['status'] === 'aluno') {
             </div>
 
             <div class="elementosLateraisCanvas" id="elementosLateraisCanvas" style="display: flex;"><br><br><br>
-                <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-zoom-in" id="aumentarZoom"
-                        onclick="AumentarZoom()" title="Aumentar Zoom"></i></span>
-                <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-zoom-out" id="diminuirZoom"
-                        onclick="DiminuirZoom()" title="Diminuir Zoom"></i></span>
-                <input style="cursor: not-allowed;" type="text" value="100%" id="CampoTextoZoom" readonly title="Zoom">
+            <span style="font-size: 25px"><i style="cursor: pointer; visibility: visible;" class="bi bi-zoom-in"
+                        id="aumentarZoom" onclick="AumentarZoom()" title="Aumentar Zoom"></i></span>
+                <span style="font-size: 25px"><i style="cursor: pointer; visibility: visible;" class="bi bi-zoom-out"
+                        id="diminuirZoom" onclick="DiminuirZoom()" title="Diminuir Zoom"></i></span>
+                <input style="cursor: not-allowed; visibility: visible;" type="text" value="100%" id="CampoTextoZoom"
+                    readonly title="Zoom">
                 <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-clipboard-data"
                         id="campoCompetenciasBtn" onclick="OnOffcampoCompetencias()" title="Competências"></i></span>
 

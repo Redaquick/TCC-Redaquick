@@ -30,6 +30,8 @@ var notasDecimal = [];
 
 var controladorToggle = false;
 
+var valorFlagAtual;
+
 buscarRedacoesCorrigidasPHP();
 
 async function buscarRedacoesCorrigidasPHP() {
@@ -400,23 +402,67 @@ function onOFFliberar() {
         toggleBtn.classList.remove('bi', 'bi-toggle2-on');
         toggleBtn.classList.add('bi', 'bi-toggle2-off');
         controladorToggle = false;
+        valorFlagAtual = 0;
         statusToggle.textContent = 'Off';
     } else {
         toggleBtn.classList.remove('bi', 'bi-toggle2-off');
         toggleBtn.classList.add('bi', 'bi-toggle2-on');
         controladorToggle = true;
+        valorFlagAtual = 1;
         statusToggle.textContent = 'On';
     }
+
+    alterarFlagRedacoes();
 }
 
 async function verificaFlagProf() {
     const dados = {
-        idRedacao : id_redacoes_atuais[0]
+        idRedacao: id_redacoes_atuais[0]
     };
 
     try {
         // Fazendo a requisição com fetch e aguardando a resposta do PHP
         const response = await fetch('https://feiratec.dev.br/redaquick/control/verificaFlagProf.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados) // Converte os dados para JSON e os envia no corpo da requisição
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
+        console.log("FLAG: " + resultadoEnvioPHP.flag);
+
+        if (resultadoEnvioPHP.flag === 0) {
+            toggleBtn.classList.remove('bi', 'bi-toggle2-on');
+            toggleBtn.classList.add('bi', 'bi-toggle2-off');
+            controladorToggle = false;
+            statusToggle.textContent = 'Off';
+        } else if (resultadoEnvioPHP.flag === 1) {
+            toggleBtn.classList.remove('bi', 'bi-toggle2-off');
+            toggleBtn.classList.add('bi', 'bi-toggle2-on');
+            controladorToggle = true;
+            statusToggle.textContent = 'On';
+        }
+
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+async function alterarFlagRedacoes() {
+    const dados = {
+        valorFlag: valorFlagAtual,
+        idRedacoes: id_redacoes_atuais
+    };
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/updateFlag.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

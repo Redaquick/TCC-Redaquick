@@ -27,7 +27,7 @@ if ($_SESSION['status'] === 'docente') {
             <p style="margin-right: 2%; display: none;" id="liberarAcessoText">Liberar Acesso aos Alunos</p>
             <span style="font-size: 2.5rem;margin-right:1%"><i style="cursor: pointer; display: none; padding: 0%; margin: 0%; gap: 0%;" class="bi bi-toggle2-off"
                     id="toggleBtn" onclick="onOFFliberar()" title="Liberar Redações no Sistema"></i></span>
-            <p id="statusToggle" style="margin-right: 1%; display: none;">Off</p>
+            <p id="statusToggle" style="margin-right: 1%; display: none; font-weight: bold;">Off</p>
             <input id="configBtnGerarRelatorio" class="configBtn" value="Gerar Relatório de Notas" type="button"
                 onclick="gerarRelatorio()" title="Gerar Notas Corrigidas Atuais" style="display: none;">
         </div>
