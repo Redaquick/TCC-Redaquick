@@ -4,7 +4,7 @@ session_start();
 
 // Verificar se o status da sessão é 'docente'
 if ($_SESSION['status'] === 'aluno') {
-?>
+    ?>
     <!DOCTYPE html>
     <html lang="pt-br">
 
@@ -82,21 +82,21 @@ if ($_SESSION['status'] === 'aluno') {
             </div>
 
             <div class="elementosLateraisCanvas" id="elementosLateraisCanvas" style="display: flex;"><br><br><br>
-                <span style="font-size: 25px"><i style="cursor: pointer; visibility: visible;" class="bi bi-zoom-in" id="aumentarZoom"
+                <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-zoom-in" id="aumentarZoom"
                         onclick="AumentarZoom()" title="Aumentar Zoom"></i></span>
-                <span style="font-size: 25px"><i style="cursor: pointer; visibility: visible;" class="bi bi-zoom-out" id="diminuirZoom"
+                <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-zoom-out" id="diminuirZoom"
                         onclick="DiminuirZoom()" title="Diminuir Zoom"></i></span>
-                <input style="cursor: not-allowed; visibility: visible;" type="text" value="100%" id="CampoTextoZoom" readonly title="Zoom">
+                <input style="cursor: not-allowed;" type="text" value="100%" id="CampoTextoZoom" readonly title="Zoom">
                 <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-clipboard-data"
                         id="campoCompetenciasBtn" onclick="OnOffcampoCompetencias()" title="Competências"></i></span>
 
-                <span style="font-size: 25px; margin-top: 63vh;"><a href="menuAluno.php" id="botaoVoltarCorrecao"><i
+                <span style="font-size: 25px; margin-top: 63vh;"><a href="menuAluno.html" id="botaoVoltarCorrecao"><i
                             class="bi bi-arrow-bar-left" title="Voltar Menu" style="visibility: visible;"></i></a></span>
             </div>
         </div>
 
         <div>
-            <section id="estanteComent" style="display: flex;">
+            <section id="estanteComent" style="display: none;">
                 <span style="background-color: #bb0b0b;">
                     <p style="font-size: 30px; text-align: center; color: white;">Comentários da Redação</p>
                 </span>
@@ -105,7 +105,7 @@ if ($_SESSION['status'] === 'aluno') {
         </div>
 
         <div>
-            <section id="comentCompetencias" style="display: none;">
+            <section id="comentCompetencias" style="display: flex;">
                 <span style="background-color: #bb0b0b;">
                     <p style="font-size: 30px; text-align: center; color: white;">Comentários Referente as Competências</p>
                 </span>
@@ -116,10 +116,10 @@ if ($_SESSION['status'] === 'aluno') {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <script src="../control/scriptCorrigirRedação.js"></script>
+    <script src="../control/scriptCorrecaoAluno.js"></script>
 
     </html>
-<?php
+    <?php
 } else {
     echo ("Você não tem permissão para acessar essa página!!!");
 }

@@ -31,7 +31,7 @@ var valorZoomPercentual = 0;
 
 var valorNotaTextoC1 = document.getElementById("competencia1");
 var valorNotaTextoC2 = document.getElementById("competencia2");
-var valorNotaTextoC3 = document.getElementById("competencia3");
+var valorNotaTextoC3 = document.getElementById("competencia3"); //USAR NO PDF
 var valorNotaTextoC4 = document.getElementById("competencia4");
 var valorNotaTextoC5 = document.getElementById("competencia5");
 
@@ -39,13 +39,13 @@ var notaInicial = 200;
 
 var notaC1 = 200;
 var notaC2 = 200;
-var notaC3 = 200; 
+var notaC3 = 200; //USAR NO PDF
 var notaC4 = 200;
 var notaC5 = 200;
 
 var comentarioCompetencia1 = document.createElement('textarea');
 var comentarioCompetencia2 = document.createElement('textarea');
-var comentarioCompetencia3 = document.createElement('textarea');
+var comentarioCompetencia3 = document.createElement('textarea'); //USAR NO PDF
 var comentarioCompetencia4 = document.createElement('textarea');
 var comentarioCompetencia5 = document.createElement('textarea');
 
@@ -60,7 +60,7 @@ var botaoAumentaC4 = document.getElementById("aumentaNotaC4");
 var botaoDiminuiC5 = document.getElementById("diminuiNotaC5");
 var botaoAumentaC5 = document.getElementById("aumentaNotaC5");
 
-var armazenaComentarios = [];
+var armazenaComentarios = []; //USAR NO PDF
 
 var arquivoRenderizado;
 
@@ -324,51 +324,6 @@ async function lerQRCodeViaPHP(urlDaImagem) {
 
     } catch (error) {
         console.error('Erro:', error);
-    }
-}
-
-function ProxPagina() {
-    if (contadorPagina < tamanhoPagsDoc) {
-        contadorPagina++;
-
-        currentStateIndex = -1;
-        canvasStates.splice(0, canvasStates.length);
-        fabricCanvas.clear();
-
-        zoom = 1;
-        valorZoomPercentual = (zoom * 100);
-        valorZoomTexto.value = valorZoomPercentual + '%';
-        fabricCanvas.setZoom(1);
-
-        renderizarPagina();
-        resetarConfigComentarios();
-        alertaRedacaoCorrigida.style.display = "none";
-        controleUndefinedQrCode = false;
-
-    } else {
-        alert('Limite de Página Atingido!')
-    }
-}
-function PaginaAnterior() {
-    if (contadorPagina > 1) {
-        contadorPagina--;
-
-        currentStateIndex = -1;
-        canvasStates.splice(0, canvasStates.length);
-        fabricCanvas.clear();
-
-        zoom = 1;
-        valorZoomPercentual = (zoom * 100);
-        valorZoomTexto.value = valorZoomPercentual + '%';
-        fabricCanvas.setZoom(1);
-
-        renderizarPagina();
-        resetarConfigComentarios();
-        alertaRedacaoCorrigida.style.display = "none";
-        controleUndefinedQrCode = false;
-
-    } else {
-        alert('Limite de Página Atingido!')
     }
 }
 
@@ -648,6 +603,51 @@ async function inserirComentariosPHP() {
 
     } catch (error) {
         console.error('Erro:', error);
+    }
+}
+
+function ProxPagina() {
+    if (contadorPagina < tamanhoPagsDoc) {
+        contadorPagina++;
+
+        currentStateIndex = -1;
+        canvasStates.splice(0, canvasStates.length);
+        fabricCanvas.clear();
+
+        zoom = 1;
+        valorZoomPercentual = (zoom * 100);
+        valorZoomTexto.value = valorZoomPercentual + '%';
+        fabricCanvas.setZoom(1);
+
+        renderizarPagina();
+        resetarConfigComentarios();
+        alertaRedacaoCorrigida.style.display = "none";
+        controleUndefinedQrCode = false;
+
+    } else {
+        alert('Limite de Página Atingido!')
+    }
+}
+function PaginaAnterior() {
+    if (contadorPagina > 1) {
+        contadorPagina--;
+
+        currentStateIndex = -1;
+        canvasStates.splice(0, canvasStates.length);
+        fabricCanvas.clear();
+
+        zoom = 1;
+        valorZoomPercentual = (zoom * 100);
+        valorZoomTexto.value = valorZoomPercentual + '%';
+        fabricCanvas.setZoom(1);
+
+        renderizarPagina();
+        resetarConfigComentarios();
+        alertaRedacaoCorrigida.style.display = "none";
+        controleUndefinedQrCode = false;
+
+    } else {
+        alert('Limite de Página Atingido!')
     }
 }
 
@@ -1099,18 +1099,16 @@ function rgbToName(rgb) {
 }
 
 function salvarClick() {
-    console.log("Largura: " + fabricCanvas.width + "\n Altura: " + fabricCanvas.height);
-
     var urlImagem = fabricCanvas.toDataURL({
-        format: 'JPEG',
+        format: 'png',
         quality: 1.0
     });
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // Adiciona a imagem ao PDF com largura de 200 e altura proporcional
-    doc.addImage(urlImagem, 'JPEG', 0, 0, 210, 300);
+    // Adiciona a imagem na primeira página
+    doc.addImage(urlImagem, 'PNG', 3, 0, 200, 280);  // Ajuste a posição e o tamanho conforme necessário
     doc.addPage();
 
     // Configura o título do relatório
@@ -1282,8 +1280,8 @@ function buttonCorBlack() {
 function hiddenVisibleDisplay() {
     sectionCorrigirRedacao.style.display = "none";
     sectionCompetenciasContainer.style.display = "flex";
-    sectionEstanteComentarios.style.display = "none";
-    sectionComentariosCompetencias.style.display = "flex";
+    sectionEstanteComentarios.style.display = "flex";
+    sectionComentariosCompetencias.style.display = "none";
     firstinputPDFupload.style.display = "none";
     topBar.style.display = "none";
     toolbar.style.display = "flex";

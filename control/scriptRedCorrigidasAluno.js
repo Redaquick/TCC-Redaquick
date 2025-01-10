@@ -128,7 +128,7 @@ async function SalvarIdRedacaoSelecionada(id_redacao_atual) {
         console.log(resultadoEnvioPHP);
 
         if (resultadoEnvioPHP.resposta === 'idSalvoComSucesso') {
-            window.location = "../view/CorrecaoAluno.html";
+            window.location = "../view/CorrecaoAluno.php";
         }
 
     } catch (error) {
