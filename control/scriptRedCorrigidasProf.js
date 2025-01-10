@@ -1,6 +1,8 @@
 var divRedacoesCorrigidas = document.getElementById('divRedacoesCorrigidas');
 var relatiorioBtn = document.getElementById('configBtnGerarRelatorio');
 var toggleBtn = document.getElementById('toggleBtn');
+var statusToggle = document.getElementById('statusToggle');
+var liberarAcessoText = document.getElementById('liberarAcessoText');
 
 var pacotes = [];
 var idsPacoteAtual = [];
@@ -25,6 +27,8 @@ var posicoesInformacoes = [];
 var RAs = [];
 var notasEnem = [];
 var notasDecimal = [];
+
+var controladorToggle = false;
 
 buscarRedacoesCorrigidasPHP();
 
@@ -215,9 +219,13 @@ function criarPacotes(nomeTarefa, index, trimestrePacote) {
 
             relatiorioBtn.style.display = 'block';
             toggleBtn.style.display = 'block';
+            statusToggle.style.display = 'block';
+            liberarAcessoText.style.display = 'block';
 
             console.log("Passou no for");
         }
+
+        verificaFlagProf();
     });
 }
 
@@ -388,11 +396,42 @@ async function gerarRelatorio() {
 }
 
 function onOFFliberar() {
-    if (toggleBtn.classList.contains('active')) {
-        toggleBtn.classList.remove('bi bi-toggle2-off');
-        toggleBtn.classList.add('bi bi-toggle2-on');
+    if (controladorToggle) {
+        toggleBtn.classList.remove('bi', 'bi-toggle2-on');
+        toggleBtn.classList.add('bi', 'bi-toggle2-off');
+        controladorToggle = false;
+        statusToggle.textContent = 'Off';
     } else {
-        toggleBtn.classList.remove('bi bi-toggle2-on');
-        toggleBtn.classList.add('bi bi-toggle2-off');
+        toggleBtn.classList.remove('bi', 'bi-toggle2-off');
+        toggleBtn.classList.add('bi', 'bi-toggle2-on');
+        controladorToggle = true;
+        statusToggle.textContent = 'On';
+    }
+}
+
+async function verificaFlagProf() {
+    const dados = {
+        idRedacao : id_redacoes_atuais[0]
+    };
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/verificaFlagProf.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados) // Converte os dados para JSON e os envia no corpo da requisição
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
+        console.log(resultadoEnvioPHP);
+
+    } catch (error) {
+        console.error('Erro:', error);
     }
 }

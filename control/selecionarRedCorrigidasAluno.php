@@ -14,12 +14,12 @@ $sql = "SELECT r.id_redacao, r.curso, r.trimestre, r.ano, t.nome AS nome_tarefa,
         JOIN redacao r ON a.id_aluno  = r.id_aluno
         JOIN correcao c ON r.id_redacao = c.id_redacao        
         JOIN tarefa t ON r.id_tarefa = t.id_tarefa
-        WHERE u.id_usuario = ? ORDER BY r.ano DESC, r.trimestre DESC, r.curso DESC, nome_tarefa";
+        WHERE u.id_usuario = ?  AND r.flag = ? ORDER BY r.ano DESC, r.trimestre DESC, r.curso DESC, nome_tarefa";
 
 $stmt = $conn->prepare($sql);
 
 try {
-    $stmt->execute([$idUsuario]);
+    $stmt->execute([$idUsuario, '1']);
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     for ($i = 0; $i < count($resultado); $i++) {
