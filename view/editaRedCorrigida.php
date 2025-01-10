@@ -30,12 +30,12 @@ if ($_SESSION['status'] === 'docente') {
 
     <body>
 
-        <div class="barrinhaCorrecaoRedaquick" id="barrinhaCorrecaoRedaquick">
+        <div class="barrinhaCorrecaoRedaquick" id="barrinhaCorrecaoRedaquick" style="display: flex;">
             <img src="../imagens/LogoRedaQuick_nova.png" alt="Logo RedaQuick" class="configIMGLogoTCCcorrecaoRedaquick">
         </div>
 
-        <div class="competencias-container" id="competenciasContainer"" style=" visibility: visible;">
-            <section class="competencia" style="display: flex;">
+        <div class="competencias-container" id="competenciasContainer"" style="display: flex;">
+            <section class="competencia">
                 <p class="titulo">Competência 1</p>
                 <span><button id="diminuiNotaC1" class="icones-competencia"><i class="bi bi-dash" title="Diminuir"
                             onclick="diminuirNotaC1()"></i></button></span>
@@ -43,7 +43,7 @@ if ($_SESSION['status'] === 'docente') {
                 <span><button id="aumentaNotaC1" class="icones-competencia"><i class="bi bi-plus" title="Aumentar"
                             onclick="aumentarNotaC1()"></i></button></span>
             </section>
-            <section class="competencia" style="display: flex;">
+            <section class="competencia">
                 <p class="titulo">Competência 2</p>
                 <span><button id="diminuiNotaC2" class="icones-competencia"><i class="bi bi-dash" title="Diminuir"
                             onclick="diminuirNotaC2()"></i></button></span>
@@ -51,7 +51,7 @@ if ($_SESSION['status'] === 'docente') {
                 <span><button id="aumentaNotaC2" class="icones-competencia"><i class="bi bi-plus" title="Aumentar"
                             onclick="aumentarNotaC2()"></i></button></span>
             </section>
-            <section class="competencia" style="display: flex;">
+            <section class="competencia">
                 <p class="titulo">Competência 3</p>
                 <span><button id="diminuiNotaC3" class="icones-competencia"><i class="bi bi-dash" title="Diminuir"
                             onclick="diminuirNotaC3()"></i></button></span>
@@ -59,7 +59,7 @@ if ($_SESSION['status'] === 'docente') {
                 <span><button id="aumentaNotaC3" class="icones-competencia"><i class="bi bi-plus" title="Aumentar"
                             onclick="aumentarNotaC3()"></i></button></span>
             </section>
-            <section class="competencia" style="display: flex;">
+            <section class="competencia">
                 <p class="titulo">Competência 4</p>
                 <span><button id="diminuiNotaC4" class="icones-competencia"><i class="bi bi-dash" title="Diminuir"
                             onclick="diminuirNotaC4()"></i></button></span>
@@ -67,7 +67,7 @@ if ($_SESSION['status'] === 'docente') {
                 <span><button id="aumentaNotaC4" class="icones-competencia"><i class="bi bi-plus" title="Aumentar"
                             onclick="aumentarNotaC4()"></i></button></span>
             </section>
-            <section class="competencia" style="display: flex;">
+            <section class="competencia">
                 <p class="titulo">Competência 5</p>
                 <span><button id="diminuiNotaC5" class="icones-competencia"><i class="bi bi-dash" title="Diminuir"
                             onclick="diminuirNotaC5()"></i></button></span>
@@ -77,12 +77,12 @@ if ($_SESSION['status'] === 'docente') {
             </section>
         </div>
 
-        <div id="main-container" style="visibility: visible;">
+        <div id="main-container" style="display: flex;">
             <div id="canvas-container">
                 <canvas id="fabric-canvas"></canvas>
                 <canvas id="RenderPDF"></canvas>
             </div>
-            <div id="toolbar" style="visibility: visible;"><br><br><br>
+            <div id="toolbar" style="display: flex;"><br><br><br>
                 <span style="font-size: 25px"><i class="bi bi-pen" id="draw" title="Caneta"></i></span>
                 <span style="font-size: 25px"><i class="bi bi-textarea-resize" id="selecionarTexto" title="Selecionar Texto"
                         onclick="desenhaRetangulo()"></i></span>
@@ -121,7 +121,7 @@ if ($_SESSION['status'] === 'docente') {
                 </section>
             </div>
 
-            <div class="elementosLateraisCanvas" id="elementosLateraisCanvas" style="visibility: visible;"><br><br><br>
+            <div class="elementosLateraisCanvas" id="elementosLateraisCanvas" style="display: flex;"><br><br><br>
                 <span style="font-size: 25px"><i style="cursor: pointer; visibility: visible;" class="bi bi-zoom-in"
                         id="aumentarZoom" onclick="AumentarZoom()" title="Aumentar Zoom"></i></span>
                 <span style="font-size: 25px"><i style="cursor: pointer; visibility: visible;" class="bi bi-zoom-out"
@@ -144,7 +144,7 @@ if ($_SESSION['status'] === 'docente') {
         </div>
 
         <div>
-            <section id="estanteComent" style="display: flex;">
+            <section id="estanteComent" style="display: none;">
                 <span style="background-color: #bb0b0b;">
                     <p style="font-size: 30px; text-align: center; color: white;">Comentários da Redação</p>
                 </span>
