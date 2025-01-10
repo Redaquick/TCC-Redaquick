@@ -162,7 +162,7 @@ if ($_SESSION['status'] === 'docente') {
                 <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-cloud-check" title="Salvar Correção"
                         id="salvarCorrecao" onclick="salvarCorrecao()"></i></span>
 
-                <span style="font-size: 25px; margin-top: 50vh;"><a href="menu.php" id="botaoVoltarCorrecao"><i
+                <span style="font-size: 25px;"><a href="menu.php" id="botaoVoltarCorrecao"><i
                             class="bi bi-arrow-bar-left" title="Voltar Menu"></i></a></span>
                 <input type="file" id="uploadPDF" accept=".pdf">
             </div>

@@ -1,5 +1,6 @@
 var divRedacoesCorrigidas = document.getElementById('divRedacoesCorrigidas');
 var relatiorioBtn = document.getElementById('configBtnGerarRelatorio');
+var toggleBtn = document.getElementById('toggleBtn');
 
 var pacotes = [];
 var idsPacoteAtual = [];
@@ -65,6 +66,8 @@ async function buscarRedacoesCorrigidasPHP() {
             var idTarefaAdicionado = [];
             var index = 0;
 
+            console.log("id_tarefas.length: " + id_tarefas.length);
+
             if (id_tarefas.length > 1) {
                 for (let i = index + 1; i < id_tarefas.length; i++) {
                     if (id_tarefas[index] == id_tarefas[i]) {
@@ -99,8 +102,10 @@ async function buscarRedacoesCorrigidasPHP() {
                     }
                 }
             } else {
-                nomesPacotes.push(nomeTarefas[id_tarefas[index]]);
-                trimestresPacotes.push(trimestres[index]);
+                nomesPacotes.push(nomeTarefas[0]);
+                trimestresPacotes.push(trimestres[0]);
+                idTarefaAdicionado.push(id_tarefas[0]);
+                idsPacoteAtual.push(0);
             }
 
             console.log(nomesPacotes);
@@ -209,6 +214,7 @@ function criarPacotes(nomeTarefa, index, trimestrePacote) {
             nomeTarefaAtual = nomeTarefas[posicoesInformacoes[i]];
 
             relatiorioBtn.style.display = 'block';
+            toggleBtn.style.display = 'block';
 
             console.log("Passou no for");
         }
@@ -260,7 +266,7 @@ async function SalvarIdRedacaoSelecionada(id_redacao_atual) {
 async function gerarRelatorio() {
     const { jsPDF } = window.jspdf;
     const XLSX = window.XLSX; // Certifique-se de que a biblioteca SheetJS foi carregada
-    
+
     const dados = {
         nomes: nomesAtuais,
         ids: id_redacoes_atuais
@@ -378,5 +384,15 @@ async function gerarRelatorio() {
 
     } catch (error) {
         console.error('Erro:', error);
+    }
+}
+
+function onOFFliberar() {
+    if (toggleBtn.classList.contains('active')) {
+        toggleBtn.classList.remove('bi bi-toggle2-off');
+        toggleBtn.classList.add('bi bi-toggle2-on');
+    } else {
+        toggleBtn.classList.remove('bi bi-toggle2-on');
+        toggleBtn.classList.add('bi bi-toggle2-off');
     }
 }

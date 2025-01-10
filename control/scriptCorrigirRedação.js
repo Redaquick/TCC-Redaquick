@@ -1098,7 +1098,7 @@ function rgbToName(rgb) {
     return coresPredefinidas[rgb] || "Verde";
 }
 
-function salvarClick() {
+async function salvarClick() {
     var urlImagem = fabricCanvas.toDataURL({
         format: 'png',
         quality: 1.0
@@ -1107,102 +1107,128 @@ function salvarClick() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // Adiciona a imagem na primeira página
-    doc.addImage(urlImagem, 'PNG', 3, 0, 200, 280);  // Ajuste a posição e o tamanho conforme necessário
-    doc.addPage();
+    const dados = {
+        mensagem: 'Enviado'
+    };
+    
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/buscarNomeVista.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
 
-    // Configura o título do relatório
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'bold'); // Define a fonte como negrito
-    doc.text('Vista Pedagógica', 85, 10);
-
-    // Configura os textos das competências, quebrando em linhas para caber no espaço
-    var nomeQuebrado1 = doc.splitTextToSize(comentarioCompetencia1.value, 235);
-    var nomeQuebrado2 = doc.splitTextToSize(comentarioCompetencia2.value, 235);
-    var nomeQuebrado3 = doc.splitTextToSize(comentarioCompetencia3.value, 235);
-    var nomeQuebrado4 = doc.splitTextToSize(comentarioCompetencia4.value, 235);
-    var nomeQuebrado5 = doc.splitTextToSize(comentarioCompetencia5.value, 235);
-
-    // Cabeçalhos da tabela com espaçamento ajustado
-    doc.setFontSize(12);
-    doc.text('Comentários Referentes às Competências:', 10, 20);
-
-    let yComentario = 30;
-
-    // Função para adicionar comentários de cada competência
-    function adicionarComentarioCompetencia(titulo, comentarios) {
-        doc.setFont('helvetica', 'bold'); // Define a fonte como negrito
-        doc.text(titulo, 10, yComentario);
-        yComentario += 5;
-
-        for (let i = 0; i < comentarios.length; i++) {
-            doc.setFont('helvetica', 'normal'); // Fonte padrão
-            doc.text(comentarios[i], 10, yComentario);
-            yComentario += 6;
-
-            // Adiciona nova página se necessário
-            if (yComentario > doc.internal.pageSize.height - 10) {
-                doc.addPage();
-                yComentario = 30;
-            }
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
         }
-    }
 
-    // Adicionando os comentários das competências
-    adicionarComentarioCompetencia('Competência 1:', nomeQuebrado1);
-    adicionarComentarioCompetencia('Competência 2:', nomeQuebrado2);
-    adicionarComentarioCompetencia('Competência 3:', nomeQuebrado3);
-    adicionarComentarioCompetencia('Competência 4:', nomeQuebrado4);
-    adicionarComentarioCompetencia('Competência 5:', nomeQuebrado5);
+        const resultadoEnvioPHP = await response.json();
+        console.log(resultadoEnvioPHP);
 
-    // Linha separadora
-    doc.setDrawColor(0); // Cor da linha (preto)
-    doc.setLineWidth(0.3); // Largura da linha
-    doc.line(10, yComentario, 200, yComentario);
-    yComentario += 10;
+        nomeAluno = resultadoEnvioPHP.nome;
 
-    // Adicionando comentários personalizados
-    doc.setFont('helvetica', 'bold');
-    doc.text('Comentários Personalizados:', 10, yComentario);
-    yComentario += 10;
+        // Adiciona a imagem na primeira página
+        doc.addImage(urlImagem, 'PNG', 3, 0, 200, 280);  // Ajuste a posição e o tamanho conforme necessário
+        doc.addPage();
 
-    if (armazenaComentarios) {
-        for (let i = 0; i < armazenaComentarios.length; i++) {
-            const estilo = getComputedStyle(armazenaComentarios[i]);
-            const corRgb = estilo.borderColor;
-            const corLinha = rgbToName(corRgb);
+        // Configura o título do relatório
+        doc.setFontSize(14);
+        doc.setFont('helvetica', 'bold'); // Define a fonte como negrito
+        doc.text('Vista Pedagógica', 85, 10);
 
-            doc.setFont('helvetica', 'bold');
-            doc.text('Comentário ' + (i + 1) + ' (' + corLinha + ') :', 10, yComentario);
+        // Configura os textos das competências, quebrando em linhas para caber no espaço
+        var nomeQuebrado1 = doc.splitTextToSize(comentarioCompetencia1.value, 235);
+        var nomeQuebrado2 = doc.splitTextToSize(comentarioCompetencia2.value, 235);
+        var nomeQuebrado3 = doc.splitTextToSize(comentarioCompetencia3.value, 235);
+        var nomeQuebrado4 = doc.splitTextToSize(comentarioCompetencia4.value, 235);
+        var nomeQuebrado5 = doc.splitTextToSize(comentarioCompetencia5.value, 235);
+
+        // Cabeçalhos da tabela com espaçamento ajustado
+        doc.setFontSize(12);
+        doc.text('Comentários Referentes às Competências:', 10, 20);
+
+        let yComentario = 30;
+
+        // Função para adicionar comentários de cada competência
+        function adicionarComentarioCompetencia(titulo, comentarios) {
+            doc.setFont('helvetica', 'bold'); // Define a fonte como negrito
+            doc.text(titulo, 10, yComentario);
             yComentario += 5;
 
-            doc.setFont('helvetica', 'normal');
-            const comentarioQuebrado = doc.splitTextToSize(armazenaComentarios[i].value, 180);
-            for (let j = 0; j < comentarioQuebrado.length; j++) {
-                doc.text(comentarioQuebrado[j], 10, yComentario);
+            for (let i = 0; i < comentarios.length; i++) {
+                doc.setFont('helvetica', 'normal'); // Fonte padrão
+                doc.text(comentarios[i], 10, yComentario);
                 yComentario += 6;
 
                 // Adiciona nova página se necessário
                 if (yComentario > doc.internal.pageSize.height - 10) {
                     doc.addPage();
-                    yComentario = 10;
+                    yComentario = 30;
                 }
             }
-            yComentario += 10; // Espaço entre os comentários
         }
-    } else {
-        doc.setFont('helvetica', 'normal');
-        doc.text('Nenhum comentário personalizado disponível.', 10, yComentario);
+
+        // Adicionando os comentários das competências
+        adicionarComentarioCompetencia('Competência 1:', nomeQuebrado1);
+        adicionarComentarioCompetencia('Competência 2:', nomeQuebrado2);
+        adicionarComentarioCompetencia('Competência 3:', nomeQuebrado3);
+        adicionarComentarioCompetencia('Competência 4:', nomeQuebrado4);
+        adicionarComentarioCompetencia('Competência 5:', nomeQuebrado5);
+
+        // Linha separadora
+        doc.setDrawColor(0); // Cor da linha (preto)
+        doc.setLineWidth(0.3); // Largura da linha
+        doc.line(10, yComentario, 200, yComentario);
+        yComentario += 10;
+
+        // Adicionando comentários personalizados
+        doc.setFont('helvetica', 'bold');
+        doc.text('Comentários Personalizados:', 10, yComentario);
+        yComentario += 10;
+
+        if (armazenaComentarios) {
+            for (let i = 0; i < armazenaComentarios.length; i++) {
+                const estilo = getComputedStyle(armazenaComentarios[i]);
+                const corRgb = estilo.borderColor;
+                const corLinha = rgbToName(corRgb);
+
+                doc.setFont('helvetica', 'bold');
+                doc.text('Comentário ' + (i + 1) + ' (' + corLinha + ') :', 10, yComentario);
+                yComentario += 5;
+
+                doc.setFont('helvetica', 'normal');
+                const comentarioQuebrado = doc.splitTextToSize(armazenaComentarios[i].value, 180);
+                for (let j = 0; j < comentarioQuebrado.length; j++) {
+                    doc.text(comentarioQuebrado[j], 10, yComentario);
+                    yComentario += 6;
+
+                    // Adiciona nova página se necessário
+                    if (yComentario > doc.internal.pageSize.height - 10) {
+                        doc.addPage();
+                        yComentario = 10;
+                    }
+                }
+                yComentario += 10; // Espaço entre os comentários
+            }
+        } else {
+            doc.setFont('helvetica', 'normal');
+            doc.text('Nenhum comentário personalizado disponível.', 10, yComentario);
+        }
+
+        console.log(armazenaComentarios);
+
+        // Gerar o PDF como um Blob e oferecer o download
+        const pdfBlob = doc.output('blob');
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(pdfBlob);
+        link.download = 'Vista Pedagógica-' + nomeAluno + '(' + turma + ').pdf';
+        link.click();
+    } catch (error) {
+        console.error('Erro:', error);
     }
-
-    console.log(armazenaComentarios);
-
-    // Gerar o PDF como um Blob e oferecer o download
-    const pdfBlob = doc.output('blob');
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(pdfBlob);
-    link.download = 'Vista Pedagógica.pdf';
-    link.click();
 }
 
 function addTextAreaComentario() {

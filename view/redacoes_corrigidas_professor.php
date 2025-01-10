@@ -13,6 +13,8 @@ if ($_SESSION['status'] === 'docente') {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Redações Corrigidas Professor</title>
         <link rel="stylesheet" href="style.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
         <!-- Inclusão da biblioteca jsPDF para gerar PDFs -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -24,6 +26,8 @@ if ($_SESSION['status'] === 'docente') {
     <body>
         <div class="barrinhaRedCorrigidas">
             <img src="../imagens/LogoRedaQuick_nova.png" alt="Logo RedaQuick" class="configIMGLogoTCC">
+            <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-toggle2-off"
+                    id="toggleBtn" onclick="onOFFliberar()" title="Liberar Redações no Sistema" style="display: none;"></i></span>
             <input id="configBtnGerarRelatorio" class="configBtn" value="Gerar Relatório de Notas" type="button"
                 onclick="gerarRelatorio()" title="Gerar Notas Corrigidas Atuais" style="display: none;">
         </div>
