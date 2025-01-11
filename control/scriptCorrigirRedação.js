@@ -737,7 +737,7 @@ function addTextAreaCompetencia() {
     comentarioCompetencia5.style.maxHeight = '152px';
     comentarioCompetencia5.setAttribute('readonly', true);
 
-    comentarioCompetencia5.value = "200: Elabora muito bem proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.";
+    comentarioCompetencia5.value = "200: Elabora muito bem proposta de intervenção relacionada ao tema e articulada à discussão desenvolvida no texto.";
 
     sectionComentariosCompetencias.appendChild(comentarioCompetencia5);
 }
@@ -761,15 +761,15 @@ function alteraComentC1(campoTexto, notaValor) {
             break;
 
         case 120:
-            campoTexto.value = "120: Demonstra domínio mediano da modalidade. escrita formal da língua portuguesa e de escolha de registro, com alguns desvios gramaticais e de convenções da escrita.";
+            campoTexto.value = "120: Demonstra domínio mediano da modalidade escrita formal da língua portuguesa e apresenta alguns desvios gramaticais.";
             break;
 
         case 100:
-            campoTexto.value = "100: Demonstra domínio mediano/insuficiente da modalidade. escrita formal da língua portuguesa e de escolha de registro, com alguns desvios gramaticais e de convenções da escrita.";
+            campoTexto.value = "100: Demonstra domínio mediano/insuficiente da modalidade escrita formal da língua portuguesa e apresenta alguns desvios gramaticais.";
             break;
 
         case 80:
-            campoTexto.value = "80: Demonstra domínio insuficiente da modalidade escrita formal da língua portuguesa, com muitos desvios gramaticais, de escolha de registro e de convenções da escrita.";
+            campoTexto.value = "80: Demonstra domínio insuficiente da escrita formal da língua portuguesa, com muitos desvios gramaticais, de escolha de registro e de convenções da escrita.";
             break;
 
         case 60:
@@ -785,7 +785,7 @@ function alteraComentC1(campoTexto, notaValor) {
             break;
 
         case 0:
-            campoTexto.value = "0: Demonstra desconhecimento da modalidade escrita formal da língua portuguesa.";
+            campoTexto.value = "0: Demonstra desconhecimento total da modalidade escrita formal da língua portuguesa.";
             break;
     }
 }
@@ -937,43 +937,43 @@ function alteraComentC4(campoTexto, notaValor) {
 function alteraComentC5(campoTexto, notaValor) {
     switch (notaValor) {
         case 200:
-            campoTexto.value = "200: Elabora com excelência proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.";
+            campoTexto.value = "200: Elabora com excelência proposta de intervenção relacionada ao tema e articulada à discussão desenvolvida no texto.";
             break;
 
         case 180:
-            campoTexto.value = "180: Elabora muito bem proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.";
+            campoTexto.value = "180: Elabora muito bem a proposta de intervenção relacionada ao tema e articulada à discussão desenvolvida no texto.";
             break;
 
         case 160:
-            campoTexto.value = "160: Elabora bem proposta de intervenção relacionada ao tema e articulada à discussão desenvolvida no texto.";
+            campoTexto.value = "160: Elabora bem a proposta de intervenção relacionada ao tema e articulada à discussão desenvolvida no texto.";
             break;
 
         case 140:
-            campoTexto.value = "140: Elabora bem/medianamente proposta de intervenção relacionada ao tema e articulada à discussão desenvolvida no texto.";
+            campoTexto.value = "140: Elabora bem/medianamente a proposta de intervenção relacionada ao tema e articulada à discussão desenvolvida no texto.";
             break;
 
         case 120:
-            campoTexto.value = "120: Elabora, de forma mediana, proposta de intervenção relacionada ao tema e articulada com a discussão desenvolvida no texto.";
+            campoTexto.value = "120: Elabora, de forma mediana, a proposta de intervenção relacionada ao tema e articulada com a discussão desenvolvida no texto.";
             break;
 
         case 100:
-            campoTexto.value = "100: Elabora, de forma mediana/insuficiente, proposta de intervenção relacionada ao tema e articulada com a discussão desenvolvida no texto.";
+            campoTexto.value = "100: Elabora, de forma mediana/insuficiente, a proposta de intervenção relacionada ao tema e articulada com a discussão desenvolvida no texto.";
             break;
 
         case 80:
-            campoTexto.value = "80: Elabora, de forma insuficiente, proposta de intervenção relacionada ao tema, ou não articulada com a discussão desenvolvida no texto.";
+            campoTexto.value = "80: Elabora, de forma insuficiente, a proposta de intervenção relacionada ao tema, ou não articulada com a discussão desenvolvida no texto.";
             break;
 
         case 60:
-            campoTexto.value = "60: Elabora, de forma insuficiente/precária, proposta de intervenção relacionada ao tema, ou não articulada com a discussão desenvolvida no texto.";
+            campoTexto.value = "60: Elabora, de forma insuficiente/precária, a proposta de intervenção relacionada ao tema, ou não articulada com a discussão desenvolvida no texto.";
             break;
 
         case 40:
-            campoTexto.value = "40: Apresente proposta de intervenção vaga, precária ou relacionada apenas ao assunto.";
+            campoTexto.value = "40: Apresenta a proposta de intervenção vaga e precária.";
             break;
 
         case 20:
-            campoTexto.value = "20: Apresente proposta de intervenção vaga, precária ou relacionada apenas ao assunto ou até fugindo do assunto.";
+            campoTexto.value = "20: Apresenta a proposta de intervenção vaga, precária ou até fugindo do assunto.";
             break;
 
         case 0:

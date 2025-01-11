@@ -610,7 +610,7 @@ function addTextAreaCompetencia() {
     comentarioCompetencia1.style.maxHeight = '152px';
     comentarioCompetencia1.setAttribute('readonly', true);
 
-    comentarioCompetencia1.value = "200 pontos: Demonstra excelente domínio da modalidade escrita formal da língua portuguesa e de escolha de registro. Desvios gramaticais ou de convenções da escrita serão aceitos somente como excepcionalidade e quando não caracterizarem reincidência.";
+    comentarioCompetencia1.value = "200: Demonstra excelente domínio da modalidade escrita formal da língua portuguesa e de escolha de registro. Desvios gramaticais ou de convenções da escrita serão aceitos somente como excepcionalidade e quando não caracterizarem reincidência.";
 
     sectionComentariosCompetencias.appendChild(comentarioCompetencia1);
 
@@ -620,7 +620,7 @@ function addTextAreaCompetencia() {
     comentarioCompetencia2.style.maxHeight = '152px';
     comentarioCompetencia1.setAttribute('readonly', true);
 
-    comentarioCompetencia2.value = "200 pontos: Desenvolve o tema por meio de argumentação consistente, a partir de um repertório sociocultural produtivo e apresenta excelente domínio do texto dissertativo-argumentativo.";
+    comentarioCompetencia2.value = "200: Desenvolve o tema por meio de argumentação consistente, a partir de um repertório sociocultural produtivo e apresenta excelente domínio do texto dissertativo-argumentativo.";
 
     sectionComentariosCompetencias.appendChild(comentarioCompetencia2);
 
@@ -630,7 +630,7 @@ function addTextAreaCompetencia() {
     comentarioCompetencia3.style.maxHeight = '152px';
     comentarioCompetencia1.setAttribute('readonly', true);
 
-    comentarioCompetencia3.value = "200 pontos: Apresenta informações, fatos e opiniões relacionados ao tema proposto, de forma consistente e organizada, configurando autoria, em defesa de um ponto de vista.";
+    comentarioCompetencia3.value = "200: Apresenta informações, fatos e opiniões relacionados ao tema proposto, de forma consistente e organizada, configurando autoria, em defesa de um ponto de vista.";
 
     sectionComentariosCompetencias.appendChild(comentarioCompetencia3);
 
@@ -640,7 +640,7 @@ function addTextAreaCompetencia() {
     comentarioCompetencia4.style.maxHeight = '152px';
     comentarioCompetencia1.setAttribute('readonly', true);
 
-    comentarioCompetencia4.value = "200 pontos: Articula bem as partes do texto e apresenta repertório diversificado de recursos coesivos.";
+    comentarioCompetencia4.value = "200: Articula bem as partes do texto e apresenta repertório diversificado de recursos coesivos.";
 
     sectionComentariosCompetencias.appendChild(comentarioCompetencia4);
 
@@ -650,7 +650,7 @@ function addTextAreaCompetencia() {
     comentarioCompetencia5.style.maxHeight = '152px';
     comentarioCompetencia1.setAttribute('readonly', true);
 
-    comentarioCompetencia5.value = "200 pontos: Elabora muito bem proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.";
+    comentarioCompetencia5.value = "200: Elabora muito bem proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.";
 
     sectionComentariosCompetencias.appendChild(comentarioCompetencia5);
 }
@@ -658,47 +658,47 @@ function addTextAreaCompetencia() {
 function alteraComentC1(campoTexto, notaValor) {
     switch (notaValor) {
         case 200:
-            campoTexto.value = "200 pontos: Demonstra excelente domínio da modalidade escrita formal da língua portuguesa e de escolha de registro. Desvios gramaticais ou de convenções da escrita serão aceitos somente como excepcionalidade e quando não caracterizarem reincidência.";
+            campoTexto.value = "200: Demonstra excelente domínio da modalidade escrita formal da língua portuguesa e de escolha de registro. Desvios gramaticais ou de convenções da escrita serão aceitos somente como excepcionalidade e quando não caracterizarem reincidência.";
             break;
 
         case 180:
-            campoTexto.value = "180 pontos: Demonstra um excelente/bom domínio da modalidade escrita formal da língua portuguesa e de escolha de registro, com poucos desvios gramaticais e de convenções de escrita.";
+            campoTexto.value = "180: Demonstra um excelente/bom domínio da modalidade escrita formal da língua portuguesa e de escolha de registro, com poucos desvios gramaticais e de convenções de escrita.";
             break;
 
         case 160:
-            campoTexto.value = "160 pontos: Demonstra bom domínio da modalidade escrita formal da língua portuguesa e de escolha de registro, com poucos desvios gramaticais e de convenções de escrita.";
+            campoTexto.value = "160: Demonstra bom domínio da modalidade escrita formal da língua portuguesa e de escolha de registro, com poucos desvios gramaticais e de convenções de escrita.";
             break;
 
         case 140:
-            campoTexto.value = "140 pontos: Demonstra um bom/mediano domínio da modalidade escrita formal da língua portuguesa e de escolha de registro, com poucos desvios gramaticais e de convenções de escrita.";
+            campoTexto.value = "140: Demonstra um bom/mediano domínio da modalidade escrita formal da língua portuguesa e de escolha de registro, com poucos desvios gramaticais e de convenções de escrita.";
             break;
 
         case 120:
-            campoTexto.value = "120 pontos: Demonstra domínio mediano da modalidade. escrita formal da língua portuguesa e de escolha de registro, com alguns desvios gramaticais e de convenções da escrita.";
+            campoTexto.value = "120: Demonstra domínio mediano da modalidade. escrita formal da língua portuguesa e de escolha de registro, com alguns desvios gramaticais e de convenções da escrita.";
             break;
 
         case 100:
-            campoTexto.value = "100 pontos: Demonstra domínio mediano/insuficiente da modalidade. escrita formal da língua portuguesa e de escolha de registro, com alguns desvios gramaticais e de convenções da escrita.";
+            campoTexto.value = "100: Demonstra domínio mediano/insuficiente da modalidade. escrita formal da língua portuguesa e de escolha de registro, com alguns desvios gramaticais e de convenções da escrita.";
             break;
 
         case 80:
-            campoTexto.value = "80 pontos: Demonstra domínio insuficiente da modalidade escrita formal da língua portuguesa, com muitos desvios gramaticais, de escolha de registro e de convenções da escrita.";
+            campoTexto.value = "80: Demonstra domínio insuficiente da modalidade escrita formal da língua portuguesa, com muitos desvios gramaticais, de escolha de registro e de convenções da escrita.";
             break;
 
         case 60:
-            campoTexto.value = "60 pontos: Demonstra domínio insuficiente/precário da modalidade escrita formal da língua portuguesa, com muitos desvios gramaticais, de escolha de registro e de convenções da escrita.";
+            campoTexto.value = "60: Demonstra domínio insuficiente/precário da modalidade escrita formal da língua portuguesa, com muitos desvios gramaticais, de escolha de registro e de convenções da escrita.";
             break;
 
         case 40:
-            campoTexto.value = "40 pontos: Demonstra domínio precário da modalidade escrita formal da língua portuguesa de forma sistemática, com diversificados e frequentes desvios gramaticais, de escolha de registro e de convenções da escrita.";
+            campoTexto.value = "40: Demonstra domínio precário da modalidade escrita formal da língua portuguesa de forma sistemática, com diversificados e frequentes desvios gramaticais, de escolha de registro e de convenções da escrita.";
             break;
 
         case 20:
-            campoTexto.value = "20 pontos: Demonstra domínio precário e desconhecimento da modalidade escrita formal da língua portuguesa de forma sistemática, com diversificados e frequentes desvios gramaticais, de escolha de registro e de convenções da escrita.";
+            campoTexto.value = "20: Demonstra domínio precário e desconhecimento da modalidade escrita formal da língua portuguesa de forma sistemática, com diversificados e frequentes desvios gramaticais, de escolha de registro e de convenções da escrita.";
             break;
 
         case 0:
-            campoTexto.value = "0 pontos: Demonstra desconhecimento da modalidade escrita formal da língua portuguesa.";
+            campoTexto.value = "0: Demonstra desconhecimento da modalidade escrita formal da língua portuguesa.";
             break;
     }
 }
@@ -706,47 +706,47 @@ function alteraComentC1(campoTexto, notaValor) {
 function alteraComentC2(campoTexto, notaValor) {
     switch (notaValor) {
         case 200:
-            campoTexto.value = "200 pontos: Desenvolve o tema por meio de argumentação consistente, a partir de um repertório sociocultural produtivo e apresenta excelente domínio do texto dissertativo-argumentativo.";
+            campoTexto.value = "200: Desenvolve o tema por meio de argumentação consistente, a partir de um repertório sociocultural produtivo e apresenta excelente domínio do texto dissertativo-argumentativo.";
             break;
 
         case 180:
-            campoTexto.value = "180 pontos: Desenvolve o tema por meio de argumentação consistente, a partir de um repertório sociocultural produtivo e apresenta excelente/bom domínio do texto dissertativo-argumentativo.";
+            campoTexto.value = "180: Desenvolve o tema por meio de argumentação consistente, a partir de um repertório sociocultural produtivo e apresenta excelente/bom domínio do texto dissertativo-argumentativo.";
             break;
 
         case 160:
-            campoTexto.value = "160 pontos: Desenvolve o tema por meio de argumentação consistente e apresenta bom domínio do texto argumentativo dissertativo, com proposição, argumentação e conclusão.";
+            campoTexto.value = "160: Desenvolve o tema por meio de argumentação consistente e apresenta bom domínio do texto argumentativo dissertativo, com proposição, argumentação e conclusão.";
             break;
 
         case 140:
-            campoTexto.value = "140 pontos: Desenvolve o tema por meio de argumentação consistente e apresenta bom/mediano domínio do texto argumentativo dissertativo, com proposição, argumentação e conclusão.";
+            campoTexto.value = "140: Desenvolve o tema por meio de argumentação consistente e apresenta bom/mediano domínio do texto argumentativo dissertativo, com proposição, argumentação e conclusão.";
             break;
 
         case 120:
-            campoTexto.value = "120 pontos: Desenvolve o tema por meio de argumentação previsível e apresenta domínio mediano do texto dissertativo-argumentativo, com proposição, argumentação e conclusão.";
+            campoTexto.value = "120: Desenvolve o tema por meio de argumentação previsível e apresenta domínio mediano do texto dissertativo-argumentativo, com proposição, argumentação e conclusão.";
             break;
 
         case 100:
-            campoTexto.value = "100 pontos: Desenvolve o tema por meio de argumentação previsível e apresenta domínio mediano/insuficiente do texto dissertativo-argumentativo, com proposição, argumentação e conclusão.";
+            campoTexto.value = "100: Desenvolve o tema por meio de argumentação previsível e apresenta domínio mediano/insuficiente do texto dissertativo-argumentativo, com proposição, argumentação e conclusão.";
             break;
 
         case 80:
-            campoTexto.value = "80 pontos: Desenvolve o tema recorrendo à cópia de trechos de textos motivadores ou apresenta domínio insuficiente do texto dissertativo-argumentativo, não atendendo à estrutura com proposição, argumentação e conclusão.";
+            campoTexto.value = "80: Desenvolve o tema recorrendo à cópia de trechos de textos motivadores ou apresenta domínio insuficiente do texto dissertativo-argumentativo, não atendendo à estrutura com proposição, argumentação e conclusão.";
             break;
 
         case 60:
-            campoTexto.value = "60 pontos: Desenvolve o tema recorrendo à cópia de trechos de textos motivadores ou apresenta domínio insuficiente/ do texto dissertativo-argumentativo, não atendendo à estrutura com proposição, argumentação e conclusão.";
+            campoTexto.value = "60: Desenvolve o tema recorrendo à cópia de trechos de textos motivadores ou apresenta domínio insuficiente/ do texto dissertativo-argumentativo, não atendendo à estrutura com proposição, argumentação e conclusão.";
             break;
 
         case 40:
-            campoTexto.value = "40 pontos: Apresenta o assunto, tangenciando o tema, ou demonstra domínio precário do texto dissertativo-argumentativo, com traços constantes de outros tipos textuais.";
+            campoTexto.value = "40: Apresenta o assunto, tangenciando o tema, ou demonstra domínio precário do texto dissertativo-argumentativo, com traços constantes de outros tipos textuais.";
             break;
 
         case 20:
-            campoTexto.value = "20 pontos: Apresenta o assunto, tangenciando o tema, ou demonstra domínio precário e fugindo do tema do texto dissertativo-argumentativo, com traços constantes de outros tipos textuais.";
+            campoTexto.value = "20: Apresenta o assunto, tangenciando o tema, ou demonstra domínio precário e fugindo do tema do texto dissertativo-argumentativo, com traços constantes de outros tipos textuais.";
             break;
 
         case 0:
-            campoTexto.value = "0 pontos: Fuga ao tema/não atendimento à estrutura dissertativo-argumentativa.";
+            campoTexto.value = "0: Fuga ao tema/não atendimento à estrutura dissertativo-argumentativa.";
             break;
     }
 }
@@ -754,47 +754,47 @@ function alteraComentC2(campoTexto, notaValor) {
 function alteraComentC3(campoTexto, notaValor) {
     switch (notaValor) {
         case 200:
-            campoTexto.value = "200 pontos: Apresenta informações, fatos e opiniões relacionados ao tema proposto, de forma consistente e organizada, configurando autoria, em defesa de um ponto de vista.";
+            campoTexto.value = "200: Apresenta informações, fatos e opiniões relacionados ao tema proposto, de forma consistente e organizada, configurando autoria, em defesa de um ponto de vista.";
             break;
 
         case 180:
-            campoTexto.value = "180 pontos: Apresenta informações, fatos e opiniões relacionados ao tema proposto, de forma consistente e organizada, porém levemente limitada, configurando autoria, em defesa de um ponto de vista.";
+            campoTexto.value = "180: Apresenta informações, fatos e opiniões relacionados ao tema proposto, de forma consistente e organizada, porém levemente limitada, configurando autoria, em defesa de um ponto de vista.";
             break;
 
         case 160:
-            campoTexto.value = "160 pontos: Apresenta informações, fatos e opiniões bem relacionados ao tema, porém limitados aos argumentos dos textos motivadores e pouco organizados, em defesa de um ponto de vista.";
+            campoTexto.value = "160: Apresenta informações, fatos e opiniões bem relacionados ao tema, porém limitados aos argumentos dos textos motivadores e pouco organizados, em defesa de um ponto de vista.";
             break;
 
         case 140:
-            campoTexto.value = "140 pontos: Apresenta informações, fatos e opiniões bem/medianamente relacionados ao tema, porém limitados aos argumentos dos textos motivadores e pouco organizados, em defesa de um ponto de vista.";
+            campoTexto.value = "140: Apresenta informações, fatos e opiniões bem/medianamente relacionados ao tema, porém limitados aos argumentos dos textos motivadores e pouco organizados, em defesa de um ponto de vista.";
             break;
 
         case 120:
-            campoTexto.value = "120 pontos: Apresenta informações, fatos e opiniões relacionados ao tema de forma mediana e pouco organizada, em defesa de um ponto de vista.";
+            campoTexto.value = "120: Apresenta informações, fatos e opiniões relacionados ao tema de forma mediana e pouco organizada, em defesa de um ponto de vista.";
             break;
 
         case 100:
-            campoTexto.value = "100 pontos: Apresenta informações, fatos e opiniões relacionados ao tema de forma mediana ou até desorganizada, em defesa de um ponto de vista.";
+            campoTexto.value = "100: Apresenta informações, fatos e opiniões relacionados ao tema de forma mediana ou até desorganizada, em defesa de um ponto de vista.";
             break;
 
         case 80:
-            campoTexto.value = "80 pontos: Apresenta informações, fatos e opiniões relacionados ao tema, mas desorganizados ou contraditórios e limitados aos argumentos dos textos motivadores, em defesa de um ponto de vista.";
+            campoTexto.value = "80: Apresenta informações, fatos e opiniões relacionados ao tema, mas desorganizados ou contraditórios e limitados aos argumentos dos textos motivadores, em defesa de um ponto de vista.";
             break;
 
         case 60:
-            campoTexto.value = "60 pontos: Apresenta informações, fatos e opiniões poucos relacionados ao tema, mas desorganizados ou contraditórios e limitados aos argumentos dos textos motivadores de forma incoerente, em defesa de um ponto de vista.";
+            campoTexto.value = "60: Apresenta informações, fatos e opiniões poucos relacionados ao tema, mas desorganizados ou contraditórios e limitados aos argumentos dos textos motivadores de forma incoerente, em defesa de um ponto de vista.";
             break;
 
         case 40:
-            campoTexto.value = "40 pontos: Apresenta informações, fatos e opiniões pouco relacionados ao tema ou incoerentes e sem defesa de um ponto de vista.";
+            campoTexto.value = "40: Apresenta informações, fatos e opiniões pouco relacionados ao tema ou incoerentes e sem defesa de um ponto de vista.";
             break;
 
         case 20:
-            campoTexto.value = "20 pontos: Apresenta informações, fatos e opiniões insuficientes e pouco relacionados ao tema ou incoerentes e sem defesa de um ponto de vista.";
+            campoTexto.value = "20: Apresenta informações, fatos e opiniões insuficientes e pouco relacionados ao tema ou incoerentes e sem defesa de um ponto de vista.";
             break;
 
         case 0:
-            campoTexto.value = "0 pontos: Não apresenta informações, fatos e opiniões relacionados ao tema e não há uma defesa de um ponto de vista.";
+            campoTexto.value = "0: Não apresenta informações, fatos e opiniões relacionados ao tema e não há uma defesa de um ponto de vista.";
             break;
     }
 }
@@ -802,47 +802,47 @@ function alteraComentC3(campoTexto, notaValor) {
 function alteraComentC4(campoTexto, notaValor) {
     switch (notaValor) {
         case 200:
-            campoTexto.value = "200 pontos: Articula bem as partes do texto e apresenta repertório diversificado de recursos coesivos.";
+            campoTexto.value = "200: Articula bem as partes do texto e apresenta repertório diversificado de recursos coesivos.";
             break;
 
         case 180:
-            campoTexto.value = "180 pontos: Articula bem as partes do texto e apresenta repertório diversificado de recursos coesivos com pouquíssimas inadequações.";
+            campoTexto.value = "180: Articula bem as partes do texto e apresenta repertório diversificado de recursos coesivos com pouquíssimas inadequações.";
             break;
 
         case 160:
-            campoTexto.value = "160 pontos: Articula as partes do texto, com poucas inadequações, e apresenta repertório diversificado de recursos coesivos.";
+            campoTexto.value = "160: Articula as partes do texto, com poucas inadequações, e apresenta repertório diversificado de recursos coesivos.";
             break;
 
         case 140:
-            campoTexto.value = "140 pontos: Articula as partes do texto, com poucas inadequações, e de forma mediana apresenta repertório diversificado de recursos coesivos.";
+            campoTexto.value = "140: Articula as partes do texto, com poucas inadequações, e de forma mediana apresenta repertório diversificado de recursos coesivos.";
             break;
 
         case 120:
-            campoTexto.value = "120 pontos: Articula as partes do texto, de forma mediana, com inadequações, e apresenta repertório pouco diversificado de recursos coesivos.";
+            campoTexto.value = "120: Articula as partes do texto, de forma mediana, com inadequações, e apresenta repertório pouco diversificado de recursos coesivos.";
             break;
 
         case 100:
-            campoTexto.value = "100 pontos: Articula as partes do texto, de forma mediana/insuficiente, com inadequações, e apresenta repertório pouco diversificado de recursos coesivos.";
+            campoTexto.value = "100: Articula as partes do texto, de forma mediana/insuficiente, com inadequações, e apresenta repertório pouco diversificado de recursos coesivos.";
             break;
 
         case 80:
-            campoTexto.value = "80 pontos: Articula as partes do texto, de forma insuficiente, com muitas inadequações e apresenta repertório limitado de recursos coesivos.";
+            campoTexto.value = "80: Articula as partes do texto, de forma insuficiente, com muitas inadequações e apresenta repertório limitado de recursos coesivos.";
             break;
 
         case 60:
-            campoTexto.value = "60 pontos: Articula as partes do texto, de forma insuficiente/precária, com muitas inadequações e apresenta repertório limitado de recursos coesivos.";
+            campoTexto.value = "60: Articula as partes do texto, de forma insuficiente/precária, com muitas inadequações e apresenta repertório limitado de recursos coesivos.";
             break;
 
         case 40:
-            campoTexto.value = "40 pontos: Articula as partes do texto de forma precária.";
+            campoTexto.value = "40: Articula as partes do texto de forma precária.";
             break;
 
         case 20:
-            campoTexto.value = "20 pontos: Articula as partes do texto de forma precária beirando a ausência de articulações.";
+            campoTexto.value = "20: Articula as partes do texto de forma precária beirando a ausência de articulações.";
             break;
 
         case 0:
-            campoTexto.value = "0 pontos: Não há a articulação de informações no corpo do texto.";
+            campoTexto.value = "0: Não há a articulação de informações no corpo do texto.";
             break;
     }
 }
@@ -850,47 +850,47 @@ function alteraComentC4(campoTexto, notaValor) {
 function alteraComentC5(campoTexto, notaValor) {
     switch (notaValor) {
         case 200:
-            campoTexto.value = "200 pontos: Elabora com excelência proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.";
+            campoTexto.value = "200: Elabora com excelência proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.";
             break;
 
         case 180:
-            campoTexto.value = "180 pontos: Elabora muito bem proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.";
+            campoTexto.value = "180: Elabora muito bem proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.";
             break;
 
         case 160:
-            campoTexto.value = "160 pontos: Elabora bem proposta de intervenção relacionada ao tema e articulada à discussão desenvolvida no texto.";
+            campoTexto.value = "160: Elabora bem proposta de intervenção relacionada ao tema e articulada à discussão desenvolvida no texto.";
             break;
 
         case 140:
-            campoTexto.value = "140 pontos: Elabora bem/medianamente proposta de intervenção relacionada ao tema e articulada à discussão desenvolvida no texto.";
+            campoTexto.value = "140: Elabora bem/medianamente proposta de intervenção relacionada ao tema e articulada à discussão desenvolvida no texto.";
             break;
 
         case 120:
-            campoTexto.value = "120 pontos: Elabora, de forma mediana, proposta de intervenção relacionada ao tema e articulada com a discussão desenvolvida no texto.";
+            campoTexto.value = "120: Elabora, de forma mediana, proposta de intervenção relacionada ao tema e articulada com a discussão desenvolvida no texto.";
             break;
 
         case 100:
-            campoTexto.value = "100 pontos: Elabora, de forma mediana/insuficiente, proposta de intervenção relacionada ao tema e articulada com a discussão desenvolvida no texto.";
+            campoTexto.value = "100: Elabora, de forma mediana/insuficiente, proposta de intervenção relacionada ao tema e articulada com a discussão desenvolvida no texto.";
             break;
 
         case 80:
-            campoTexto.value = "80 pontos: Elabora, de forma insuficiente, proposta de intervenção relacionada ao tema, ou não articulada com a discussão desenvolvida no texto.";
+            campoTexto.value = "80: Elabora, de forma insuficiente, proposta de intervenção relacionada ao tema, ou não articulada com a discussão desenvolvida no texto.";
             break;
 
         case 60:
-            campoTexto.value = "60 pontos: Elabora, de forma insuficiente/precária, proposta de intervenção relacionada ao tema, ou não articulada com a discussão desenvolvida no texto.";
+            campoTexto.value = "60: Elabora, de forma insuficiente/precária, proposta de intervenção relacionada ao tema, ou não articulada com a discussão desenvolvida no texto.";
             break;
 
         case 40:
-            campoTexto.value = "40 pontos: Apresente proposta de intervenção vaga, precária ou relacionada apenas ao assunto.";
+            campoTexto.value = "40: Apresente proposta de intervenção vaga, precária ou relacionada apenas ao assunto.";
             break;
 
         case 20:
-            campoTexto.value = "20 pontos: Apresente proposta de intervenção vaga, precária ou relacionada apenas ao assunto ou até fugindo do assunto.";
+            campoTexto.value = "20: Apresente proposta de intervenção vaga, precária ou relacionada apenas ao assunto ou até fugindo do assunto.";
             break;
 
         case 0:
-            campoTexto.value = "0 pontos: Não apresenta proposta de intervenção ou apresenta proposta não relacionada ao tema ou ao assunto.";
+            campoTexto.value = "0: Não apresenta proposta de intervenção ou apresenta proposta não relacionada ao tema ou ao assunto.";
             break;
     }
 }
@@ -1191,11 +1191,11 @@ function buttonCorBlack() {
 }
 
 function resetarConfigComentarios() {
-    comentarioCompetencia1.value = '200 pontos: Demonstra excelente domínio da modalidade escrita formal da língua portuguesa e de escolha de registro. Desvios gramaticais ou de convenções da escrita serão aceitos somente como excepcionalidade e quando não caracterizarem reincidência.';
-    comentarioCompetencia2.value = '200 pontos: Desenvolve o tema por meio de argumentação consistente, a partir de um repertório sociocultural produtivo e apresenta excelente domínio do texto dissertativo-argumentativo.';
-    comentarioCompetencia3.value = '200 pontos: Apresenta informações, fatos e opiniões relacionados ao tema proposto, de forma consistente e organizada, configurando autoria, em defesa de um ponto de vista.';
-    comentarioCompetencia4.value = '200 pontos: Articula bem as partes do texto e apresenta repertório diversificado de recursos coesivos.';
-    comentarioCompetencia5.value = '200 pontos: Elabora muito bem proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.';
+    comentarioCompetencia1.value = '200: Demonstra excelente domínio da modalidade escrita formal da língua portuguesa e de escolha de registro. Desvios gramaticais ou de convenções da escrita serão aceitos somente como excepcionalidade e quando não caracterizarem reincidência.';
+    comentarioCompetencia2.value = '200: Desenvolve o tema por meio de argumentação consistente, a partir de um repertório sociocultural produtivo e apresenta excelente domínio do texto dissertativo-argumentativo.';
+    comentarioCompetencia3.value = '200: Apresenta informações, fatos e opiniões relacionados ao tema proposto, de forma consistente e organizada, configurando autoria, em defesa de um ponto de vista.';
+    comentarioCompetencia4.value = '200: Articula bem as partes do texto e apresenta repertório diversificado de recursos coesivos.';
+    comentarioCompetencia5.value = '200: Elabora muito bem proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.';
 
     valorNotaTextoC1.value = notaInicial;
     valorNotaTextoC2.value = notaInicial;

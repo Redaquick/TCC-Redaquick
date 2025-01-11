@@ -66,12 +66,12 @@ if ($_SESSION['status'] === 'aluno') {
             </section>
         </div>
 
-        <div id="main-container" style="visibility: visible;">
-            <div id="canvas-container">
+        <div id="main-container">
+            <div id="canvas-container" style="visibility: visible;">
                 <canvas id="fabric-canvas"></canvas>
                 <canvas id="RenderPDF"></canvas>
             </div>
-            <div id="toolbar" style="visibility: visible;"><br><br><br>
+            <div id="toolbar" style="display: flex"><br><br><br>
                 <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-chat-right-text"
                         id="estanteComentariosBtn" onclick="OnOffestanteComentarios()" title="Comentários"></i></span>
                 <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-card-checklist"

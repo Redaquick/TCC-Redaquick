@@ -37,11 +37,11 @@ var valorNotaTextoC5 = document.getElementById("competencia5");
 
 var notaInicial = 200;
 
-var notaC1 = 200;
-var notaC2 = 200;
-var notaC3 = 200; //USAR NO PDF
-var notaC4 = 200;
-var notaC5 = 200;
+var notaC1;
+var notaC2;
+var notaC3;
+var notaC4;
+var notaC5;
 
 var comentarioCompetencia1 = document.createElement('textarea');
 var comentarioCompetencia2 = document.createElement('textarea');
@@ -110,7 +110,13 @@ var alertaRedacaoCorrigida = document.getElementById('alertaRedacaoCorrigida');
 
 var controleUndefinedQrCode = false;
 
-buscarJson();
+configIniciais();
+
+async function configIniciais() {
+    await buscarJson();
+    await buscarNotas();
+    await buscarComentarios();
+}
 
 // Função para salvar o estado atual do canvas
 function saveCanvasState() {
@@ -582,26 +588,6 @@ function salvarClick() {
     link.click();
 }
 
-function resetarConfigComentarios() {
-    comentarioCompetencia1.value = '200 pontos: Demonstra excelente domínio da modalidade escrita formal da língua portuguesa e de escolha de registro. Desvios gramaticais ou de convenções da escrita serão aceitos somente como excepcionalidade e quando não caracterizarem reincidência.';
-    comentarioCompetencia2.value = '200 pontos: Desenvolve o tema por meio de argumentação consistente, a partir de um repertório sociocultural produtivo e apresenta excelente domínio do texto dissertativo-argumentativo.';
-    comentarioCompetencia3.value = '200 pontos: Apresenta informações, fatos e opiniões relacionados ao tema proposto, de forma consistente e organizada, configurando autoria, em defesa de um ponto de vista.';
-    comentarioCompetencia4.value = '200 pontos: Articula bem as partes do texto e apresenta repertório diversificado de recursos coesivos.';
-    comentarioCompetencia5.value = '200 pontos: Elabora muito bem proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.';
-
-    valorNotaTextoC1.value = notaInicial;
-    valorNotaTextoC2.value = notaInicial;
-    valorNotaTextoC3.value = notaInicial;
-    valorNotaTextoC4.value = notaInicial;
-    valorNotaTextoC5.value = notaInicial;
-
-    armazenaComentarios.forEach(function (elemento) {
-        elemento.remove();
-    });
-
-    armazenaComentarios.splice(0, armazenaComentarios.length);
-}
-
 async function buscarJson() {
     const dados = {
         mensagem: "Enviado"
@@ -630,6 +616,9 @@ async function buscarJson() {
             const imageWidth = backgroundImage.width;
             const imageHeight = backgroundImage.height;
 
+            heightImagem = imageHeight;
+            widthImagem = imageWidth;
+
             // Ajusta o tamanho do canvas com base nas dimensões da imagem de fundo
             fabricCanvas.setWidth(imageWidth);
             fabricCanvas.setHeight(imageHeight);
@@ -650,3 +639,72 @@ async function buscarJson() {
         console.error('Erro:', error);
     }
 }
+
+async function buscarNotas() {
+    const dados = {
+        mensagem: "Enviado"
+    };
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/buscarNotasCompAlterar.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
+        console.log(resultadoEnvioPHP);
+
+        notaC1 = resultadoEnvioPHP.nota_c1;
+        notaC2 = resultadoEnvioPHP.nota_c2;
+        notaC3 = resultadoEnvioPHP.nota_c3;
+        notaC4 = resultadoEnvioPHP.nota_c4;
+        notaC5 = resultadoEnvioPHP.nota_c5;
+
+        console.log(notaC1 + " " + notaC2 + " " + notaC3 + " " + notaC4 + " " + notaC5);
+
+        valorNotaTextoC1.value = notaC1;
+        valorNotaTextoC2.value = notaC2;
+        valorNotaTextoC3.value = notaC3;
+        valorNotaTextoC4.value = notaC4;
+        valorNotaTextoC5.value = notaC5;
+
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+async function buscarComentarios() {
+    const dados = {
+        mensagem: "Enviado"
+    };
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/buscarComentariosAlterar.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
+        console.log(resultadoEnvioPHP);
+
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+

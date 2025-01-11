@@ -77,8 +77,8 @@ if ($_SESSION['status'] === 'docente') {
             </section>
         </div>
 
-        <div id="main-container" style="display: flex;">
-            <div id="canvas-container">
+        <div id="main-container">
+            <div id="canvas-container" style="visibility: visible;">
                 <canvas id="fabric-canvas"></canvas>
                 <canvas id="RenderPDF"></canvas>
             </div>
