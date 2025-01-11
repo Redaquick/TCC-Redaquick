@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 $input = file_get_contents('php://input');
 $canvasJSON = $input;
 
-$sql = "INSERT INTO redacao (id_aluno, curso, trimestre, ano, json, id_tarefa) VALUES (?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO redacao (id_aluno, curso, trimestre, ano, json, id_tarefa, flag) VALUES (?, ?, ?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);
 
 $ra = $_SESSION['NumRA'];
@@ -27,7 +27,7 @@ try {
     if ($resultado != null) {
         $id_aluno = $resultado['id_aluno'];
         try {
-            $stmt->execute([$id_aluno, $curso, $trimestre, $ano, $canvasJSON, $id_atividade]);
+            $stmt->execute([$id_aluno, $curso, $trimestre, $ano, $canvasJSON, $id_atividade, '0']);
 
             $idRedacao = $conn->lastInsertId();
             $_SESSION["idRedacao"] = $idRedacao;

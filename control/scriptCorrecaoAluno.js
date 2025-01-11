@@ -583,11 +583,11 @@ function salvarClick() {
 }
 
 function resetarConfigComentarios() {
-    comentarioCompetencia1.value = '200 pts: Demonstra excelente domínio da modalidade escrita formal da língua portuguesa e de escolha de registro. Desvios gramaticais ou de convenções da escrita serão aceitos somente como excepcionalidade e quando não caracterizarem reincidência.';
-    comentarioCompetencia2.value = '200 pts: Desenvolve o tema por meio de argumentação consistente, a partir de um repertório sociocultural produtivo e apresenta excelente domínio do texto dissertativo-argumentativo.';
-    comentarioCompetencia3.value = '200 pts: Apresenta informações, fatos e opiniões relacionados ao tema proposto, de forma consistente e organizada, configurando autoria, em defesa de um ponto de vista.';
-    comentarioCompetencia4.value = '200 pts: Articula bem as partes do texto e apresenta repertório diversificado de recursos coesivos.';
-    comentarioCompetencia5.value = '200 pts: Elabora muito bem proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.';
+    comentarioCompetencia1.value = '200 pontos: Demonstra excelente domínio da modalidade escrita formal da língua portuguesa e de escolha de registro. Desvios gramaticais ou de convenções da escrita serão aceitos somente como excepcionalidade e quando não caracterizarem reincidência.';
+    comentarioCompetencia2.value = '200 pontos: Desenvolve o tema por meio de argumentação consistente, a partir de um repertório sociocultural produtivo e apresenta excelente domínio do texto dissertativo-argumentativo.';
+    comentarioCompetencia3.value = '200 pontos: Apresenta informações, fatos e opiniões relacionados ao tema proposto, de forma consistente e organizada, configurando autoria, em defesa de um ponto de vista.';
+    comentarioCompetencia4.value = '200 pontos: Articula bem as partes do texto e apresenta repertório diversificado de recursos coesivos.';
+    comentarioCompetencia5.value = '200 pontos: Elabora muito bem proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.';
 
     valorNotaTextoC1.value = notaInicial;
     valorNotaTextoC2.value = notaInicial;
