@@ -482,6 +482,8 @@ async function alterarFlagRedacoes() {
         const resultadoEnvioPHP = await response.json();
         console.log(resultadoEnvioPHP);
 
+        window.location.reload();
+
     } catch (error) {
         console.error('Erro:', error);
     }
