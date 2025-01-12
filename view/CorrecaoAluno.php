@@ -91,7 +91,7 @@ if ($_SESSION['status'] === 'aluno') {
                 <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-clipboard-data"
                         id="campoCompetenciasBtn" onclick="OnOffcampoCompetencias()" title="Competências"></i></span>
 
-                <span style="font-size: 25px; margin-top: 63vh;"><a href="menuAluno.html" id="botaoVoltarCorrecao"><i
+                <span style="font-size: 25px;"><a href="menuAluno.php" id="botaoVoltarCorrecao"><i
                             class="bi bi-arrow-bar-left" title="Voltar Menu" style="visibility: visible;"></i></a></span>
             </div>
         </div>

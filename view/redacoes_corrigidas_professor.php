@@ -24,6 +24,8 @@ if ($_SESSION['status'] === 'docente') {
     <body>
         <div class="barrinhaRedCorrigidas" style="padding: 0%;">
             <img src="../imagens/LogoRedaQuick_nova.png" alt="Logo RedaQuick" class="configIMGLogoTCC">
+            <span style="font-size: 25px; margin-right: 5%;"><a href="menu.php" id="botaoVoltarCorrecao"><i
+                        class="bi bi-arrow-bar-left" title="Voltar Menu"></i></a></span>
             <p style="margin-right: 2%; display: none;" id="liberarAcessoText">Liberar Acesso aos Alunos</p>
             <span style="font-size: 2.5rem;margin-right:1%"><i style="cursor: pointer; display: none; padding: 0%; margin: 0%; gap: 0%;" class="bi bi-toggle2-off"
                     id="toggleBtn" onclick="onOFFliberar()" title="Liberar Redações no Sistema"></i></span>

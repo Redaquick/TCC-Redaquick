@@ -99,7 +99,7 @@ if ($_SESSION['status'] === 'docente') {
             </div>
 
             <div>
-                <section id="paleteCores" style="display: flex;">
+                <section id="paleteCores">
                     <button
                         style="background-color: red; border-radius: 20%; width: 1.8rem; height: 1.8rem; border: 1px solid white;"
                         id="buttonCorRed" onclick="buttonCorRed()"></button>
@@ -136,7 +136,7 @@ if ($_SESSION['status'] === 'docente') {
                 <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-cloud-check" title="Salvar Correção"
                         id="salvarCorrecao" onclick="salvarCorrecao()" style="visibility: visible;"></i></span>
 
-                <span style="font-size: 25px; margin-top: 50vh;"><a href="redacoes_corrigidas_professor.php"
+                <span style="font-size: 25px;"><a href="redacoes_corrigidas_professor.php"
                         id="botaoVoltarCorrecao"><i class="bi bi-arrow-bar-left" title="Voltar Menu"
                             style="visibility: visible;"></i></a></span>
                 <input type="file" id="uploadPDF" accept=".pdf">

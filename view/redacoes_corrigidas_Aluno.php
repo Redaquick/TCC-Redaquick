@@ -14,11 +14,14 @@ if ($_SESSION['status'] === 'aluno') {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Redações Corrigidas Aluno</title>
         <link rel="stylesheet" href="style.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     </head>
 
     <body>
         <div class="barrinhaRedCorrigidas">
             <img src="../imagens/LogoRedaQuick_nova.png" alt="Logo RedaQuick" class="configIMGLogoTCC">
+            <span style="font-size: 25px; margin-right: 5%;"><a href="menuAluno.php" id="botaoVoltarCorrecao"><i
+                        class="bi bi-arrow-bar-left" title="Voltar Menu"></i></a></span>
         </div>
 
         <div id="divRedacoesCorrigidasAluno"></div>
