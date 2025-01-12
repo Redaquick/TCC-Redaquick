@@ -83,10 +83,10 @@ var yCoordenadaSecond = 0;
 var controladorOnOffCompetencias = true;
 var campoCompetencias = document.getElementById("campoCompetenciasBtn");
 
-var controladorOnOffComentarios = true;
+var controladorOnOffComentarios = false;
 var campoComentarios = document.getElementById("estanteComentariosBtn");
 
-var controladorOnOffcomentariosCompetencias = false;
+var controladorOnOffcomentariosCompetencias = true;
 var campoComentarios = document.getElementById("comentariosCompetenciasBtn");
 
 var mouseDown = false;

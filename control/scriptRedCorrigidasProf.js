@@ -15,6 +15,7 @@ var anos = [];
 var id_tarefas = [];
 var id_alunos = [];
 var id_redacoes = [];
+var flags = [];
 
 var id_redacoes_atuais = [];
 var nomesAtuais = [];
@@ -62,8 +63,9 @@ async function buscarRedacoesCorrigidasPHP() {
         id_tarefas = resultadoEnvioPHP.id_tarefas;
         id_alunos = resultadoEnvioPHP.id_alunos;
         id_redacoes = resultadoEnvioPHP.id_redacoes;
+        flags = resultadoEnvioPHP.flags;
 
-        console.log(nomes + "\n" + nomeTarefas + "\n" + nomeCursos + "\n" + trimestres + "\n" + anos + "\n" + id_tarefas + "\n" + id_alunos + "\n" + id_redacoes);
+        console.log(nomes + "\n" + nomeTarefas + "\n" + nomeCursos + "\n" + trimestres + "\n" + anos + "\n" + id_tarefas + "\n" + id_alunos + "\n" + id_redacoes + "\n" + flags);
 
         if (nomes && nomeTarefas && nomeCursos && trimestres && anos && id_tarefas && id_alunos && id_redacoes) {
 
@@ -131,7 +133,7 @@ async function buscarRedacoesCorrigidasPHP() {
     }
 }
 
-function criarRetangulos(nomeAluno, curso, trimestre, ano, indice_redacao) {
+function criarRetangulos(nomeAluno, curso, trimestre, ano, indice_redacao, statusRedacao) {
     console.log('Passou criarRetangulos');
     const sectionRetangulo = document.createElement('section');
 
@@ -139,16 +141,19 @@ function criarRetangulos(nomeAluno, curso, trimestre, ano, indice_redacao) {
     const textoCurso = document.createElement('p');
     const textoTrimestre = document.createElement('p');
     const textoAno = document.createElement('p');
+    const textoFlag = document.createElement('p');
 
     textoNomeAluno.textContent = nomeAluno;
     textoCurso.textContent = curso;
     textoTrimestre.textContent = trimestre + "° Trimestre";
     textoAno.textContent = ano;
+    textoFlag.textContent = statusRedacao;
 
     sectionRetangulo.appendChild(textoNomeAluno);
     sectionRetangulo.appendChild(textoCurso);
     sectionRetangulo.appendChild(textoTrimestre);
     sectionRetangulo.appendChild(textoAno);
+    sectionRetangulo.appendChild(textoFlag);
 
     sectionRetangulo.classList.add('sectionTarefasRedacoes');
     divRedacoesCorrigidas.appendChild(sectionRetangulo);
@@ -211,7 +216,7 @@ function criarPacotes(nomeTarefa, index, trimestrePacote) {
         nomeTarefaRelatorio = nomeTarefas[posicoesInformacoes[0]];
 
         for (let i = 0; i < posicoesInformacoes.length; i++) {
-            criarRetangulos(nomes[posicoesInformacoes[i]], nomeCursos[posicoesInformacoes[i]], trimestres[posicoesInformacoes[i]], anos[posicoesInformacoes[i]], i);
+            criarRetangulos(nomes[posicoesInformacoes[i]], nomeCursos[posicoesInformacoes[i]], trimestres[posicoesInformacoes[i]], anos[posicoesInformacoes[i]], i, flags[posicoesInformacoes[i]]);
 
             id_redacoes_atuais.push(id_redacoes[posicoesInformacoes[i]]);
             nomesAtuais.push(nomes[posicoesInformacoes[i]]);

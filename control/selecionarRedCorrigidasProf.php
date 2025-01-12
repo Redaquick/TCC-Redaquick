@@ -8,7 +8,7 @@ $dados = json_decode($input, true);
 
 $idCorretor = $_SESSION["id_usuario"];
 
-$sql = "SELECT r.id_redacao, r.id_aluno, a.nome AS nome_aluno, r.curso, r.trimestre, r.ano, r.id_tarefa, t.nome AS nome_tarefa
+$sql = "SELECT r.id_redacao, r.id_aluno, r.flag, a.nome AS nome_aluno, r.curso, r.trimestre, r.ano, r.id_tarefa, t.nome AS nome_tarefa
         FROM correcao c
         JOIN redacao r ON c.id_redacao  = r.id_redacao
         JOIN aluno a ON r.id_aluno = a.id_aluno
@@ -30,8 +30,17 @@ try {
         $id_tarefas[$i] = $resultado[$i]['id_tarefa'];
         $id_alunos[$i] = $resultado[$i]['id_aluno'];
         $id_redacoes[$i] = $resultado[$i]['id_redacao'];
+        $flags[$i] = $resultado[$i]['flag'];
     }
 
+    for ($i=0; $i < count($flags); $i++) { 
+        if($flags[$i] === 0){
+            $flagsConvertidas[$i] = 'Acesso não Liberado';
+        }else{
+            $flagsConvertidas[$i] = 'Acesso Liberado';
+        }    
+    }
+    
     if ($resultado) {
         $response = [
             'nomes' => $nomes,
@@ -41,7 +50,8 @@ try {
             'tarefas' => $tarefas,
             'id_tarefas' => $id_tarefas,
             'id_alunos' => $id_alunos,
-            'id_redacoes' => $id_redacoes
+            'id_redacoes' => $id_redacoes,
+            'flags' => $flagsConvertidas
         ];
         echo json_encode($response);
     } else {

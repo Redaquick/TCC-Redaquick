@@ -83,10 +83,10 @@ var yCoordenadaSecond = 0;
 var controladorOnOffCompetencias = true;
 var campoCompetencias = document.getElementById("campoCompetenciasBtn");
 
-var controladorOnOffComentarios = true;
+var controladorOnOffComentarios = false;
 var campoComentarios = document.getElementById("estanteComentariosBtn");
 
-var controladorOnOffcomentariosCompetencias = false;
+var controladorOnOffcomentariosCompetencias = true;
 var campoComentarios = document.getElementById("comentariosCompetenciasBtn");
 
 var mouseDown = false;
@@ -116,6 +116,7 @@ async function configIniciais() {
     await buscarJson();
     await buscarNotas();
     await buscarComentarios();
+    await buscarComentariosPadrao();
 }
 
 // Função para salvar o estado atual do canvas
@@ -703,8 +704,84 @@ async function buscarComentarios() {
         const resultadoEnvioPHP = await response.json();
         console.log(resultadoEnvioPHP);
 
+        const comentarios = resultadoEnvioPHP.comentario.split('&');
+        const cores = resultadoEnvioPHP.corTxt.split('&');
+
+        for (let index = 0; index < comentarios.length; index++) {
+            addTextAreaComentario(cores[index], comentarios[index]);
+        }
+
     } catch (error) {
         console.error('Erro:', error);
     }
 }
 
+function addTextAreaComentario(cor, texto) {
+    var comentario = document.createElement('textarea');
+    comentario.style.borderColor = cor;
+    comentario.style.borderWidth = '2px';
+    comentario.style.minHeight = '105px';
+    comentario.style.maxHeight = '105px';
+    comentario.maxLength = 150;
+    comentario.value = texto;
+    comentario.readOnly = true;
+
+    sectionEstanteComentarios.appendChild(comentario);
+
+    armazenaComentarios.push(comentario);
+}
+
+async function buscarComentariosPadrao() {
+    const dados = {
+        mensagem: "Enviado"
+    };
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/buscarComentariosPadraoAlterar.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
+        console.log(resultadoEnvioPHP);
+
+        const comentariosPadrao = resultadoEnvioPHP.comentarioPadrao.split('&');
+
+        configCampoCompPadrao(comentarioCompetencia1);
+        configCampoCompPadrao(comentarioCompetencia2);
+        configCampoCompPadrao(comentarioCompetencia3);
+        configCampoCompPadrao(comentarioCompetencia4);
+        configCampoCompPadrao(comentarioCompetencia5);
+
+        comentarioCompetencia1.value = comentariosPadrao[0];
+        comentarioCompetencia2.value = comentariosPadrao[1];
+        comentarioCompetencia3.value = comentariosPadrao[2];
+        comentarioCompetencia4.value = comentariosPadrao[3];
+        comentarioCompetencia5.value = comentariosPadrao[4];
+
+        sectionComentariosCompetencias.appendChild(comentarioCompetencia1);
+        sectionComentariosCompetencias.appendChild(comentarioCompetencia2);
+        sectionComentariosCompetencias.appendChild(comentarioCompetencia3);
+        sectionComentariosCompetencias.appendChild(comentarioCompetencia4);
+        sectionComentariosCompetencias.appendChild(comentarioCompetencia5);
+
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+function configCampoCompPadrao(comentarioCompetencia){
+    comentarioCompetencia.style.borderColor = 'black';
+    comentarioCompetencia.style.borderWidth = '2px';
+    comentarioCompetencia.style.minHeight = '152px';
+    comentarioCompetencia.style.maxHeight = '152px';
+    comentarioCompetencia.setAttribute('readonly', true);
+}
