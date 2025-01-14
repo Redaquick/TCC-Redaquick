@@ -11,10 +11,16 @@ $comentarioGeral = $dados['comentarioGeral'];
 $comentarioPadrao = $dados['comentarioPadrao'];
 $corText = $dados['corText'];
 
+$flagSession = $dados['flagSession'];
+
 $sql = "UPDATE comentario SET comentario = ?, comentarioPadrao = ?, corTxt = ? WHERE id_redacao = ?";
 $stmt = $conn->prepare($sql);
 
-$idRedacao = $_SESSION["VerificaCorrecaoIDredacao"];
+if ($flagSession === 'true') {
+    $idRedacao = $_SESSION["VerificaCorrecaoIDredacao"];
+} else if ($flagSession === 'false') {
+    $idRedacao = $_SESSION["id_redacaoAtual"];
+}
 
 try {
     $stmt->execute([$comentarioGeral, $comentarioPadrao, $corText, $idRedacao]);
@@ -27,4 +33,3 @@ try {
     echo json_encode('ERRO AO ATUALIZAR COMENTARIOS: ' . $ex->getMessage());
     exit();
 }
-?>

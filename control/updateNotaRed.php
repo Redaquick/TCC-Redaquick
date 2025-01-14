@@ -15,10 +15,16 @@ $notaC5 = $dados['c5'];
 $notaTotalEnem = $dados['notaTotalEnem'];
 $notaDecimal = $notaTotalEnem / 100.0;
 
+$flagSession = $dados['flagSession'];
+
 $sql = "UPDATE correcao SET nota_c1 = ?, nota_c2 = ?, nota_c3 = ?, nota_c4 = ?, nota_c5 = ?, nota_enem = ?, nota_decimal = ? WHERE id_redacao = ?";
 $stmt = $conn->prepare($sql);
 
-$idRedacao = $_SESSION["VerificaCorrecaoIDredacao"];
+if ($flagSession === 'true') {
+    $idRedacao = $_SESSION["VerificaCorrecaoIDredacao"];
+} else if ($flagSession === 'false') {
+    $idRedacao = $_SESSION["id_redacaoAtual"];
+}
 
 try {
     $stmt->execute([$notaC1, $notaC2, $notaC3, $notaC4, $notaC5, $notaTotalEnem, $notaDecimal, $idRedacao]);

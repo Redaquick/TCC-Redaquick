@@ -451,7 +451,8 @@ async function updateComentariosoPHP() {
     const dados = {
         comentarioGeral: comentario,
         comentarioPadrao: comentarioP,
-        corText: corTxt
+        corText: corTxt,
+        flagSession: 'true'
     };
 
     try {
@@ -483,7 +484,8 @@ async function updateNotasPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotal)
         c3: notaC3,
         c4: notaC4,
         c5: notaC5,
-        notaTotalEnem: notaTotal
+        notaTotalEnem: notaTotal,
+        flagSession: 'true'
     };
 
     try {

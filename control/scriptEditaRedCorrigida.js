@@ -31,21 +31,21 @@ var valorZoomPercentual = 0;
 
 var valorNotaTextoC1 = document.getElementById("competencia1");
 var valorNotaTextoC2 = document.getElementById("competencia2");
-var valorNotaTextoC3 = document.getElementById("competencia3"); //USAR NO PDF
+var valorNotaTextoC3 = document.getElementById("competencia3");
 var valorNotaTextoC4 = document.getElementById("competencia4");
 var valorNotaTextoC5 = document.getElementById("competencia5");
 
 var notaInicial = 200;
 
-var notaC1 = 200;
-var notaC2 = 200;
-var notaC3 = 200; //USAR NO PDF
-var notaC4 = 200;
-var notaC5 = 200;
+var notaC1;
+var notaC2;
+var notaC3;
+var notaC4;
+var notaC5;
 
 var comentarioCompetencia1 = document.createElement('textarea');
 var comentarioCompetencia2 = document.createElement('textarea');
-var comentarioCompetencia3 = document.createElement('textarea'); //USAR NO PDF
+var comentarioCompetencia3 = document.createElement('textarea');
 var comentarioCompetencia4 = document.createElement('textarea');
 var comentarioCompetencia5 = document.createElement('textarea');
 
@@ -60,7 +60,7 @@ var botaoAumentaC4 = document.getElementById("aumentaNotaC4");
 var botaoDiminuiC5 = document.getElementById("diminuiNotaC5");
 var botaoAumentaC5 = document.getElementById("aumentaNotaC5");
 
-var armazenaComentarios = []; //USAR NO PDF
+var armazenaComentarios = [];
 
 var arquivoRenderizado;
 
@@ -105,10 +105,14 @@ var ano;
 var id_atividade;
 var id_instituicao;
 
-var controleVerificarCorrecaoCorrigida = false;
-var alertaRedacaoCorrigida = document.getElementById('alertaRedacaoCorrigida');
+configIniciais();
 
-var controleUndefinedQrCode = false;
+async function configIniciais() {
+    await buscarJson();
+    await buscarNotas();
+    await buscarComentarios();
+    await buscarComentariosPadrao();
+}
 
 // Função para salvar o estado atual do canvas
 function saveCanvasState() {
@@ -227,7 +231,7 @@ fabricCanvas.on('mouse:up', function (event) {
 
             console.log(canvasStates);
 
-            addTextAreaComentario();
+            addTextAreaComentario(corLinha, '');
         }
     }
 });
@@ -239,133 +243,21 @@ function imutaObjeto() {
     });
 }
 
-async function lerQRCodeViaPHP(urlDaImagem) {
-    const urlString = urlDaImagem;
-
-    try {
-        // Fazendo a requisição com fetch e aguardando a resposta do PHP 
-        const response = await fetch('https://feiratec.dev.br/redaquick/control/leitura_qrcode.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'text/plain'
-            },
-            body: urlString
-        });
-
-        if (!response.ok) {
-            throw new Error('Erro na requisição: ' + response.statusText);
-        }
-
-        const resultadoEnvioPHP = await response.json(); // Extrai e converte o corpo da resposta para JSON        
-
-        ra = resultadoEnvioPHP.NumRA;
-        turma = resultadoEnvioPHP.turma;
-        trimestre = resultadoEnvioPHP.trimestre;
-        ano = resultadoEnvioPHP.ano;
-        id_atividade = resultadoEnvioPHP.id_atividade;
-        id_instituicao = resultadoEnvioPHP.id_instituicao;
-
-        console.log(ra + "\n" + turma + "\n" + trimestre + "\n" + ano + "\n" + id_atividade + "\n" + id_instituicao);
-
-        if (ra && turma && trimestre && ano && id_atividade && id_instituicao) {
-            controleUndefinedQrCode = true;
-        } else {
-            alert('Os dados do QrCode não foram identificados corretamente!!!');
-        }
-
-        if (controleUndefinedQrCode) {
-            verificaRedacaoCorrigidaPHP();
-        } else {
-            controleVerificarCorrecaoCorrigida = false;
-            alertaRedacaoCorrigida.style.display = "none";
-        }
-
-    } catch (error) {
-        console.error('Erro:', error);
-    }
-}
-
-async function verificaRedacaoCorrigidaPHP() {
-    const dados = {
-        estado: 'Enviado'
-    };
-
-    try {
-        // Fazendo a requisição com fetch e aguardando a resposta do PHP 
-        const response = await fetch('https://feiratec.dev.br/redaquick/control/verifica_correcaoCorrigida.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dados)
-        });
-
-        if (!response.ok) {
-            throw new Error('Erro na requisição: ' + response.statusText);
-        }
-
-        const resultadoEnvioPHP = await response.text();
-        console.log(resultadoEnvioPHP);
-
-        if (resultadoEnvioPHP === 'true') {
-            controleVerificarCorrecaoCorrigida = true;
-            alertaRedacaoCorrigida.style.display = "flex";
-        } else {
-            controleVerificarCorrecaoCorrigida = false;
-            alertaRedacaoCorrigida.style.display = "none";
-        }
-
-    } catch (error) {
-        console.error('Erro:', error);
-    }
-}
-
-function verificaRedacaoSalvaProxPag() {
-    if (controleSalvarCorrecao == false && controleVerificarCorrecaoCorrigida == false) {
-        if (confirm('Sua correção não foi salva. Tem certeza que deseja passar de página?')) {
-            ProxPagina();
-        }
-    } else {
-        controleSalvarCorrecao = false;
-        ProxPagina();
-    }
-}
-function verificaRedacaoSalvaPagAnterior() {
-    if (controleSalvarCorrecao == false && controleVerificarCorrecaoCorrigida == false) {
-        if (confirm('Sua correção não foi salva. Tem certeza que deseja passar de página?')) {
-            PaginaAnterior();
-        }
-    } else {
-        controleSalvarCorrecao = false;
-        PaginaAnterior();
-    }
-}
 async function salvarCorrecao() {
-    if (controleUndefinedQrCode) {
-        let canvasJson = fabricCanvas.toJSON();
-        console.log(canvasJson);
 
-        let notaTotalEnem = notaC1 + notaC2 + notaC3 + notaC4 + notaC5;
+    let canvasJson = fabricCanvas.toJSON();
+    console.log(canvasJson);
 
-        if (controleVerificarCorrecaoCorrigida == false) {
-            await inserirRedacaoPHP(canvasJson);
-            await inserirNotaPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotalEnem);
-            await inserirComentariosPHP();
+    let notaTotalEnem = notaC1 + notaC2 + notaC3 + notaC4 + notaC5;
 
-            controleSalvarCorrecao = true;
-            alert('Sua Correção foi salva!!!');
-        } else {
-            if (confirm('Esta redação já foi corrigida. Deseja substituir a correção salva por esta?')) {
-                await updateRedacaoPHP(canvasJson);
-                await updateComentariosoPHP();
-                await updateNotasPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotalEnem);
+    if (confirm('Esta redação já foi corrigida. Deseja substituir a correção salva por esta?')) {
+        await updateRedacaoPHP(canvasJson);
+        await updateComentariosoPHP();
+        await updateNotasPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotalEnem);
 
-                alert('Sua Correção foi salva!!!');
-            }
-        }
-    } else {
-        alert('Os dados do QrCode não foram identificados corretamente!!!');
+        alert('Sua Correção foi salva!!!');
     }
+
 }
 
 async function updateRedacaoPHP(canvasJson) {
@@ -373,7 +265,7 @@ async function updateRedacaoPHP(canvasJson) {
 
     try {
         // Fazendo a requisição com fetch e aguardando a resposta do PHP 
-        const response = await fetch('https://feiratec.dev.br/redaquick/control/updateRedacaoSalva.php', {
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/updateRedacaoEditaRed.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain'
@@ -409,7 +301,8 @@ async function updateComentariosoPHP() {
     const dados = {
         comentarioGeral: comentario,
         comentarioPadrao: comentarioP,
-        corText: corTxt
+        corText: corTxt,
+        flagSession: 'false'
     };
 
     try {
@@ -441,7 +334,8 @@ async function updateNotasPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotal)
         c3: notaC3,
         c4: notaC4,
         c5: notaC5,
-        notaTotalEnem: notaTotal
+        notaTotalEnem: notaTotal,
+        flagSession: 'false'
     };
 
     try {
@@ -1118,17 +1012,200 @@ function salvarClick() {
     link.click();
 }
 
-function addTextAreaComentario() {
+async function buscarJson() {
+    const dados = {
+        mensagem: "Enviado"
+    };
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/buscarJsonAlterar.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
+        console.log(resultadoEnvioPHP);
+
+        if (resultadoEnvioPHP.backgroundImage) {
+            // Obtém as dimensões da imagem de fundo no JSON
+            const backgroundImage = resultadoEnvioPHP.backgroundImage;
+            const imageWidth = backgroundImage.width;
+            const imageHeight = backgroundImage.height;
+
+            heightImagem = imageHeight;
+            widthImagem = imageWidth;
+
+            // Ajusta o tamanho do canvas com base nas dimensões da imagem de fundo
+            fabricCanvas.setWidth(imageWidth);
+            fabricCanvas.setHeight(imageHeight);
+        }
+
+        await fabricCanvas.loadFromJSON(resultadoEnvioPHP, () => {
+            console.log("Canvas carregado com sucesso.");
+
+            objetosDesenhados = fabricCanvas.getObjects();
+            console.log(objetosDesenhados);
+            imutaObjeto();
+
+            fabricCanvas.selection = false;
+            fabricCanvas.selectable = false;
+        });
+
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+async function buscarNotas() {
+    const dados = {
+        mensagem: "Enviado"
+    };
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/buscarNotasCompAlterar.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
+        console.log(resultadoEnvioPHP);
+
+        notaC1 = resultadoEnvioPHP.nota_c1;
+        notaC2 = resultadoEnvioPHP.nota_c2;
+        notaC3 = resultadoEnvioPHP.nota_c3;
+        notaC4 = resultadoEnvioPHP.nota_c4;
+        notaC5 = resultadoEnvioPHP.nota_c5;
+
+        console.log(notaC1 + " " + notaC2 + " " + notaC3 + " " + notaC4 + " " + notaC5);
+
+        valorNotaTextoC1.value = notaC1;
+        valorNotaTextoC2.value = notaC2;
+        valorNotaTextoC3.value = notaC3;
+        valorNotaTextoC4.value = notaC4;
+        valorNotaTextoC5.value = notaC5;
+
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+async function buscarComentarios() {
+    const dados = {
+        mensagem: "Enviado"
+    };
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/buscarComentariosAlterar.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
+        console.log(resultadoEnvioPHP);
+
+        const comentarios = resultadoEnvioPHP.comentario.split('&');
+        const cores = resultadoEnvioPHP.corTxt.split('&');
+
+        for (let index = 0; index < comentarios.length; index++) {
+            addTextAreaComentario(cores[index], comentarios[index]);
+        }
+
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+function addTextAreaComentario(cor, texto) {
     var comentario = document.createElement('textarea');
-    comentario.style.borderColor = corLinha;
+    comentario.style.borderColor = cor;
     comentario.style.borderWidth = '2px';
     comentario.style.minHeight = '105px';
     comentario.style.maxHeight = '105px';
     comentario.maxLength = 150;
+    comentario.value = texto;    
 
     sectionEstanteComentarios.appendChild(comentario);
 
     armazenaComentarios.push(comentario);
+}
+
+async function buscarComentariosPadrao() {
+    const dados = {
+        mensagem: "Enviado"
+    };
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/buscarComentariosPadraoAlterar.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
+        console.log(resultadoEnvioPHP);
+
+        const comentariosPadrao = resultadoEnvioPHP.comentarioPadrao.split('&');
+
+        configCampoCompPadrao(comentarioCompetencia1);
+        configCampoCompPadrao(comentarioCompetencia2);
+        configCampoCompPadrao(comentarioCompetencia3);
+        configCampoCompPadrao(comentarioCompetencia4);
+        configCampoCompPadrao(comentarioCompetencia5);
+
+        comentarioCompetencia1.value = comentariosPadrao[0];
+        comentarioCompetencia2.value = comentariosPadrao[1];
+        comentarioCompetencia3.value = comentariosPadrao[2];
+        comentarioCompetencia4.value = comentariosPadrao[3];
+        comentarioCompetencia5.value = comentariosPadrao[4];
+
+        sectionComentariosCompetencias.appendChild(comentarioCompetencia1);
+        sectionComentariosCompetencias.appendChild(comentarioCompetencia2);
+        sectionComentariosCompetencias.appendChild(comentarioCompetencia3);
+        sectionComentariosCompetencias.appendChild(comentarioCompetencia4);
+        sectionComentariosCompetencias.appendChild(comentarioCompetencia5);
+
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+function configCampoCompPadrao(comentarioCompetencia) {
+    comentarioCompetencia.style.borderColor = 'black';
+    comentarioCompetencia.style.borderWidth = '2px';
+    comentarioCompetencia.style.minHeight = '152px';
+    comentarioCompetencia.style.maxHeight = '152px';
+    comentarioCompetencia.setAttribute('readonly', true);
 }
 
 function buttonCorPrincipalClick() {
