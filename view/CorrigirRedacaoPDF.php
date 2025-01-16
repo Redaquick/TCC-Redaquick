@@ -4,7 +4,7 @@ session_start();
 
 // Verificar se o status da sessão é 'docente'
 if ($_SESSION['status'] === 'docente') {
-?>
+    ?>
 
     <!DOCTYPE html>
     <html lang="pt-br">
@@ -106,7 +106,7 @@ if ($_SESSION['status'] === 'docente') {
             </div>
             <div id="toolbar"><br><br><br>
                 <span style="font-size: 25px"><i class="bi bi-pen" id="draw" title="Caneta"></i></span>
-                <span style="font-size: 25px"><i class="bi bi-textarea-resize" id="selecionarTexto" title="Selecionar Texto"
+                <span style="font-size: 25px"><i class="bi bi-aspect-ratio" id="selecionarTexto" title="Selecionar Texto"
                         onclick="desenhaRetangulo()"></i></span>
                 <span style="font-size: 25px"><i class="bi bi-ban" id="desativar" title="Desativar"></i></span>
                 <button
@@ -120,7 +120,8 @@ if ($_SESSION['status'] === 'docente') {
                 <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-chat-right-text"
                         id="estanteComentariosBtn" onclick="OnOffestanteComentarios()" title="Comentários"></i></span>
                 <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-card-checklist"
-                        id="comentariosCompetenciasBtn" onclick="OnOffcomentariosCompetencias()" title="Comentários das Competências"></i></span>
+                        id="comentariosCompetenciasBtn" onclick="OnOffcomentariosCompetencias()"
+                        title="Comentários das Competências"></i></span>
             </div>
 
             <div>
@@ -162,8 +163,8 @@ if ($_SESSION['status'] === 'docente') {
                 <span style="font-size: 25px"><i style="cursor: pointer;" class="bi bi-cloud-check" title="Salvar Correção"
                         id="salvarCorrecao" onclick="salvarCorrecao()"></i></span>
 
-                <span style="font-size: 25px;"><a href="menu.php" id="botaoVoltarCorrecao"><i
-                            class="bi bi-arrow-bar-left" title="Voltar Menu"></i></a></span>
+                <span style="font-size: 25px;"><a id="botaoVoltarCorrecao"><i class="bi bi-arrow-bar-left"
+                            title="Voltar Menu" style="cursor: pointer;"></i></a></span>
                 <input type="file" id="uploadPDF" accept=".pdf">
             </div>
         </div>
@@ -192,7 +193,7 @@ if ($_SESSION['status'] === 'docente') {
     <script src="../control/scriptCorrigirRedação.js"></script>
 
     </html>
-<?php
+    <?php
 } else {
     echo ("Você não tem permissão para acessar essa página!!!");
 }

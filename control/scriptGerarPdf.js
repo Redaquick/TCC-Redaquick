@@ -184,6 +184,8 @@ async function gerarPDFs() {
         link.download = 'Folha de Redações-' + nomeAtividadeCampo2 + '.pdf';
         link.click();
 
+        alert('Tarefa Cadastrada com Sucesso. O download do PDF está em execução...')
+
     } else {
         alert('Por favor, coloque os arquivos solicitados!');
         return;

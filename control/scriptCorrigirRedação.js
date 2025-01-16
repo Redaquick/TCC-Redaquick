@@ -1432,3 +1432,13 @@ document.addEventListener('keydown', (e) => {
         }
     }
 });
+
+document.getElementById('botaoVoltarCorrecao').addEventListener('click', function () {
+    if (controleSalvarCorrecao == false && controleVerificarCorrecaoCorrigida == false) {
+        if (confirm('Sua correção não foi salva. Tem certeza que deseja voltar ao menu?')) {
+            window.location.href = 'menu.php';
+        }
+    } else {
+        window.location.href = 'menu.php';
+    }
+});

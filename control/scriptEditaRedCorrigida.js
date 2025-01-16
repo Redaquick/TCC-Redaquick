@@ -255,6 +255,8 @@ async function salvarCorrecao() {
         await updateComentariosoPHP();
         await updateNotasPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotalEnem);
 
+        controleSalvarCorrecao = true;
+
         alert('Sua Correção foi salva!!!');
     }
 
@@ -1319,5 +1321,15 @@ document.addEventListener('keydown', (e) => {
         } else {
             console.log("Nenhuma ação anterior para desfazer.");
         }
+    }
+});
+
+document.getElementById('botaoVoltarCorrecao').addEventListener('click', function () {
+    if (controleSalvarCorrecao == false) {
+        if (confirm('Sua correção não foi salva. Tem certeza que deseja voltar ao menu?')) {
+            window.location.href = 'redacoes_corrigidas_professor.php';
+        }
+    } else {
+        window.location.href = 'redacoes_corrigidas_professor.php';
     }
 });
