@@ -1112,7 +1112,7 @@ async function salvarClick() {
     const dados = {
         mensagem: 'Enviado'
     };
-    
+
     try {
         // Fazendo a requisição com fetch e aguardando a resposta do PHP
         const response = await fetch('https://feiratec.dev.br/redaquick/control/buscarNomeVista.php', {
@@ -1397,3 +1397,38 @@ function resetarConfigComentarios() {
 
     armazenaComentarios.splice(0, armazenaComentarios.length);
 }
+
+document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key.toLowerCase() === 'z') {
+        e.preventDefault();
+
+        fabricCanvas.isDrawingMode = false;
+        controleModoDesenho = false;
+
+        if (currentStateIndex > 0) {
+            currentStateIndex--;
+            // Restaura o estado anterior do canvas
+            fabricCanvas.loadFromJSON(canvasStates[currentStateIndex], () => {
+                fabricCanvas.renderAll();
+
+                if (objetosDesenhados[objetosDesenhados.length - 1].type === 'rect') {
+                    var ultimoComentario = armazenaComentarios.pop();
+                    ultimoComentario.remove();
+                }
+
+                canvasStates.pop();
+
+                console.log("Clicou em Voltar");
+                console.log(canvasStates);
+                console.log(currentStateIndex);
+
+                objetosDesenhados = fabricCanvas.getObjects();
+                imutaObjeto();
+                console.log(objetosDesenhados);
+            });
+
+        } else {
+            console.log("Nenhuma ação anterior para desfazer.");
+        }
+    }
+});
