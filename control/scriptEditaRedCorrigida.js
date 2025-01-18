@@ -105,6 +105,8 @@ var ano;
 var id_atividade;
 var id_instituicao;
 
+var caneta = document.getElementById('draw');
+
 configIniciais();
 
 async function configIniciais() {
@@ -122,6 +124,12 @@ function saveCanvasState() {
 
 // Evento para ativar o modo de desenho com pincel vermelho e largura 2
 document.getElementById('draw').addEventListener('click', () => {
+    caneta.classList.remove('bi', 'bi-pen');
+    caneta.classList.add('bi', 'bi-pen-fill');
+
+    retanguloIcon.classList.remove('bi', 'bi-aspect-ratio-fill');
+    retanguloIcon.classList.add('bi', 'bi-aspect-ratio');
+
     controleModoDesenho = true;
     controleDesenhaRet = false;
 
@@ -142,6 +150,9 @@ document.getElementById('draw').addEventListener('click', () => {
 document.getElementById('back').addEventListener('click', () => {
     fabricCanvas.isDrawingMode = false;
     controleModoDesenho = false;
+
+    caneta.classList.remove('bi', 'bi-pen-fill');
+    caneta.classList.add('bi', 'bi-pen');
 
     if (currentStateIndex > 0) {
         currentStateIndex--;
@@ -174,6 +185,12 @@ document.getElementById('desativar').addEventListener('click', () => {
     fabricCanvas.isDrawingMode = false;
     controleModoDesenho = false;
     controleDesenhaRet = false;
+
+    caneta.classList.remove('bi', 'bi-pen-fill');
+    caneta.classList.add('bi', 'bi-pen');
+
+    retanguloIcon.classList.remove('bi', 'bi-aspect-ratio-fill');
+    retanguloIcon.classList.add('bi', 'bi-aspect-ratio');
 });
 
 // Evento para parar o DrawingMode
@@ -488,6 +505,12 @@ function DiminuirZoom() {
 }
 
 function desenhaRetangulo() {
+    caneta.classList.remove('bi', 'bi-pen-fill');
+    caneta.classList.add('bi', 'bi-pen');
+
+    retanguloIcon.classList.remove('bi', 'bi-aspect-ratio');
+    retanguloIcon.classList.add('bi', 'bi-aspect-ratio-fill');
+
     controleDesenhaRet = true;
     controleModoDesenho = false;
     fabricCanvas.isDrawingMode = false;
@@ -1300,6 +1323,9 @@ document.addEventListener('keydown', (e) => {
 
         fabricCanvas.isDrawingMode = false;
         controleModoDesenho = false;
+
+        caneta.classList.remove('bi', 'bi-pen-fill');
+        caneta.classList.add('bi', 'bi-pen');
 
         if (currentStateIndex > 0) {
             currentStateIndex--;
