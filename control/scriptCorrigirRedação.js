@@ -568,10 +568,10 @@ async function inserirNotaPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotal)
 }
 
 async function inserirComentariosPHP() {
-    let comentario = '';
+    let comentario = null;
     let comentarioP = comentarioCompetencia1.value + "&" + comentarioCompetencia2.value + "&" + comentarioCompetencia3.value + "&" +
         comentarioCompetencia4.value + "&" + comentarioCompetencia5.value;
-    let corTxt = '';
+    let corTxt = null;
 
     if (armazenaComentarios != null) {
         armazenaComentarios.forEach(function (e, index) {

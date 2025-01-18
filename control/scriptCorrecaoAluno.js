@@ -31,7 +31,7 @@ var valorZoomPercentual = 0;
 
 var valorNotaTextoC1 = document.getElementById("competencia1");
 var valorNotaTextoC2 = document.getElementById("competencia2");
-var valorNotaTextoC3 = document.getElementById("competencia3"); 
+var valorNotaTextoC3 = document.getElementById("competencia3");
 var valorNotaTextoC4 = document.getElementById("competencia4");
 var valorNotaTextoC5 = document.getElementById("competencia5");
 
@@ -60,7 +60,7 @@ var botaoAumentaC4 = document.getElementById("aumentaNotaC4");
 var botaoDiminuiC5 = document.getElementById("diminuiNotaC5");
 var botaoAumentaC5 = document.getElementById("aumentaNotaC5");
 
-var armazenaComentarios = []; 
+var armazenaComentarios = [];
 
 var arquivoRenderizado;
 
@@ -704,11 +704,14 @@ async function buscarComentarios() {
         const resultadoEnvioPHP = await response.json();
         console.log(resultadoEnvioPHP);
 
-        const comentarios = resultadoEnvioPHP.comentario.split('&');
-        const cores = resultadoEnvioPHP.corTxt.split('&');
 
-        for (let index = 0; index < comentarios.length; index++) {
-            addTextAreaComentario(cores[index], comentarios[index]);
+        if (resultadoEnvioPHP.comentario != null) {
+            const comentarios = resultadoEnvioPHP.comentario.split('&');
+            const cores = resultadoEnvioPHP.corTxt.split('&');
+
+            for (let index = 0; index < comentarios.length; index++) {
+                addTextAreaComentario(cores[index], comentarios[index]);
+            }
         }
 
     } catch (error) {
@@ -778,7 +781,7 @@ async function buscarComentariosPadrao() {
     }
 }
 
-function configCampoCompPadrao(comentarioCompetencia){
+function configCampoCompPadrao(comentarioCompetencia) {
     comentarioCompetencia.style.borderColor = 'black';
     comentarioCompetencia.style.borderWidth = '2px';
     comentarioCompetencia.style.minHeight = '152px';

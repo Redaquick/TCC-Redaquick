@@ -1129,11 +1129,16 @@ async function buscarComentarios() {
         const resultadoEnvioPHP = await response.json();
         console.log(resultadoEnvioPHP);
 
-        const comentarios = resultadoEnvioPHP.comentario.split('&');
-        const cores = resultadoEnvioPHP.corTxt.split('&');
 
-        for (let index = 0; index < comentarios.length; index++) {
-            addTextAreaComentario(cores[index], comentarios[index]);
+        if (resultadoEnvioPHP.comentario != null) {
+            const comentarios = resultadoEnvioPHP.comentario.split('&');
+            const cores = resultadoEnvioPHP.corTxt.split('&');
+
+            console.log("Length Comentários: " + comentarios.length);
+
+            for (let index = 0; index < comentarios.length; index++) {
+                addTextAreaComentario(cores[index], comentarios[index]);
+            }
         }
 
     } catch (error) {
