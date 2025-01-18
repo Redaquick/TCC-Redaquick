@@ -280,7 +280,7 @@ async function SalvarIdRedacaoSelecionada(id_redacao_atual) {
 
 async function gerarRelatorio() {
     const { jsPDF } = window.jspdf;
-    const XLSX = window.XLSX; // Certifique-se de que a biblioteca SheetJS foi carregada
+    const XLSX = window.XLSX;
 
     const dados = {
         nomes: nomesAtuais,
@@ -288,7 +288,6 @@ async function gerarRelatorio() {
     };
 
     try {
-        // Fazendo a requisição com fetch e aguardando a resposta do PHP
         const response = await fetch('https://feiratec.dev.br/redaquick/control/buscarNotasCorrigidas.php', {
             method: 'POST',
             headers: {
@@ -302,15 +301,13 @@ async function gerarRelatorio() {
         }
 
         const resultadoEnvioPHP = await response.json();
-        console.log(resultadoEnvioPHP);
 
-        RAs = resultadoEnvioPHP.RAs;
-        notasEnem = resultadoEnvioPHP.notasEnem;
-        notasDecimal = resultadoEnvioPHP.notasDecimal;
+        const RAs = resultadoEnvioPHP.RAs;
+        const notasEnem = resultadoEnvioPHP.notasEnem;
+        const notasDecimal = resultadoEnvioPHP.notasDecimal;
 
         // Gerar o PDF
         const doc = new jsPDF();
-
         doc.setFontSize(14);
         doc.setFont('helvetica', 'bold');
         doc.text('Relatório com Notas', 80, 10);
@@ -346,7 +343,7 @@ async function gerarRelatorio() {
                 doc.setFont('helvetica', 'normal');
                 doc.text('Nome', 47, 20);
                 doc.text('RA', 107, 20);
-                doc.text('Curso', 128, 20);
+                doc.text('Curso', 129, 20);
                 doc.text('Nota (ENEM)', 150, 20);
                 doc.text('Nota (Decimal)', 180, 20);
                 doc.line(100, 15, 100, 290);
@@ -371,29 +368,30 @@ async function gerarRelatorio() {
             y = linhaY + 6;
         }
 
-        // Gerar o PDF como um Blob
         const pdfBlob = doc.output('blob');
         const pdfLink = document.createElement('a');
         pdfLink.href = URL.createObjectURL(pdfBlob);
         pdfLink.download = 'Relatório Notas - ' + nomeTarefaRelatorio + ".pdf";
 
-        // Preparar os dados para o CSV
+        // Gerar o CSV
         const dadosCSV = [["Nome", "RA", "Curso", "Nota (ENEM)", "Nota (Decimal)"]];
         for (let i = 0; i < nomesAtuais.length; i++) {
-            dadosCSV.push([nomesAtuais[i], RAs[i], cursosAtuais[i], notasEnem[i], notasDecimal[i]]);
+            dadosCSV.push([
+                `"${nomesAtuais[i]}"`,
+                `"${RAs[i]}"`,
+                `"${cursosAtuais[i]}"`,
+                `"${notasEnem[i]}"`,
+                `"${notasDecimal[i]}"`
+            ]);
         }
 
-        // Convertendo para CSV
-        const ws = XLSX.utils.aoa_to_sheet(dadosCSV);
-        const csvContent = XLSX.utils.sheet_to_csv(ws);
-
-        // Criar um Blob para o arquivo CSV
+        const csvContent = dadosCSV.map(row => row.join(';')).join('\r\n');
         const csvBlob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
         const csvLink = document.createElement("a");
         csvLink.href = URL.createObjectURL(csvBlob);
         csvLink.download = "Relatório Notas - " + nomeTarefaRelatorio + ".csv";
 
-        // Simular o clique nos dois links para fazer o download dos dois arquivos
+        // Simular os cliques para download
         pdfLink.click();
         csvLink.click();
 
