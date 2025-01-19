@@ -106,6 +106,7 @@ var id_atividade;
 var id_instituicao;
 
 var caneta = document.getElementById('draw');
+var retanguloIcon = document.getElementById('selecionarTexto');
 
 configIniciais();
 
