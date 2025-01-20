@@ -26,7 +26,8 @@ if ($_SESSION['status'] === 'docente') {
             <div class="settings-menu" id="settingsMenu">
                 <a id="configPerfil" href="perfil.php">Perfil</a>
                 <a id="configCadastrar" href="cadastro_usuario.php">Cadastrar Alunos</a>
-                <a id="configLogout" href="../index.php">Logout</a>
+                <a id="configContasCadastradas" href="contasCadastradas_prof.php">Contas Cadastradas</a>
+                <a id="configLogout" href="../index.php">Logout</a>                
             </div>
         </div>
 

@@ -8,8 +8,9 @@ $senha = $_POST["password"];
 $senhaCriptografada = sha1($senha);
 $ra = $_POST["raUsuario"];
 $id_instituicao = $_SESSION["id_instituicao"];
+$id_usuario = $_SESSION["id_usuario"];
 
-$sql = "INSERT INTO usuario (nome, ra, id_instituicao, email, senha, status, acesso) VALUES (?, ?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO usuario (nome, ra, id_instituicao, email, senha, status, acesso, id_criador) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);
 
 $sqlSelect = "SELECT * FROM usuario WHERE email = ? OR (ra = ? AND id_instituicao = ?)";
@@ -23,7 +24,7 @@ try {
         $status = 'aluno';
         $acesso = 'sim';
         try {
-            $stmt->execute([$nome, $ra, $id_instituicao, $email, $senhaCriptografada, $status, $acesso]);
+            $stmt->execute([$nome, $ra, $id_instituicao, $email, $senhaCriptografada, $status, $acesso, $id_usuario]);
             $_SESSION['mensagemCadastroRealizado'] = "Cadastro Realizado com sucesso!";
             try {
                 $sqlSelectAluno = "SELECT * FROM aluno WHERE RA = ? AND id_instituicao = ?";
