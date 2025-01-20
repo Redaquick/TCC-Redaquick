@@ -15,6 +15,9 @@ if ($_SESSION['status'] === 'docente') {
         <link rel="stylesheet" href="style.css">
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
@@ -28,13 +31,16 @@ if ($_SESSION['status'] === 'docente') {
                         class="bi bi-arrow-bar-left" title="Voltar Menu"></i></a></span>
         </div>
 
-        <div id="contasCadastradas" style="margin-top: 7%;">
-            <table id="tableUsuariosCadastrados">
+        <div id="contasCadastradas" style="margin-top: 10%;" class="container">
+            <table id="tableUsuariosCadastrados" class="table table-bordered table-hover table-striped text-center"
+                style="visibility: hidden;">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>RA</th>
-                        <th>Email</th>
+                        <th style="background-color: red; color: white;">Nome</th>
+                        <th style="background-color: red; color: white;">RA</th>
+                        <th style="background-color: red; color: white;">Email</th>
+                        <th style="background-color: red; color: white;">Editar</th>
+                        <th style="background-color: red; color: white;">Excluir</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,6 +48,8 @@ if ($_SESSION['status'] === 'docente') {
                 </tbody>
             </table>
         </div>
+
+        <div id="mensagemErro" style="display: flex; justify-content: center; align-items: center;"></div>
     </body>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
