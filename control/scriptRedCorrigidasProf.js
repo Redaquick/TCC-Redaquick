@@ -279,124 +279,129 @@ async function SalvarIdRedacaoSelecionada(id_redacao_atual) {
 }
 
 async function gerarRelatorio() {
-    const { jsPDF } = window.jspdf;
-    const XLSX = window.XLSX;
+    var valorAlert = prompt("Insira qual o valor máximo deste pacote de redações:");
 
-    const dados = {
-        nomes: nomesAtuais,
-        ids: id_redacoes_atuais
-    };
+    // Verifica se o campo foi preenchido
+    if (valorAlert && valorAlert.trim() !== "") {
+        const { jsPDF } = window.jspdf;
+        const XLSX = window.XLSX;
 
-    try {
-        const response = await fetch('https://feiratec.dev.br/redaquick/control/buscarNotasCorrigidas.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dados)
-        });
+        const dados = {
+            nomes: nomesAtuais,
+            ids: id_redacoes_atuais
+        };
 
-        if (!response.ok) {
-            throw new Error('Erro na requisição: ' + response.statusText);
-        }
+        try {
+            const response = await fetch('https://feiratec.dev.br/redaquick/control/buscarNotasCorrigidas.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            });
 
-        const resultadoEnvioPHP = await response.json();
-
-        const RAs = resultadoEnvioPHP.RAs;
-        const notasEnem = resultadoEnvioPHP.notasEnem;
-        const notasDecimal = resultadoEnvioPHP.notasDecimal;
-
-        // Gerar o PDF
-        const doc = new jsPDF();
-        doc.setFontSize(14);
-        doc.setFont('helvetica', 'bold');
-        doc.text('Relatório com Notas', 80, 10);
-
-        doc.setFontSize(12);
-        doc.setFont('helvetica', 'normal');
-        doc.text('Nome', 47, 20);
-        doc.text('RA', 107, 20);
-        doc.text('Curso', 129, 20);
-        doc.text('Nota (ENEM)', 150, 20);
-        doc.text('Nota (Decimal)', 180, 20);
-
-        doc.setDrawColor(0);
-        doc.setLineWidth(0.3);
-        doc.line(100, 15, 100, 290);
-        doc.line(120, 15, 120, 290);
-        doc.line(147, 15, 147, 290);
-        doc.line(177, 15, 177, 290);
-        doc.line(0, 22, 210, 22);
-
-        let y = 30;
-        const pageHeight = 290;
-
-        for (let i = 0; i < nomesAtuais.length; i++) {
-            const nomeQuebrado = doc.splitTextToSize(nomesAtuais[i], 90);
-            const nomeAltura = nomeQuebrado.length * 6;
-
-            if (y + nomeAltura + 10 > pageHeight) {
-                doc.addPage();
-                y = 30;
-
-                doc.setFontSize(12);
-                doc.setFont('helvetica', 'normal');
-                doc.text('Nome', 47, 20);
-                doc.text('RA', 107, 20);
-                doc.text('Curso', 129, 20);
-                doc.text('Nota (ENEM)', 150, 20);
-                doc.text('Nota (Decimal)', 180, 20);
-                doc.line(100, 15, 100, 290);
-                doc.line(120, 15, 120, 290);
-                doc.line(147, 15, 147, 290);
-                doc.line(177, 15, 177, 290);
-                doc.line(0, 22, 210, 22);
+            if (!response.ok) {
+                throw new Error('Erro na requisição: ' + response.statusText);
             }
 
-            for (var j = 0; j < nomeQuebrado.length; j++) {
-                doc.text(nomeQuebrado[j], 3, y + (j * 6));
+            const resultadoEnvioPHP = await response.json();
+
+            const RAs = resultadoEnvioPHP.RAs;
+            const notasEnem = resultadoEnvioPHP.notasEnem;
+            const notasDecimal = resultadoEnvioPHP.notasDecimal;
+
+            // Gerar o PDF
+            const doc = new jsPDF();
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Relatório com Notas', 80, 10);
+
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'normal');
+            doc.text('Nome', 47, 20);
+            doc.text('RA', 107, 20);
+            doc.text('Curso', 129, 20);
+            doc.text('Nota (ENEM)', 150, 20);
+            doc.text('Nota (Decimal)', 180, 20);
+
+            doc.setDrawColor(0);
+            doc.setLineWidth(0.3);
+            doc.line(100, 15, 100, 290);
+            doc.line(120, 15, 120, 290);
+            doc.line(147, 15, 147, 290);
+            doc.line(177, 15, 177, 290);
+            doc.line(0, 22, 210, 22);
+
+            let y = 30;
+            const pageHeight = 290;
+
+            for (let i = 0; i < nomesAtuais.length; i++) {
+                const nomeQuebrado = doc.splitTextToSize(nomesAtuais[i], 90);
+                const nomeAltura = nomeQuebrado.length * 6;
+
+                if (y + nomeAltura + 10 > pageHeight) {
+                    doc.addPage();
+                    y = 30;
+
+                    doc.setFontSize(12);
+                    doc.setFont('helvetica', 'normal');
+                    doc.text('Nome', 47, 20);
+                    doc.text('RA', 107, 20);
+                    doc.text('Curso', 129, 20);
+                    doc.text('Nota (ENEM)', 150, 20);
+                    doc.text('Nota (Decimal)', 180, 20);
+                    doc.line(100, 15, 100, 290);
+                    doc.line(120, 15, 120, 290);
+                    doc.line(147, 15, 147, 290);
+                    doc.line(177, 15, 177, 290);
+                    doc.line(0, 22, 210, 22);
+                }
+
+                for (var j = 0; j < nomeQuebrado.length; j++) {
+                    doc.text(nomeQuebrado[j], 3, y + (j * 6));
+                }
+
+                doc.text(`${RAs[i]}`, 104, y + ((j - 1) * 6));
+                doc.text(`${cursosAtuais[i]}`, 124, y + ((j - 1) * 6));
+                doc.text(`${notasEnem[i]}`, 158, y + ((j - 1) * 6));
+                doc.text(`${notasDecimal[i]}`, 188, y + ((j - 1) * 6));
+
+                const linhaY = y + ((j - 1) * 6) + 2;
+                doc.line(0, linhaY, 210, linhaY);
+
+                y = linhaY + 6;
             }
 
-            doc.text(`${RAs[i]}`, 104, y + ((j - 1) * 6));
-            doc.text(`${cursosAtuais[i]}`, 124, y + ((j - 1) * 6));
-            doc.text(`${notasEnem[i]}`, 158, y + ((j - 1) * 6));
-            doc.text(`${notasDecimal[i]}`, 188, y + ((j - 1) * 6));
+            const pdfBlob = doc.output('blob');
+            const pdfLink = document.createElement('a');
+            pdfLink.href = URL.createObjectURL(pdfBlob);
+            pdfLink.download = 'Relatório Notas - ' + nomeTarefaRelatorio + ".pdf";
 
-            const linhaY = y + ((j - 1) * 6) + 2;
-            doc.line(0, linhaY, 210, linhaY);
+            // Gerar o CSV
+            const dadosCSV = [["Nome", "RA", "Curso", "Nota (ENEM)", "Nota (Decimal)"]];
+            for (let i = 0; i < nomesAtuais.length; i++) {
+                dadosCSV.push([
+                    `"${nomesAtuais[i]}"`,
+                    `"${RAs[i]}"`,
+                    `"${cursosAtuais[i]}"`,
+                    `"${notasEnem[i]}"`,
+                    `"${notasDecimal[i]}"`
+                ]);
+            }
 
-            y = linhaY + 6;
+            const csvContent = dadosCSV.map(row => row.join(';')).join('\r\n');
+            const csvBlob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+            const csvLink = document.createElement("a");
+            csvLink.href = URL.createObjectURL(csvBlob);
+            csvLink.download = "Relatório Notas - " + nomeTarefaRelatorio + ".csv";
+
+            // Simular os cliques para download
+            pdfLink.click();
+            csvLink.click();
+
+        } catch (error) {
+            console.error('Erro:', error);
         }
-
-        const pdfBlob = doc.output('blob');
-        const pdfLink = document.createElement('a');
-        pdfLink.href = URL.createObjectURL(pdfBlob);
-        pdfLink.download = 'Relatório Notas - ' + nomeTarefaRelatorio + ".pdf";
-
-        // Gerar o CSV
-        const dadosCSV = [["Nome", "RA", "Curso", "Nota (ENEM)", "Nota (Decimal)"]];
-        for (let i = 0; i < nomesAtuais.length; i++) {
-            dadosCSV.push([
-                `"${nomesAtuais[i]}"`,
-                `"${RAs[i]}"`,
-                `"${cursosAtuais[i]}"`,
-                `"${notasEnem[i]}"`,
-                `"${notasDecimal[i]}"`
-            ]);
-        }
-
-        const csvContent = dadosCSV.map(row => row.join(';')).join('\r\n');
-        const csvBlob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-        const csvLink = document.createElement("a");
-        csvLink.href = URL.createObjectURL(csvBlob);
-        csvLink.download = "Relatório Notas - " + nomeTarefaRelatorio + ".csv";
-
-        // Simular os cliques para download
-        pdfLink.click();
-        csvLink.click();
-
-    } catch (error) {
-        console.error('Erro:', error);
     }
 }
 
