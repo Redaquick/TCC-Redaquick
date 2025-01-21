@@ -65,8 +65,13 @@ function adicionarLinha(nomeAluno, raAluno, emailAluno) {
     const remover = novaLinha.insertCell(4);
 
     // Adiciona os ícones do Bootstrap
-    editar.innerHTML = '<button class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i></button>';
+    editar.innerHTML = '<button id="edita' + contadorId + '" class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i></button>';
     remover.innerHTML = '<button id="lixeira' + contadorId + '"class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>';
+
+    document.getElementById('edita' + contadorId).addEventListener('click', function () {
+        salvarSessionContaCadastrada(emailAluno, raAluno, nomeAluno);
+        window.location = "editaContaCadastrada_prof.php";
+    });
 
     document.getElementById('lixeira' + contadorId).addEventListener('click', function () {
         excluirDados(emailAluno);
@@ -117,6 +122,35 @@ async function excluirDados(email) {
 
             window.location.reload();
         }
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+async function salvarSessionContaCadastrada(email, ra, nome) {
+    const dados = {
+        emailContaCadastrada: email,
+        raContaCadastrada: ra,
+        nomeContaCadastrada: nome
+    };
+
+    try {
+        // Fazendo a requisição com fetch e aguardando a resposta do PHP 
+        const response = await fetch('https://feiratec.dev.br/redaquick/control/salvarSessionContaCadastrada.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.statusText);
+        }
+
+        const resultadoEnvioPHP = await response.json();
+        console.log(resultadoEnvioPHP);
+
     } catch (error) {
         console.error('Erro:', error);
     }
