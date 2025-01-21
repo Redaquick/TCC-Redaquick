@@ -282,7 +282,7 @@ async function gerarRelatorio() {
     var valorAlert = prompt("Insira qual o valor máximo deste pacote de redações:");
 
     // Verifica se o campo foi preenchido
-    if (valorAlert && valorAlert.trim() !== "") {
+    if (valorAlert) {
         const { jsPDF } = window.jspdf;
         const XLSX = window.XLSX;
 
@@ -310,6 +310,15 @@ async function gerarRelatorio() {
             const notasEnem = resultadoEnvioPHP.notasEnem;
             const notasDecimal = resultadoEnvioPHP.notasDecimal;
 
+            var notasTotais = [];
+
+            for (let index = 0; index < notasDecimal.length; index++) {
+                let notaTotalAtividade = (notasDecimal[index]) / 10;
+                notaTotalAtividade = notaTotalAtividade * valorAlert;
+
+                notasTotais[index] = notaTotalAtividade;
+            }
+            
             // Gerar o PDF
             const doc = new jsPDF();
             doc.setFontSize(14);
@@ -364,7 +373,7 @@ async function gerarRelatorio() {
                 doc.text(`${RAs[i]}`, 104, y + ((j - 1) * 6));
                 doc.text(`${cursosAtuais[i]}`, 124, y + ((j - 1) * 6));
                 doc.text(`${notasEnem[i]}`, 158, y + ((j - 1) * 6));
-                doc.text(`${notasDecimal[i]}`, 188, y + ((j - 1) * 6));
+                doc.text(`${notasTotais[i]}`, 188, y + ((j - 1) * 6));
 
                 const linhaY = y + ((j - 1) * 6) + 2;
                 doc.line(0, linhaY, 210, linhaY);
@@ -385,7 +394,7 @@ async function gerarRelatorio() {
                     `"${RAs[i]}"`,
                     `"${cursosAtuais[i]}"`,
                     `"${notasEnem[i]}"`,
-                    `"${notasDecimal[i]}"`
+                    `"${notasTotais[i]}"`
                 ]);
             }
 
@@ -402,6 +411,8 @@ async function gerarRelatorio() {
         } catch (error) {
             console.error('Erro:', error);
         }
+    } else {
+        alert('É necessário informar uma nota!!!');
     }
 }
 

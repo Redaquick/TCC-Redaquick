@@ -29,13 +29,13 @@ if (!isset($_SESSION)) {//verifica se existe a session
                 <!--Lembrar de mudar o email para o do redaquick-->
                 <form action="https://api.staticforms.xyz/submit" method="post">
                     <input class="configInputLogin" type="text" name="name" id="nome" placeholder="Digite seu nome"
-                        required autocomplete="off">
+                        required>
                     <br>
                     <input class="configInputLogin" type="email" name="email" id="emailFaleConosco"
-                        placeholder="Digite seu e-mail" required autocomplete="off">
+                        placeholder="Digite seu e-mail" required>
                     <br>
                     <input class="configInputLogin" type="text" name="phone" id="telefone" placeholder="(xx)xxxxx-xxxx"
-                        required autocomplete="off">
+                        required>
                     <br>
                     <a href="index.php"><input class="configBtn" type="submit" value="Enviar"></a>
                     <input type="hidden" name="accessKey" value="e0392dd0-70e7-4c8a-99eb-eab6ceebaebf">
@@ -57,7 +57,7 @@ if (!isset($_SESSION)) {//verifica se existe a session
             <div class="alinhamentoCentro">
                 <form action="control/login.php" method="post">
                     <input class="configInputLogin" type="email" name="email" id="emailLogin"
-                        placeholder="Digite seu e-mail" required autocomplete="off">
+                        placeholder="Digite seu e-mail" required>
                     <br><br>
                     <input class="configInputPassword" type="password" name="password" id="password"
                         placeholder="Digite sua senha" required minlength="5" maxlength="20"><span

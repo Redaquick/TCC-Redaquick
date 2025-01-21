@@ -34,13 +34,13 @@ if (!isset($_SESSION)) {//verifica se existe a session
             <div class="alinhamentoCentro">
             <form action="../control/cadastrar-usuario.php" method="post">
                     <input class="configInputLogin" type="text" name="nomeUsuario" id="nomeUsuario"
-                        placeholder="Digite o nome do aluno" required autocomplete="off">
+                        placeholder="Digite o nome do aluno" required>
                     <br>
                     <input class="configInputLogin" type="text" name="raUsuario" id="raUsuario"
-                        placeholder="Digite o RA do aluno" required autocomplete="off" maxlength="20">
+                        placeholder="Digite o RA do aluno" required maxlength="20">
                     <br>
                     <input class="configInputLogin" type="email" name="email" id="email" placeholder="Digite o email"
-                        required autocomplete="off">
+                        required>
                     <br>
                     <input class="configInputPassword" type="password" name="password" id="password"
                         placeholder="Digite a senha" required minlength="5" maxlength="20"><span

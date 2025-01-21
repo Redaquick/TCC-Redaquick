@@ -34,7 +34,7 @@ session_start();
                 <form action="../control/verificar_email.php" id="email-form" method="post">
                     <br><br>
                     <input class="configInputLogin" type="email" name="email" id="emailCodigoEsqueceuSenha"
-                        placeholder="Digite seu e-mail" required autocomplete="off">
+                        placeholder="Digite seu e-mail" required>
 
                     <div class="button-container">
                         <a href="../index.php"><input class="configBtnVoltar" type="button" value="Voltar"></a>
