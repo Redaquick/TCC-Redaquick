@@ -592,16 +592,22 @@ async function inserirNotaPHP(notaC1, notaC2, notaC3, notaC4, notaC5, notaTotal)
 }
 
 async function inserirComentariosPHP() {
-    let comentario = null;
+    let comentario;
     let comentarioP = comentarioCompetencia1.value + "&" + comentarioCompetencia2.value + "&" + comentarioCompetencia3.value + "&" +
         comentarioCompetencia4.value + "&" + comentarioCompetencia5.value;
-    let corTxt = null;
+    let corTxt;
 
     if (armazenaComentarios != null) {
+        comentario = '';
+        corTxt = '';
+
         armazenaComentarios.forEach(function (e, index) {
             comentario += (index > 0 ? '&' : '') + e.value;
             corTxt += (index > 0 ? '&' : '') + e.style.borderColor;
         });
+    }else{
+        comentario = 'SEMCOMENTARIOREDAQUICK';
+        corTxt = 'SEMCOMENTARIOREDAQUICK';
     }
 
     const dados = {
