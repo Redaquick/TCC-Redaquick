@@ -1154,7 +1154,7 @@ async function buscarComentarios() {
         console.log(resultadoEnvioPHP);
 
 
-        if (resultadoEnvioPHP.comentario != null) {
+        if (resultadoEnvioPHP.comentario) {
             const comentarios = resultadoEnvioPHP.comentario.split('&');
             const cores = resultadoEnvioPHP.corTxt.split('&');
 
